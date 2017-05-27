@@ -1,5 +1,5 @@
 // Copyright (c) 2017 hors<horsicq@gmail.com>
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
@@ -17,7 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-// 
+//
 #include "dialogstaticscan.h"
 #include "ui_dialogstaticscan.h"
 
@@ -45,6 +45,42 @@ void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pO
     bIsRun=true;
     scan->setData(sFileName,pOptions,pListResult);
     thread->start();
+}
+
+QStandardItemModel *DialogStaticScan::getModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects)
+{
+    QStandardItemModel *result=new QStandardItemModel;
+
+    QMap<QString,QStandardItem *> mapParents;
+
+    for(int i=0; i<pListDetects->count(); i++)
+    {
+        if(!mapParents.contains(pListDetects->at(i).id.uuid.toString()))
+        {
+            QString sParent=SpecAbstract::createTypeString(&pListDetects->at(i));;
+
+            QStandardItem *itemParent=new QStandardItem(sParent);
+
+            if(pListDetects->at(i).parentId.uuid=="")
+            {
+                result->appendRow(itemParent);
+            }
+            else
+            {
+                mapParents.value(pListDetects->at(i).parentId.uuid.toString())->appendRow(itemParent);
+            }
+
+            mapParents.insert(pListDetects->at(i).id.uuid.toString(),itemParent);
+        }
+
+        QStandardItem *itemParent=mapParents.value(pListDetects->at(i).id.uuid.toString());
+
+        QString sItem=SpecAbstract::createResultString2(&pListDetects->at(i));
+        QStandardItem *item=new QStandardItem(sItem);
+        itemParent->appendRow(item);
+    }
+
+    return result;
 }
 
 DialogStaticScan::~DialogStaticScan()

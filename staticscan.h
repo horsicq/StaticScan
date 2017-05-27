@@ -1,5 +1,5 @@
 // Copyright (c) 2017 hors<horsicq@gmail.com>
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
@@ -17,7 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-// 
+//
 #ifndef STATICSCAN_H
 #define STATICSCAN_H
 
@@ -25,30 +25,20 @@
 #include <QElapsedTimer>
 #include <QMutex>
 #include "specabstract.h"
-//#include "detect.h"
-//#include "upx.h"
 
-
-typedef QList<SpecAbstract::SCAN_STRUCT> (*ScanPEFunction)(QPE *pPE,SpecAbstract::SCAN_OPTIONS *pOptions,qint64 nStartOffset,SpecAbstract::ID parentId);
-typedef QList<SpecAbstract::SCAN_STRUCT> (*ScanBinaryFunction)(QBinary *pBinary,SpecAbstract::SCAN_OPTIONS *pOptions,qint64 nStartOffset,SpecAbstract::ID parentId);
+#define SSE_VERSION "1.00"
 
 class StaticScan : public QObject
 {
     Q_OBJECT
 public:
-
-
-
     explicit StaticScan(QObject *parent = 0);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,QList<SpecAbstract::SCAN_STRUCT> *pListResult);
 
     static QList<SpecAbstract::SCAN_STRUCT> process(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
-    static QList<SpecAbstract::SCAN_STRUCT> process(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions);
-
+    static QString getEngineVersion();
 private:
-
-    void _process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nStartOffset,SpecAbstract::ID parentId);
-
+    void _process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions);
 
 signals:
     void completed(quint64 nElapsedTime);

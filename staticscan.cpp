@@ -1,5 +1,5 @@
 // Copyright (c) 2017 hors<horsicq@gmail.com>
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
@@ -17,7 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-// 
+//
 #include "staticscan.h"
 
 StaticScan::StaticScan(QObject *parent) : QObject(parent)
@@ -47,10 +47,9 @@ void StaticScan::process()
             QElapsedTimer timer;
             timer.start();
             SpecAbstract::ID parentId;
-            parentId.nOffset=-1;
             parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
-
-            _process(&file,pListResult,0,parentId);
+            parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
+            _process(&file,pListResult,0,file.size(),parentId,pOptions);
 
             emit completed(timer.elapsed());
 
@@ -74,48 +73,45 @@ QList<SpecAbstract::SCAN_STRUCT> StaticScan::process(QString sFileName, SpecAbst
     return listResult;
 }
 
-QList<SpecAbstract::SCAN_STRUCT> StaticScan::process(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions)
+QString StaticScan::getEngineVersion()
 {
-    Q_UNUSED(pOptions);
-    QList<SpecAbstract::SCAN_STRUCT> listResult;
-    StaticScan scan;
-    SpecAbstract::ID parentId;
-    parentId.nOffset=-1;
-    parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
-    scan._process(pDevice,&listResult,0,parentId);
-
-    return listResult;
+    return SSE_VERSION;
 }
 
-void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nStartOffset,SpecAbstract::ID parentId)
+void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    Q_UNUSED(nStartOffset);
-    Q_UNUSED(parentId);
-    QSet<QBinary::FILE_TYPES> setTypes=QBinary::getFileTypes(pDevice);
+    SubDevice sd(pDevice,nOffset,nSize);
 
-    if(setTypes.contains(QBinary::FILE_TYPE_BINARY))
+    if(sd.open(QIODevice::ReadOnly))
     {
-        //        SpecAbstract::SCAN_STRUCT record={0};
+        QSet<QBinary::FILE_TYPES> setTypes=QBinary::getFileTypes(&sd);
 
-        //        record.id.filetype=SpecAbstract::RECORD_FILETYPE_BINARY;
-        //        record.id.nOffset=nStartOffset;
-        //        record.nSize=pDevice->size();
-        //        record.parentId=parentId;
-        //        record.type=SpecAbstract::RECORD_TYPE_UNKNOWN;
-        //        record.name=SpecAbstract::RECORD_NAME_UNKNOWN;
-        //        record.sVersion="";
-        //        record.parentId=parentId;
+        if(setTypes.contains(QBinary::FILE_TYPE_PE32)||setTypes.contains(QBinary::FILE_TYPE_PE64))
+        {
+            SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId);
 
-        //        pList->append(record);
+            pList->append(pe_info.basic_info.listDetects);
 
+            if(pOptions->bScanOverlay)
+            {
+                if(pe_info.nOverlaySize)
+                {
+                    SpecAbstract::ID _parentId=pe_info.basic_info.id;
+                    _parentId.filepart=SpecAbstract::RECORD_FILEPART_OVERLAY;
+                    _process(pDevice,pList,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions);
+                }
+            }
+        }
+        else
+        {
+            SpecAbstract::BINARYINFO_STRUCT binary_info=SpecAbstract::getBinaryInfo(&sd,parentId);
+
+            pList->append(binary_info.basic_info.listDetects);
+        }
+
+        sd.close();
     }
 
-    if(setTypes.contains(QBinary::FILE_TYPE_PE32)||setTypes.contains(QBinary::FILE_TYPE_PE64))
-    {
-        SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(pDevice);
-
-        pList->append(pe_info.listDetects);
-    }
 }
 
 
