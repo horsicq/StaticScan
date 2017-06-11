@@ -26,7 +26,7 @@
 #include <QMutex>
 #include "specabstract.h"
 
-#define SSE_VERSION "1.00"
+#define SSE_VERSION "1.01"
 
 class StaticScan : public QObject
 {
