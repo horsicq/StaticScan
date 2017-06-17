@@ -73,9 +73,76 @@ QList<SpecAbstract::SCAN_STRUCT> StaticScan::process(QString sFileName, SpecAbst
     return listResult;
 }
 
+QString StaticScan::getString(QList<SpecAbstract::SCAN_STRUCT> *pListDetects)
+{
+    QString sResult;
+
+    for(int i=0; i<pListDetects->count(); i++)
+    {
+        sResult+=SpecAbstract::createFullResultString(&pListDetects->at(i));
+
+        if(i!=pListDetects->count()-1)
+        {
+            sResult+="\n";
+        }
+    }
+
+    return sResult;
+}
+
+QString StaticScan::getXML(QList<SpecAbstract::SCAN_STRUCT> *pListDetects)
+{
+    // TODO !!! xml levels
+    QString sResult;
+    QXmlStreamWriter xml(&sResult);
+
+    xml.setAutoFormatting(true);
+//    xml.writeStartDocument();
+
+    QSet<QString> stParents;
+
+    QString sParent;
+
+    for(int i=0; i<pListDetects->count(); i++)
+    {
+        if(!stParents.contains(pListDetects->at(i).id.uuid.toString()))
+        {
+            if(sParent!="")
+            {
+                xml.writeEndElement();
+            }
+
+            sParent=SpecAbstract::createTypeString(&pListDetects->at(i));
+
+            xml.writeStartElement(sParent);
+
+            stParents.insert(pListDetects->at(i).id.uuid.toString());
+        }
+
+        QString sItem=SpecAbstract::createResultString2(&pListDetects->at(i));
+
+        xml.writeStartElement("detect");
+        xml.writeAttribute("type",SpecAbstract::recordTypeIdToString(pListDetects->at(i).type));
+        xml.writeAttribute("name",SpecAbstract::recordNameIdToString(pListDetects->at(i).name));
+        xml.writeAttribute("version",pListDetects->at(i).sVersion);
+        xml.writeAttribute("info",pListDetects->at(i).sInfo);
+        xml.writeCharacters(sItem);
+        xml.writeEndElement();
+
+        if(i==pListDetects->count()-1)
+        {
+            xml.writeEndElement();
+        }
+    }
+
+//    xml.writeEndElement();
+
+    return sResult;
+}
+
 QString StaticScan::getEngineVersion()
 {
-    return SSE_VERSION;
+    return QString("%1").arg(SSE_VERSION,0,'f',2);
 }
 
 void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
@@ -101,6 +168,12 @@ void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *p
                     _process(pDevice,pList,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions);
                 }
             }
+        }
+        else if(setTypes.contains(QBinary::FILE_TYPE_ELF32)||setTypes.contains(QBinary::FILE_TYPE_ELF64))
+        {
+            SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId);
+
+            pList->append(elf_info.basic_info.listDetects);
         }
         else
         {

@@ -24,9 +24,10 @@
 #include <QObject>
 #include <QElapsedTimer>
 #include <QMutex>
+#include <QXmlStreamWriter>
 #include "specabstract.h"
 
-#define SSE_VERSION "1.01"
+#define SSE_VERSION 1.01
 
 class StaticScan : public QObject
 {
@@ -36,6 +37,8 @@ public:
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,QList<SpecAbstract::SCAN_STRUCT> *pListResult);
 
     static QList<SpecAbstract::SCAN_STRUCT> process(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    static QString getString(QList<SpecAbstract::SCAN_STRUCT> *pListDetects);
+    static QString getXML(QList<SpecAbstract::SCAN_STRUCT> *pListDetects);
     static QString getEngineVersion();
 private:
     void _process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions);
