@@ -24,7 +24,7 @@
 #include <QDialog>
 #include <QThread>
 #include <QStandardItemModel>
-#include "staticscan.h"
+#include "staticscanitemmodel.h"
 
 namespace Ui
 {
@@ -38,8 +38,6 @@ class DialogStaticScan : public QDialog
 public:
     explicit DialogStaticScan(QWidget *parent = 0);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,QList<SpecAbstract::SCAN_STRUCT> *pListResult);
-
-    static QStandardItemModel *getModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects);
     ~DialogStaticScan();
 
 private slots:

@@ -47,41 +47,6 @@ void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pO
     thread->start();
 }
 
-QStandardItemModel *DialogStaticScan::getModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects)
-{
-    QStandardItemModel *result=new QStandardItemModel;
-
-    QMap<QString,QStandardItem *> mapParents;
-
-    for(int i=0; i<pListDetects->count(); i++)
-    {
-        if(!mapParents.contains(pListDetects->at(i).id.uuid.toString()))
-        {
-            QString sParent=SpecAbstract::createTypeString(&pListDetects->at(i));;
-
-            QStandardItem *itemParent=new QStandardItem(sParent);
-
-            if(pListDetects->at(i).parentId.uuid=="")
-            {
-                result->appendRow(itemParent);
-            }
-            else
-            {
-                mapParents.value(pListDetects->at(i).parentId.uuid.toString())->appendRow(itemParent);
-            }
-
-            mapParents.insert(pListDetects->at(i).id.uuid.toString(),itemParent);
-        }
-
-        QStandardItem *itemParent=mapParents.value(pListDetects->at(i).id.uuid.toString());
-
-        QString sItem=SpecAbstract::createResultString2(&pListDetects->at(i));
-        QStandardItem *item=new QStandardItem(sItem);
-        itemParent->appendRow(item);
-    }
-
-    return result;
-}
 
 DialogStaticScan::~DialogStaticScan()
 {
