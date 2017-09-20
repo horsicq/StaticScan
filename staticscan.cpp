@@ -35,6 +35,8 @@ void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions
 void StaticScan::process()
 {
     bIsStop=false;
+    QElapsedTimer timer;
+    timer.start();
 
     QFile file;
 
@@ -44,18 +46,16 @@ void StaticScan::process()
 
         if(file.open(QIODevice::ReadOnly))
         {
-            QElapsedTimer timer;
-            timer.start();
             SpecAbstract::ID parentId;
             parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
             parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
             _process(&file,pListResult,0,file.size(),parentId,pOptions);
 
-            emit completed(timer.elapsed());
-
             file.close();
         }
     }
+
+    emit completed(timer.elapsed());
 }
 
 void StaticScan::stop()
