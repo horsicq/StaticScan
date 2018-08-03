@@ -37,7 +37,7 @@ class DialogStaticScan : public QDialog
 
 public:
     explicit DialogStaticScan(QWidget *parent = 0);
-    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,QList<SpecAbstract::SCAN_STRUCT> *pListResult);
+    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     ~DialogStaticScan();
 
 private slots:

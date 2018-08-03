@@ -33,12 +33,12 @@ class StaticScan : public QObject
     Q_OBJECT
 public:
     explicit StaticScan(QObject *parent = 0);
-    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,QList<SpecAbstract::SCAN_STRUCT> *pListResult);
+    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
 
-    static QList<SpecAbstract::SCAN_STRUCT> process(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    static SpecAbstract::SCAN_RESULT process(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
 private:
-    void _process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions);
+    void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, SpecAbstract::ID parentId, SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel=0);
 
 signals:
     void completed(quint64 nElapsedTime);
@@ -50,7 +50,7 @@ public slots:
 private:
     QString sFileName;
     SpecAbstract::SCAN_OPTIONS *pOptions;
-    QList<SpecAbstract::SCAN_STRUCT> *pListResult;
+    SpecAbstract::SCAN_RESULT *pScanResult;
     bool bIsStop;
 };
 

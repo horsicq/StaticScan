@@ -25,11 +25,11 @@ StaticScan::StaticScan(QObject *parent) : QObject(parent)
     bIsStop=false;
 }
 
-void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,QList<SpecAbstract::SCAN_STRUCT> *pListResult)
+void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
     this->sFileName=sFileName;
     this->pOptions=pOptions;
-    this->pListResult=pListResult;
+    this->pScanResult=pScanResult;
 }
 
 void StaticScan::process()
@@ -49,7 +49,7 @@ void StaticScan::process()
             SpecAbstract::ID parentId;
             parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
             parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
-            _process(&file,pListResult,0,file.size(),parentId,pOptions);
+            _process(&file,pScanResult,0,file.size(),parentId,pOptions);
 
             file.close();
         }
@@ -63,14 +63,14 @@ void StaticScan::stop()
     bIsStop=true;
 }
 
-QList<SpecAbstract::SCAN_STRUCT> StaticScan::process(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
+SpecAbstract::SCAN_RESULT StaticScan::process(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    QList<SpecAbstract::SCAN_STRUCT> listResult;
+    SpecAbstract::SCAN_RESULT scanResult;
     StaticScan scan;
-    scan.setData(sFileName,pOptions,&listResult);
+    scan.setData(sFileName,pOptions,&scanResult);
     scan.process();
 
-    return listResult;
+    return scanResult;
 }
 
 QString StaticScan::getEngineVersion()
@@ -78,8 +78,14 @@ QString StaticScan::getEngineVersion()
     return SSE_VERSION;
 }
 
-void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *pList,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
+void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel)
 {
+    QTime scanTime;
+    if(nLevel==0)
+    {
+        scanTime=QTime::currentTime();
+    }
+
     SubDevice sd(pDevice,nOffset,nSize);
 
     if(sd.open(QIODevice::ReadOnly))
@@ -90,7 +96,7 @@ void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *p
         {
             SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId,pOptions);
 
-            pList->append(pe_info.basic_info.listDetects);
+            pScanResult->listRecords.append(pe_info.basic_info.listDetects);
 
             if(pOptions->bScanOverlay)
             {
@@ -98,7 +104,7 @@ void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *p
                 {
                     SpecAbstract::ID _parentId=pe_info.basic_info.id;
                     _parentId.filepart=SpecAbstract::RECORD_FILEPART_OVERLAY;
-                    _process(pDevice,pList,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions);
+                    _process(pDevice,pScanResult,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions,nLevel++);
                 }
             }
         }
@@ -106,24 +112,28 @@ void StaticScan::_process(QIODevice *pDevice,QList<SpecAbstract::SCAN_STRUCT> *p
         {
             SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId,pOptions);
 
-            pList->append(elf_info.basic_info.listDetects);
+            pScanResult->listRecords.append(elf_info.basic_info.listDetects);
         }
         else if(stTypes.contains(QBinary::FILE_TYPE_MSDOS))
         {
             SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions);
 
-            pList->append(msdos_info.basic_info.listDetects);
+            pScanResult->listRecords.append(msdos_info.basic_info.listDetects);
         }
         else
         {
             SpecAbstract::BINARYINFO_STRUCT binary_info=SpecAbstract::getBinaryInfo(&sd,parentId,pOptions);
 
-            pList->append(binary_info.basic_info.listDetects);
+            pScanResult->listRecords.append(binary_info.basic_info.listDetects);
         }
 
         sd.close();
     }
 
+    if(nLevel==0)
+    {
+        pScanResult->nScanTime=scanTime.msecsTo(QTime::currentTime());
+    }
 }
 
 

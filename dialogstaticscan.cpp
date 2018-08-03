@@ -40,10 +40,10 @@ DialogStaticScan::DialogStaticScan(QWidget *parent) :
     bIsRun=false;
 }
 
-void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, QList<SpecAbstract::SCAN_STRUCT> *pListResult)
+void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
     bIsRun=true;
-    scan->setData(sFileName,pOptions,pListResult);
+    scan->setData(sFileName,pOptions,pScanResult);
     thread->start();
 }
 

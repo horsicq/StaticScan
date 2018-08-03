@@ -237,10 +237,13 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *item)
 
 void StaticScanItemModel::_toString(QString *pString, StaticScanItem *item, int nLevel)
 {
-    QString sResult;
-    sResult=sResult.leftJustified(4*nLevel,' ');
-    sResult.append(QString("%1\n").arg(item->data(0).toString()));
-    pString->append(sResult);
+    if(nLevel)
+    {
+        QString sResult;
+        sResult=sResult.leftJustified(4*(nLevel-1),' ');
+        sResult.append(QString("%1\n").arg(item->data(0).toString()));
+        pString->append(sResult);
+    }
 
     if(item->childCount())
     {
