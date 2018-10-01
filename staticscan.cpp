@@ -92,7 +92,7 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
     {
         QSet<QBinary::FILE_TYPES> stTypes=QBinary::getFileTypes(&sd);
 
-        if(stTypes.contains(QBinary::FILE_TYPE_PE32)||stTypes.contains(QBinary::FILE_TYPE_PE64))
+        if(stTypes.contains(QBinary::FT_PE32)||stTypes.contains(QBinary::FT_PE64))
         {
             SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId,pOptions);
 
@@ -108,13 +108,13 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
                 }
             }
         }
-        else if(stTypes.contains(QBinary::FILE_TYPE_ELF32)||stTypes.contains(QBinary::FILE_TYPE_ELF64))
+        else if(stTypes.contains(QBinary::FT_ELF32)||stTypes.contains(QBinary::FT_ELF64))
         {
             SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId,pOptions);
 
             pScanResult->listRecords.append(elf_info.basic_info.listDetects);
         }
-        else if(stTypes.contains(QBinary::FILE_TYPE_MSDOS))
+        else if(stTypes.contains(QBinary::FT_MSDOS))
         {
             SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions);
 
