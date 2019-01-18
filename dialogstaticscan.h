@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QThread>
+#include <QDateTime>
 #include <QStandardItemModel>
 #include "staticscanitemmodel.h"
 
@@ -36,20 +37,27 @@ class DialogStaticScan : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogStaticScan(QWidget *parent = 0);
+    explicit DialogStaticScan(QWidget *parent=nullptr);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
+    void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
     ~DialogStaticScan();
 
 private slots:
     void on_pushButtonCancel_clicked();
-    void onCompleted(quint64 nElapsed);
+    void onCompleted(qint64 nElapsed);
     void onSetProgressMaximum(int nMax);
     void onSetProgressValue(int nValue);
+    void timerSlot();
+
+signals:
+    void scanResult(SpecAbstract::SCAN_RESULT scanResult);
+
 private:
     Ui::DialogStaticScan *ui;
     StaticScan *scan;
     QThread *thread;
     bool bIsRun;
+    QTimer *pTimer;
 };
 
 #endif // DIALOGSTATICSCAN_H

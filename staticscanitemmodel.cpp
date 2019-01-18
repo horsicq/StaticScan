@@ -167,7 +167,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 Qt::ItemFlags StaticScanItemModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
-        return 0;
+        return nullptr;
 
     return QAbstractItemModel::flags(index);
 }
@@ -252,6 +252,4 @@ void StaticScanItemModel::_toString(QString *pString, StaticScanItem *item, int 
             _toString(pString,item->child(i),nLevel+1);
         }
     }
-
-
 }

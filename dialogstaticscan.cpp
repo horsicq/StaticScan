@@ -33,11 +33,13 @@ DialogStaticScan::DialogStaticScan(QWidget *parent) :
     scan->moveToThread(thread);
 
     connect(thread, SIGNAL(started()), scan, SLOT(process()));
-    connect(scan, SIGNAL(completed(quint64)), this, SLOT(onCompleted(quint64)));
-    connect(scan, SIGNAL(setProgressMaximum(int)), this, SLOT(onSetProgressMaximum(int)));
-    connect(scan, SIGNAL(setProgressValue(int)), this, SLOT(onSetProgressValue(int)));
+    connect(scan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(scan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
 
     bIsRun=false;
+
+    pTimer=new QTimer(this);
+    connect(pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 }
 
 void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
@@ -45,6 +47,17 @@ void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pO
     bIsRun=true;
     scan->setData(sFileName,pOptions,pScanResult);
     thread->start();
+    pTimer->start(1000);
+    ui->progressBarTotal->setMaximum(0);
+}
+
+void DialogStaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
+{
+    bIsRun=true;
+    scan->setData(sDirectoryName,pOptions);
+    thread->start();
+    pTimer->start(1000);
+    ui->progressBarTotal->setMaximum(100);
 }
 
 
@@ -55,8 +68,13 @@ DialogStaticScan::~DialogStaticScan()
         scan->stop();
     }
 
+    pTimer->stop();
+
     thread->quit();
     thread->wait();
+
+
+    delete pTimer;
 
     delete ui;
 
@@ -69,14 +87,16 @@ void DialogStaticScan::on_pushButtonCancel_clicked()
     if(bIsRun)
     {
         scan->stop();
+        pTimer->stop();
         bIsRun=false;
     }
 }
 
-void DialogStaticScan::onCompleted(quint64 nElapsed)
+void DialogStaticScan::onCompleted(qint64 nElapsed)
 {
     Q_UNUSED(nElapsed);
     // TODO
+    bIsRun=false;
     this->close();
 }
 
@@ -88,4 +108,24 @@ void DialogStaticScan::onSetProgressMaximum(int nMax)
 void DialogStaticScan::onSetProgressValue(int nValue)
 {
     ui->progressBarTotal->setValue(nValue);
+}
+
+void DialogStaticScan::timerSlot()
+{
+    StaticScan::STATS stats=scan->getCurrentStats();
+
+    ui->labelTotal->setText(QString::number(stats.nTotal));
+    ui->labelCurrent->setText(QString::number(stats.nCurrent));
+    ui->labelCurrentStatus->setText(stats.sStatus);
+
+    if(stats.nTotal)
+    {
+        ui->progressBarTotal->setValue((stats.nCurrent*100)/stats.nTotal);
+    }
+
+    QDateTime dt;
+    dt.setMSecsSinceEpoch(stats.nElapsed);
+    QString sDateTime=dt.time().addSecs(-60*60).toString("hh-mm-ss");
+
+    ui->labelTime->setText(sDateTime);
 }

@@ -23,6 +23,10 @@
 StaticScan::StaticScan(QObject *parent) : QObject(parent)
 {
     bIsStop=false;
+    pOptions=nullptr;
+    pScanResult=nullptr;
+    currentStats=STATS();
+    pElapsedTimer=nullptr;
 }
 
 void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
@@ -32,30 +36,85 @@ void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions
     this->pScanResult=pScanResult;
 }
 
+void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
+{
+    this->sFileName=sFileName;
+    this->pOptions=pOptions;
+}
+
 void StaticScan::process()
 {
-    bIsStop=false;
-    QElapsedTimer timer;
-    timer.start();
+    pElapsedTimer=new QElapsedTimer;
+    pElapsedTimer->start();
 
-    QFile file;
+    currentStats.nTotal=0;
+    currentStats.nCurrent=0;
+
+    bIsStop=false;
 
     if(sFileName!="")
     {
-        file.setFileName(sFileName);
-
-        if(file.open(QIODevice::ReadOnly))
+        if(pScanResult)
         {
-            SpecAbstract::ID parentId;
-            parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
-            parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
-            _process(&file,pScanResult,0,file.size(),parentId,pOptions);
+            currentStats.sStatus=tr("Scan");
 
-            file.close();
+            *pScanResult=scanFile(sFileName);
+
+            emit scanResult(*pScanResult);
+        }
+        else
+        {
+            currentStats.sStatus=tr("Searching");
+            QList<QString> listFiles;
+            findFiles(sFileName,&listFiles);
+            currentStats.nTotal=listFiles.count();
+
+            for(int i=0;(i<currentStats.nTotal)&&(!bIsStop);i++)
+            {
+                currentStats.nCurrent=i+1;
+                currentStats.sStatus=listFiles.at(i);
+                SpecAbstract::SCAN_RESULT _scanResult=scanFile(currentStats.sStatus);
+
+                emit scanResult(_scanResult);
+            }
         }
     }
 
-    emit completed(timer.elapsed());
+    emit completed(pElapsedTimer->elapsed());
+    delete pElapsedTimer;
+    pElapsedTimer=nullptr;
+
+    bIsStop=false;
+}
+
+void StaticScan::findFiles(QString sFileName,QList<QString> *pListFileNames)
+{
+    currentStats.nTotal=pListFileNames->count();
+
+    if(!bIsStop)
+    {
+        QFileInfo fi(sFileName);
+
+        if(fi.isFile())
+        {
+            pListFileNames->append(fi.absoluteFilePath());
+        }
+        else if(fi.isDir())
+        {
+            QDir dir(sFileName);
+
+            QFileInfoList eil=dir.entryInfoList();
+
+            for(int i=0;(i<eil.count())&&(!bIsStop);i++)
+            {
+                QString sFN=eil.at(i).fileName();
+                if((sFN!=".")&&(sFN!=".."))
+                {
+                    findFiles(eil.at(i).absoluteFilePath(),pListFileNames);
+                }
+            }
+        }
+    }
 }
 
 void StaticScan::stop()
@@ -63,7 +122,7 @@ void StaticScan::stop()
     bIsStop=true;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::process(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
+SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     SpecAbstract::SCAN_RESULT scanResult;
     StaticScan scan;
@@ -78,19 +137,31 @@ QString StaticScan::getEngineVersion()
     return SSE_VERSION;
 }
 
+StaticScan::STATS StaticScan::getCurrentStats()
+{
+    if(pElapsedTimer)
+    {
+        currentStats.nElapsed=pElapsedTimer->elapsed();
+    }
+
+    return currentStats;
+}
+
 void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel)
 {
-    QTime scanTime;
-    if(nLevel==0)
+    QElapsedTimer scanTimer;
+    scanTimer.start();
+
+    if(QString(pDevice->metaObject()->className())=="QFile")
     {
-        scanTime=QTime::currentTime();
+        pScanResult->sFileName=((QFile *)pDevice)->fileName();
     }
 
     SubDevice sd(pDevice,nOffset,nSize);
 
     if(sd.open(QIODevice::ReadOnly))
     {
-        QSet<QBinary::FILE_TYPES> stTypes=QBinary::getFileTypes(&sd);
+        QSet<QBinary::FT> stTypes=QBinary::getFileTypes(&sd);
 
         if(stTypes.contains(QBinary::FT_PE32)||stTypes.contains(QBinary::FT_PE64))
         {
@@ -132,8 +203,28 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
     if(nLevel==0)
     {
-        pScanResult->nScanTime=scanTime.msecsTo(QTime::currentTime());
+        pScanResult->nScanTime=scanTimer.elapsed();
     }
+}
+
+SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
+{
+    SpecAbstract::SCAN_RESULT result={0};
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadOnly))
+    {
+        SpecAbstract::ID parentId;
+        parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
+        parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
+        _process(&file,&result,0,file.size(),parentId,pOptions);
+
+        file.close();
+    }
+
+    return result;
 }
 
 

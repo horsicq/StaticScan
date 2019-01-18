@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QElapsedTimer>
 #include <QMutex>
+#include <QTimer>
 #include "specabstract.h"
 
 #define SSE_VERSION "1.02"
@@ -32,26 +33,37 @@ class StaticScan : public QObject
 {
     Q_OBJECT
 public:
-    explicit StaticScan(QObject *parent = 0);
+    struct STATS
+    {
+        quint64 nTotal;
+        quint64 nCurrent;
+        qint64 nElapsed;
+        QString sStatus;
+    };
+    explicit StaticScan(QObject *parent=nullptr);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
-
-    static SpecAbstract::SCAN_RESULT process(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
+    STATS getCurrentStats();
 private:
     void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, SpecAbstract::ID parentId, SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel=0);
-
+    SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
+    void findFiles(QString sFileName,QList<QString> *pListFileNames);
 signals:
-    void completed(quint64 nElapsedTime);
-    void setProgressMaximum(int nMax);
-    void setProgressValue(int nValue);
+    void completed(qint64 nElapsedTime);
+    void scanResult(SpecAbstract::SCAN_RESULT scanResult);
 public slots:
     void process();
     void stop();
+
 private:
     QString sFileName;
     SpecAbstract::SCAN_OPTIONS *pOptions;
     SpecAbstract::SCAN_RESULT *pScanResult;
     bool bIsStop;
+    STATS currentStats;
+    QElapsedTimer *pElapsedTimer;
 };
 
 #endif // STATICSCAN_H
