@@ -226,7 +226,3 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 
     return result;
 }
-
-
-
-

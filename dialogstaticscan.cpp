@@ -73,9 +73,6 @@ DialogStaticScan::~DialogStaticScan()
     thread->quit();
     thread->wait();
 
-
-    delete pTimer;
-
     delete ui;
 
     delete thread;
@@ -120,7 +117,7 @@ void DialogStaticScan::timerSlot()
 
     if(stats.nTotal)
     {
-        ui->progressBarTotal->setValue((stats.nCurrent*100)/stats.nTotal);
+        ui->progressBarTotal->setValue((int)((stats.nCurrent*100)/stats.nTotal));
     }
 
     QDateTime dt;
