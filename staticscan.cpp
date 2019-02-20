@@ -185,6 +185,12 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
             pScanResult->listRecords.append(elf_info.basic_info.listDetects);
         }
+        else if(stTypes.contains(QBinary::FT_MACH32)||stTypes.contains(QBinary::FT_MACH64))
+        {
+            SpecAbstract::MACHINFO_STRUCT mach_info=SpecAbstract::getMACHInfo(&sd,parentId,pOptions);
+
+            pScanResult->listRecords.append(mach_info.basic_info.listDetects);
+        }
         else if(stTypes.contains(QBinary::FT_MSDOS))
         {
             SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions);
