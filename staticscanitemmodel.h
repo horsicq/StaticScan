@@ -33,7 +33,7 @@ class StaticScanItemModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects,QObject *parent = 0);
+    explicit StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects,QObject *parent = nullptr);
     ~StaticScanItemModel();
 
     // Header:
