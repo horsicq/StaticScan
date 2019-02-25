@@ -35,7 +35,7 @@ class StaticScan : public QObject
 public:
     struct STATS
     {
-        quint64 nTotal;
+        qint32 nTotal;
         quint64 nCurrent;
         qint64 nElapsed;
         QString sStatus;
@@ -49,7 +49,7 @@ public:
 private:
     void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, SpecAbstract::ID parentId, SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel=0);
     SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
-    void findFiles(QString sFileName,QList<QString> *pListFileNames);
+
 signals:
     void completed(qint64 nElapsedTime);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);

@@ -66,7 +66,15 @@ void StaticScan::process()
         {
             currentStats.sStatus=tr("Searching");
             QList<QString> listFiles;
-            findFiles(sFileName,&listFiles);
+
+            QBinary::FFOPTIONS ffoptions={};
+            ffoptions.bSubdirectories=pOptions->bSubdirectories;
+            ffoptions.pbIsStop=&bIsStop;
+            ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
+            ffoptions.pListFiles=&listFiles;
+
+            QBinary::findFiles(sFileName,&ffoptions);
+
             currentStats.nTotal=listFiles.count();
 
             for(int i=0;(i<currentStats.nTotal)&&(!bIsStop);i++)
@@ -85,36 +93,6 @@ void StaticScan::process()
     pElapsedTimer=nullptr;
 
     bIsStop=false;
-}
-
-void StaticScan::findFiles(QString sFileName,QList<QString> *pListFileNames)
-{
-    currentStats.nTotal=pListFileNames->count();
-
-    if(!bIsStop)
-    {
-        QFileInfo fi(sFileName);
-
-        if(fi.isFile())
-        {
-            pListFileNames->append(fi.absoluteFilePath());
-        }
-        else if(fi.isDir())
-        {
-            QDir dir(sFileName);
-
-            QFileInfoList eil=dir.entryInfoList();
-
-            for(int i=0;(i<eil.count())&&(!bIsStop);i++)
-            {
-                QString sFN=eil.at(i).fileName();
-                if((sFN!=".")&&(sFN!=".."))
-                {
-                    findFiles(eil.at(i).absoluteFilePath(),pListFileNames);
-                }
-            }
-        }
-    }
 }
 
 void StaticScan::stop()
