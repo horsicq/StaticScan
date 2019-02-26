@@ -65,43 +65,59 @@ StaticScanItemModel::~StaticScanItemModel()
 
 QVariant StaticScanItemModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-        return rootItem->data(section);
+    QVariant result;
 
-    return QVariant();
+    if((orientation==Qt::Horizontal)&&(role==Qt::DisplayRole))
+    {
+        result=rootItem->data(section);
+    }
+
+    return result;
 }
 
 QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent))
-        return QModelIndex();
+    QModelIndex result;
 
-    StaticScanItem *parentItem;
+    if(hasIndex(row, column, parent))
+    {
+        StaticScanItem *parentItem;
 
-    if (!parent.isValid())
-        parentItem = rootItem;
-    else
-        parentItem = static_cast<StaticScanItem *>(parent.internalPointer());
+        if(!parent.isValid())
+        {
+            parentItem=rootItem;
+        }
+        else
+        {
+            parentItem=static_cast<StaticScanItem *>(parent.internalPointer());
+        }
 
-    StaticScanItem *childItem=parentItem->child(row);
-    if (childItem)
-        return createIndex(row, column, childItem);
-    else
-        return QModelIndex();
+        StaticScanItem *childItem=parentItem->child(row);
+        if(childItem)
+        {
+            result=createIndex(row, column, childItem);
+        }
+    }
+
+    return result;
 }
 
 QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 {
-    if (!index.isValid())
-        return QModelIndex();
+    QModelIndex result;
 
-    StaticScanItem *childItem = static_cast<StaticScanItem *>(index.internalPointer());
-    StaticScanItem *parentItem = childItem->parentItem();
+    if(index.isValid())
+    {
+        StaticScanItem *childItem = static_cast<StaticScanItem *>(index.internalPointer());
+        StaticScanItem *parentItem = childItem->parentItem();
 
-    if (parentItem == rootItem)
-        return QModelIndex();
+        if(parentItem!=rootItem)
+        {
+            result=createIndex(parentItem->row(), 0, parentItem);
+        }
+    }
 
-    return createIndex(parentItem->row(), 0, parentItem);
+    return result;
 }
 
 int StaticScanItemModel::rowCount(const QModelIndex &parent) const

@@ -75,12 +75,14 @@ SpecAbstract::SCAN_STRUCT StaticScanItem::scanStruct() const
 
 int StaticScanItem::row() const
 {
+    int nResult=0;
+
     if(_parentItem)
     {
-        return _parentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
+        nResult=_parentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
     }
 
-    return 0;
+    return nResult;
 }
 
 StaticScanItem *StaticScanItem::parentItem()

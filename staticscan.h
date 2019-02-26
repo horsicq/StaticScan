@@ -36,7 +36,7 @@ public:
     struct STATS
     {
         qint32 nTotal;
-        quint64 nCurrent;
+        qint32 nCurrent;
         qint64 nElapsed;
         QString sStatus;
     };
