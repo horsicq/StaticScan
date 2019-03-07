@@ -33,23 +33,18 @@ class StaticScanItemModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects,QObject *parent = nullptr);
+    explicit StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects,QObject *parent=nullptr);
     ~StaticScanItemModel();
 
     // Header:
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-
+    QVariant headerData(int section,Qt::Orientation orientation,int role=Qt::DisplayRole) const override;
     // Basic functionality:
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const override;
+    QModelIndex index(int row,int column,const QModelIndex &parent=QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex &parent=QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent=QModelIndex()) const override;
+    QVariant data(const QModelIndex &index,int role=Qt::DisplayRole) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-
     QString toXML();
     QString toFormattedString();
     QString toString(SpecAbstract::SCAN_OPTIONS *pScanOptions);

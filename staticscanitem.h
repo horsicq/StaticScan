@@ -32,7 +32,6 @@ public:
     ~StaticScanItem();
 
     void appendChild(StaticScanItem *child);
-
     StaticScanItem *child(int row);
     int childCount() const;
     int columnCount() const;

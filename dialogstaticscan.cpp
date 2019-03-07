@@ -60,7 +60,6 @@ void DialogStaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTION
     ui->progressBarTotal->setMaximum(100);
 }
 
-
 DialogStaticScan::~DialogStaticScan()
 {
     if(bIsRun)
