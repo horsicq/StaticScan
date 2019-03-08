@@ -22,6 +22,8 @@
 #define FORMSTATICSCAN_H
 
 #include <QWidget>
+#include "formresult.h"
+#include "dialogstaticscan.h"
 
 namespace Ui {
 class FormStaticScan;
@@ -32,11 +34,24 @@ class FormStaticScan : public QWidget
     Q_OBJECT
 
 public:
+    struct OPTIONS
+    {
+        bool bHideOverlayScan;
+        bool bScanAfterOpen;
+        bool bIsImage;
+    };
+
     explicit FormStaticScan(QWidget *parent = nullptr);
     ~FormStaticScan();
 
+    void setData(QIODevice *pDevice,OPTIONS *pOptions);
+private slots:
+    void on_pushButtonScan_clicked();
+    void scan();
 private:
     Ui::FormStaticScan *ui;
+    QIODevice *pDevice;
+    OPTIONS *pOptions;
 };
 
 #endif // FORMSTATICSCAN_H

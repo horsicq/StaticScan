@@ -27,7 +27,7 @@
 #include <QTimer>
 #include "specabstract.h"
 
-#define SSE_VERSION "1.04"
+#define SSE_VERSION "1.05"
 
 class StaticScan : public QObject
 {
@@ -42,13 +42,21 @@ public:
     };
     explicit StaticScan(QObject *parent=nullptr);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
+    void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
     STATS getCurrentStats();
 private:
+    enum SCAN_TYPE
+    {
+        SCAN_TYPE_DEVICE=0,
+        SCAN_TYPE_FILE,
+        SCAN_TYPE_DIRECTORY
+    };
     void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, SpecAbstract::ID parentId, SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel=0);
     SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
+    SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice);
 
 signals:
     void completed(qint64 nElapsedTime);
@@ -58,12 +66,14 @@ public slots:
     void stop();
 
 private:
-    QString sFileName;
-    SpecAbstract::SCAN_OPTIONS *pOptions;
-    SpecAbstract::SCAN_RESULT *pScanResult;
+    QString _sFileName;
+    QIODevice *_pDevice;
+    SpecAbstract::SCAN_OPTIONS *_pOptions;
+    SpecAbstract::SCAN_RESULT *_pScanResult;
     bool bIsStop;
     STATS currentStats;
     QElapsedTimer *pElapsedTimer;
+    SCAN_TYPE scanType;
 };
 
 #endif // STATICSCAN_H

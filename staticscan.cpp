@@ -23,23 +23,38 @@
 StaticScan::StaticScan(QObject *parent) : QObject(parent)
 {
     bIsStop=false;
-    pOptions=nullptr;
-    pScanResult=nullptr;
+    _pOptions=nullptr;
+    _pScanResult=nullptr;
     currentStats=STATS();
     pElapsedTimer=nullptr;
+
+    scanType=SCAN_TYPE_DEVICE;
 }
 
 void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    this->sFileName=sFileName;
-    this->pOptions=pOptions;
-    this->pScanResult=pScanResult;
+    this->_sFileName=sFileName;
+    this->_pOptions=pOptions;
+    this->_pScanResult=pScanResult;
+
+    this->scanType=SCAN_TYPE_FILE;
+}
+
+void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+{
+    this->_pDevice=pDevice;
+    this->_pOptions=pOptions;
+    this->_pScanResult=pScanResult;
+
+    this->scanType=SCAN_TYPE_DEVICE;
 }
 
 void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    this->sFileName=sFileName;
-    this->pOptions=pOptions;
+    this->_sFileName=sFileName;
+    this->_pOptions=pOptions;
+
+    this->scanType=SCAN_TYPE_DIRECTORY;
 }
 
 void StaticScan::process()
@@ -52,28 +67,31 @@ void StaticScan::process()
 
     bIsStop=false;
 
-    if(sFileName!="")
+    if(this->scanType==SCAN_TYPE_FILE)
     {
-        if(pScanResult)
+        if((_pScanResult)&&(_sFileName!=""))
         {
-            currentStats.sStatus=tr("Scan");
+            currentStats.sStatus=tr("File scan");
 
-            *pScanResult=scanFile(sFileName);
+            *_pScanResult=scanFile(_sFileName);
 
-            emit scanResult(*pScanResult);
+            emit scanResult(*_pScanResult);
         }
-        else
+    }
+    else if(this->scanType==SCAN_TYPE_DIRECTORY)
+    {
+        if(_sFileName!="")
         {
-            currentStats.sStatus=tr("Searching");
+            currentStats.sStatus=tr("Directory scan");
             QList<QString> listFiles;
 
             QBinary::FFOPTIONS ffoptions={};
-            ffoptions.bSubdirectories=pOptions->bSubdirectories;
+            ffoptions.bSubdirectories=_pOptions->bSubdirectories;
             ffoptions.pbIsStop=&bIsStop;
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
             ffoptions.pListFiles=&listFiles;
 
-            QBinary::findFiles(sFileName,&ffoptions);
+            QBinary::findFiles(_sFileName,&ffoptions);
 
             currentStats.nTotal=listFiles.count();
 
@@ -85,6 +103,17 @@ void StaticScan::process()
 
                 emit scanResult(_scanResult);
             }
+        }
+    }
+    else if(this->scanType==SCAN_TYPE_DEVICE)
+    {
+        if(_pDevice)
+        {
+            currentStats.sStatus=tr("Device scan");
+
+            *_pScanResult=scanDevice(_pDevice);
+
+            emit scanResult(*_pScanResult);
         }
     }
 
@@ -132,7 +161,7 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
     if(QString(pDevice->metaObject()->className())=="QFile")
     {
-        pScanResult->sFileName=((QFile *)pDevice)->fileName();
+        pScanResult->sFileName=((QFile *)pDevice)->fileName(); // TODO
     }
 
     SubDevice sd(pDevice,nOffset,nSize);
@@ -200,13 +229,22 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 
     if(file.open(QIODevice::ReadOnly))
     {
-        SpecAbstract::ID parentId;
-        parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
-        parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
-        _process(&file,&result,0,file.size(),parentId,pOptions);
+        result=scanDevice(&file);
 
         file.close();
     }
+
+    return result;
+}
+
+SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
+{
+    SpecAbstract::SCAN_RESULT result={0};
+
+    SpecAbstract::ID parentId;
+    parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
+    parentId.filepart=SpecAbstract::RECORD_FILEPART_HEADER;
+    _process(pDevice,&result,0,pDevice->size(),parentId,_pOptions);
 
     return result;
 }

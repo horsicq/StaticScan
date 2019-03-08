@@ -26,9 +26,50 @@ FormStaticScan::FormStaticScan(QWidget *parent) :
     ui(new Ui::FormStaticScan)
 {
     ui->setupUi(this);
+
+    ui->checkBoxDeepScan->setChecked(true);
+    ui->checkBoxScanOverlay->setChecked(true);
 }
 
 FormStaticScan::~FormStaticScan()
 {
     delete ui;
+}
+
+void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptions)
+{
+    this->pDevice=pDevice;
+    this->pOptions=pOptions;
+
+    if(pOptions->bHideOverlayScan)
+    {
+        ui->checkBoxScanOverlay->setChecked(false);
+        ui->checkBoxScanOverlay->hide();
+    }
+
+    if(pOptions->bScanAfterOpen)
+    {
+        scan();
+    }
+}
+
+void FormStaticScan::on_pushButtonScan_clicked()
+{
+    scan();
+}
+
+void FormStaticScan::scan()
+{
+    SpecAbstract::SCAN_RESULT scanResult;
+
+    SpecAbstract::SCAN_OPTIONS options= {0};
+    options.bScanOverlay=ui->checkBoxScanOverlay->isChecked();
+    options.bDeepScan=ui->checkBoxDeepScan->isChecked();
+    options.bIsImage=pOptions->bIsImage;
+
+    DialogStaticScan ds(this);
+    ds.setData(pDevice,&options,&scanResult);
+    ds.exec();
+
+    ui->widgetResult->setData(&scanResult,"");
 }
