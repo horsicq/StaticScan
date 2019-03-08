@@ -2,16 +2,13 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 HEADERS += \
-    $$PWD/dialogstaticscan.h \
-    $$PWD/formresult.h
+    $$PWD/dialogstaticscan.h 
 
 SOURCES += \
-    $$PWD/dialogstaticscan.cpp \
-    $$PWD/formresult.cpp
+    $$PWD/dialogstaticscan.cpp 
 
 FORMS += \
-    $$PWD/dialogstaticscan.ui \
-    $$PWD/formresult.ui
+    $$PWD/dialogstaticscan.ui 
 
 !contains(XCONFIG, staticscan) {
     XCONFIG += staticscan
