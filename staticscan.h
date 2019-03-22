@@ -47,6 +47,7 @@ public:
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
     STATS getCurrentStats();
+
 private:
     enum SCAN_TYPE
     {
@@ -61,6 +62,7 @@ private:
 signals:
     void completed(qint64 nElapsedTime);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
+
 public slots:
     void process();
     void stop();

@@ -48,6 +48,7 @@ public:
     QString toXML();
     QString toFormattedString();
     QString toString(SpecAbstract::SCAN_OPTIONS *pScanOptions);
+
 private:
     void _toXML(QXmlStreamWriter *pXml,StaticScanItem *item);
     void _toString(QString *pString,StaticScanItem *item,int nLevel);
