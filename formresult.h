@@ -17,6 +17,7 @@ public:
     explicit FormResult(QWidget *parent = nullptr);
     ~FormResult();
     void setData(SpecAbstract::SCAN_RESULT *pScanResult, QString sSaveFileName);
+
 private slots:
     void on_pushButtonClear_clicked();
     void on_pushButtonSave_clicked();
