@@ -27,14 +27,14 @@ DialogStaticScan::DialogStaticScan(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    scan=new StaticScan;
-    thread=new QThread;
+    pScan=new StaticScan;
+    pThread=new QThread;
 
-    scan->moveToThread(thread);
+    pScan->moveToThread(pThread);
 
-    connect(thread, SIGNAL(started()), scan, SLOT(process()));
-    connect(scan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
-    connect(scan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
+    connect(pThread, SIGNAL(started()), pScan, SLOT(process()));
+    connect(pScan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
 
     bIsRun=false;
 
@@ -45,8 +45,8 @@ DialogStaticScan::DialogStaticScan(QWidget *parent) :
 void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
     bIsRun=true;
-    scan->setData(sFileName,pOptions,pScanResult);
-    thread->start();
+    pScan->setData(sFileName,pOptions,pScanResult);
+    pThread->start();
     pTimer->start(1000);
     ui->progressBarTotal->setMaximum(0);
 }
@@ -54,8 +54,8 @@ void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pO
 void DialogStaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
     bIsRun=true;
-    scan->setData(pDevice,pOptions,pScanResult);
-    thread->start();
+    pScan->setData(pDevice,pOptions,pScanResult);
+    pThread->start();
     pTimer->start(1000);
     ui->progressBarTotal->setMaximum(0);
 }
@@ -63,8 +63,8 @@ void DialogStaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *p
 void DialogStaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     bIsRun=true;
-    scan->setData(sDirectoryName,pOptions);
-    thread->start();
+    pScan->setData(sDirectoryName,pOptions);
+    pThread->start();
     pTimer->start(1000);
     ui->progressBarTotal->setMaximum(100);
 }
@@ -73,25 +73,25 @@ DialogStaticScan::~DialogStaticScan()
 {
     if(bIsRun)
     {
-        scan->stop();
+        pScan->stop();
     }
 
     pTimer->stop();
 
-    thread->quit();
-    thread->wait();
+    pThread->quit();
+    pThread->wait();
 
     delete ui;
 
-    delete thread;
-    delete scan;
+    delete pThread;
+    delete pScan;
 }
 
 void DialogStaticScan::on_pushButtonCancel_clicked()
 {
     if(bIsRun)
     {
-        scan->stop();
+        pScan->stop();
         pTimer->stop();
         bIsRun=false;
     }
@@ -117,7 +117,7 @@ void DialogStaticScan::onSetProgressValue(int nValue)
 
 void DialogStaticScan::timerSlot()
 {
-    StaticScan::STATS stats=scan->getCurrentStats();
+    StaticScan::STATS stats=pScan->getCurrentStats();
 
     ui->labelTotal->setText(QString::number(stats.nTotal));
     ui->labelCurrent->setText(QString::number(stats.nCurrent));

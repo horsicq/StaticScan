@@ -55,8 +55,8 @@ signals:
 
 private:
     Ui::DialogStaticScan *ui;
-    StaticScan *scan;
-    QThread *thread;
+    StaticScan *pScan;
+    QThread *pThread;
     bool bIsRun;
     QTimer *pTimer;
 };
