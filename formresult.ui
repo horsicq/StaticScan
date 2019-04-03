@@ -31,6 +31,9 @@
      <attribute name="headerVisible">
       <bool>false</bool>
      </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
     </widget>
    </item>
    <item>

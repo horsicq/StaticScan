@@ -28,14 +28,14 @@
 class StaticScanItem
 {
 public:
-    StaticScanItem(const QString &_sString, StaticScanItem *parentItem=0);
+    StaticScanItem(const QString &_sString, StaticScanItem *pParentItem=nullptr,int nColumnCount=1);
     ~StaticScanItem();
 
-    void appendChild(StaticScanItem *child);
-    StaticScanItem *child(int row);
+    void appendChild(StaticScanItem *pChild);
+    StaticScanItem *child(int nRow);
     int childCount() const;
     int columnCount() const;
-    QVariant data(int column) const;
+    QVariant data(int nColumn) const;
     void setScanStruct(const SpecAbstract::SCAN_STRUCT &_ss);
     SpecAbstract::SCAN_STRUCT scanStruct() const;
     int row() const;
@@ -45,6 +45,7 @@ private:
     QList<StaticScanItem *> listChildItems;
     QString _sString;
     StaticScanItem *_parentItem;
+    int nColumnCount;
 
     SpecAbstract::SCAN_STRUCT _ss;
 };

@@ -20,10 +20,11 @@
 //
 #include "staticscanitem.h"
 
-StaticScanItem::StaticScanItem(const QString &_sString, StaticScanItem *parentItem)
+StaticScanItem::StaticScanItem(const QString &_sString, StaticScanItem *pParentItem, int nColumnCount)
 {
-    this->_parentItem=parentItem;
+    this->_parentItem=pParentItem;
     this->_sString=_sString;
+    this->nColumnCount=nColumnCount;
 }
 
 StaticScanItem::~StaticScanItem()
@@ -31,14 +32,14 @@ StaticScanItem::~StaticScanItem()
     qDeleteAll(listChildItems);
 }
 
-void StaticScanItem::appendChild(StaticScanItem *child)
+void StaticScanItem::appendChild(StaticScanItem *pChild)
 {
-    listChildItems.append(child);
+    listChildItems.append(pChild);
 }
 
-StaticScanItem *StaticScanItem::child(int row)
+StaticScanItem *StaticScanItem::child(int nRow)
 {
-    return listChildItems.value(row);
+    return listChildItems.value(nRow);
 }
 
 int StaticScanItem::childCount() const
@@ -48,14 +49,14 @@ int StaticScanItem::childCount() const
 
 int StaticScanItem::columnCount() const
 {
-    return 1;
+    return nColumnCount;
 }
 
-QVariant StaticScanItem::data(int column) const
+QVariant StaticScanItem::data(int nColumn) const
 {
     QVariant result;
 
-    if(column==0)
+    if(nColumn==0)
     {
         result=_sString;
     }

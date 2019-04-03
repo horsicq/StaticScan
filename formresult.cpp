@@ -13,16 +13,16 @@ FormResult::~FormResult()
     delete ui;
 }
 
-void FormResult::setData(SpecAbstract::SCAN_RESULT *pScanResult, QString sSaveFileName)
+void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName)
 {
-    scanResult=*pScanResult;
+    this->scanResult=scanResult;
     this->sSaveFileName=sSaveFileName;
 
-    StaticScanItemModel *model=new StaticScanItemModel(&scanResult.listRecords);
+    StaticScanItemModel *model=new StaticScanItemModel(&(this->scanResult.listRecords),this,1);
     ui->treeViewResult->setModel(model);
     ui->treeViewResult->expandAll();
 
-    ui->labelTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
+    ui->labelTime->setText(QString("%1 %2").arg(this->scanResult.nScanTime).arg(tr("msec")));
 }
 
 void FormResult::on_pushButtonClear_clicked()
