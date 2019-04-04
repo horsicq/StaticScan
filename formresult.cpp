@@ -34,26 +34,5 @@ void FormResult::on_pushButtonClear_clicked()
 void FormResult::on_pushButtonSave_clicked()
 {
     QAbstractItemModel *pModel=ui->treeViewResult->model();
-
-    if(pModel)
-    {
-        QString sFilter;
-        sFilter+=QString("%1 (*.txt)").arg(tr("Text documents"));
-        QString sFileName=QFileDialog::getSaveFileName(this,tr("Save result"),sSaveFileName,sFilter);
-
-        if(!sFileName.isEmpty())
-        {
-            QFile file;
-            file.setFileName(sFileName);
-
-            if(file.open(QIODevice::ReadWrite))
-            {
-                QString sText=((StaticScanItemModel *)pModel)->toFormattedString();
-
-                file.write(sText.toLatin1().data());
-
-                file.close();
-            }
-        }
-    }
+    DialogStaticScan::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
 }

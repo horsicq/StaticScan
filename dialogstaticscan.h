@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QThread>
 #include <QDateTime>
+#include <QFileDialog>
 #include <QStandardItemModel>
 #include "staticscanitemmodel.h"
 
@@ -43,6 +44,7 @@ public:
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
     ~DialogStaticScan();
 
+    static bool saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName);
 private slots:
     void on_pushButtonCancel_clicked();
     void onCompleted(qint64 nElapsed);

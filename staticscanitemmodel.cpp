@@ -23,7 +23,7 @@
 StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects, QObject *parent, int nColumnCount)
     : QAbstractItemModel(parent)
 {
-    rootItem=new StaticScanItem(tr("Result"));
+    rootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
 
     QMap<QString,StaticScanItem *> mapParents;
 
@@ -136,10 +136,18 @@ int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 
 int StaticScanItemModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return static_cast<StaticScanItem *>(parent.internalPointer())->columnCount();
+    int nResult=0;
+
+    if(parent.isValid())
+    {
+        nResult=static_cast<StaticScanItem *>(parent.internalPointer())->columnCount();
+    }
     else
-        return rootItem->columnCount();
+    {
+        nResult=rootItem->columnCount();
+    }
+
+    return nResult;
 }
 
 QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const

@@ -87,6 +87,37 @@ DialogStaticScan::~DialogStaticScan()
     delete pScan;
 }
 
+bool DialogStaticScan::saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName)
+{
+    bool bResult=false;
+
+    if(pModel)
+    {
+        QString sFilter;
+        sFilter+=QString("%1 (*.txt)").arg(tr("Text documents"));
+        QString sFileName=QFileDialog::getSaveFileName(pParent,tr("Save result"),sResultFileName,sFilter);
+
+        if(!sFileName.isEmpty())
+        {
+            QFile file;
+            file.setFileName(sFileName);
+
+            if(file.open(QIODevice::ReadWrite))
+            {
+                QString sText=pModel->toFormattedString();
+
+                file.write(sText.toLatin1().data());
+
+                file.close();
+
+                bResult=true;
+            }
+        }
+    }
+
+    return bResult;
+}
+
 void DialogStaticScan::on_pushButtonCancel_clicked()
 {
     if(bIsRun)

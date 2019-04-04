@@ -2,8 +2,8 @@
 #define FORMRESULT_H
 
 #include <QWidget>
-#include <QFileDialog>
-#include "staticscanitemmodel.h"
+
+#include "dialogstaticscan.h"
 
 namespace Ui {
 class FormResult;
