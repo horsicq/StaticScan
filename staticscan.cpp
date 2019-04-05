@@ -172,7 +172,7 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
         if(stTypes.contains(QBinary::FT_PE32)||stTypes.contains(QBinary::FT_PE64))
         {
-            SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId,pOptions);
+            SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(pe_info.basic_info.listDetects);
 
@@ -188,25 +188,25 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
         }
         else if(stTypes.contains(QBinary::FT_ELF32)||stTypes.contains(QBinary::FT_ELF64))
         {
-            SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId,pOptions);
+            SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(elf_info.basic_info.listDetects);
         }
         else if(stTypes.contains(QBinary::FT_MACH32)||stTypes.contains(QBinary::FT_MACH64))
         {
-            SpecAbstract::MACHINFO_STRUCT mach_info=SpecAbstract::getMACHInfo(&sd,parentId,pOptions);
+            SpecAbstract::MACHINFO_STRUCT mach_info=SpecAbstract::getMACHInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(mach_info.basic_info.listDetects);
         }
         else if(stTypes.contains(QBinary::FT_MSDOS))
         {
-            SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions);
+            SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(msdos_info.basic_info.listDetects);
         }
         else
         {
-            SpecAbstract::BINARYINFO_STRUCT binary_info=SpecAbstract::getBinaryInfo(&sd,parentId,pOptions);
+            SpecAbstract::BINARYINFO_STRUCT binary_info=SpecAbstract::getBinaryInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(binary_info.basic_info.listDetects);
         }

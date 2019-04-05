@@ -164,7 +164,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 #ifdef QT_GUI_LIB
         else if(role==Qt::ForegroundRole)
         {
-            SpecAbstract::RECORD_TYPES rt=item->scanStruct().type;
+            SpecAbstract::RECORD_TYPE rt=item->scanStruct().type;
 
             if(         (rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
                         (rt==SpecAbstract::RECORD_TYPE_SFX))

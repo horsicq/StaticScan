@@ -71,5 +71,5 @@ void FormStaticScan::scan()
     ds.setData(pDevice,&options,&scanResult);
     ds.exec();
 
-    ui->widgetResult->setData(&scanResult,"");
+    ui->widgetResult->setData(scanResult,"");
 }

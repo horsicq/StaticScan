@@ -33,12 +33,11 @@ class StaticScanItemModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+
     explicit StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects,QObject *parent=nullptr,int nColumnCount=1);
     ~StaticScanItemModel() override;
 
-    // Header:
     QVariant headerData(int section,Qt::Orientation orientation,int role=Qt::DisplayRole) const override;
-    // Basic functionality:
     QModelIndex index(int row,int column,const QModelIndex &parent=QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent=QModelIndex()) const override;
