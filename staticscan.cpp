@@ -85,13 +85,13 @@ void StaticScan::process()
             currentStats.sStatus=tr("Directory scan");
             QList<QString> listFiles;
 
-            QBinary::FFOPTIONS ffoptions={};
+            XBinary::FFOPTIONS ffoptions={};
             ffoptions.bSubdirectories=_pOptions->bSubdirectories;
             ffoptions.pbIsStop=&bIsStop;
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
             ffoptions.pListFiles=&listFiles;
 
-            QBinary::findFiles(_sFileName,&ffoptions);
+            XBinary::findFiles(_sFileName,&ffoptions);
 
             currentStats.nTotal=listFiles.count();
 
@@ -168,9 +168,9 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
     if(sd.open(QIODevice::ReadOnly))
     {
-        QSet<QBinary::FT> stTypes=QBinary::getFileTypes(&sd);
+        QSet<XBinary::FT> stTypes=XBinary::getFileTypes(&sd);
 
-        if(stTypes.contains(QBinary::FT_PE32)||stTypes.contains(QBinary::FT_PE64))
+        if(stTypes.contains(XBinary::FT_PE32)||stTypes.contains(XBinary::FT_PE64))
         {
             SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId,pOptions,nOffset);
 
@@ -186,19 +186,19 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
                 }
             }
         }
-        else if(stTypes.contains(QBinary::FT_ELF32)||stTypes.contains(QBinary::FT_ELF64))
+        else if(stTypes.contains(XBinary::FT_ELF32)||stTypes.contains(XBinary::FT_ELF64))
         {
             SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(elf_info.basic_info.listDetects);
         }
-        else if(stTypes.contains(QBinary::FT_MACH32)||stTypes.contains(QBinary::FT_MACH64))
+        else if(stTypes.contains(XBinary::FT_MACH32)||stTypes.contains(XBinary::FT_MACH64))
         {
             SpecAbstract::MACHINFO_STRUCT mach_info=SpecAbstract::getMACHInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(mach_info.basic_info.listDetects);
         }
-        else if(stTypes.contains(QBinary::FT_MSDOS))
+        else if(stTypes.contains(XBinary::FT_MSDOS))
         {
             SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions,nOffset);
 
