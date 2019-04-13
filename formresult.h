@@ -14,7 +14,7 @@ class FormResult : public QWidget
     Q_OBJECT
 
 public:
-    explicit FormResult(QWidget *parent = nullptr);
+    explicit FormResult(QWidget *parent=nullptr);
     ~FormResult();
     void setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName);
 
