@@ -47,11 +47,12 @@ public:
     QString toXML();
     QString toFormattedString();
     QString toString(SpecAbstract::SCAN_OPTIONS *pScanOptions);
+    StaticScanItem *rootItem();
 
 private:
     void _toXML(QXmlStreamWriter *pXml,StaticScanItem *item);
     void _toString(QString *pString,StaticScanItem *item,int nLevel);
-    StaticScanItem *rootItem;
+    StaticScanItem *_rootItem;
 };
 
 #endif // STATICSCANITEMMODEL_H

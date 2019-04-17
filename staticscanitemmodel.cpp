@@ -23,7 +23,7 @@
 StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects, QObject *parent, int nColumnCount)
     : QAbstractItemModel(parent)
 {
-    rootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
+    _rootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
 
     QMap<QString,StaticScanItem *> mapParents;
 
@@ -34,7 +34,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
             StaticScanItem *_itemParent;
             if(pListDetects->at(i).parentId.uuid=="")
             {
-                _itemParent=rootItem;
+                _itemParent=_rootItem;
             }
             else
             {
@@ -44,6 +44,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
             QString sParent=SpecAbstract::createTypeString(&pListDetects->at(i));
 
             StaticScanItem *itemParent=new StaticScanItem(sParent,_itemParent,nColumnCount);
+            itemParent->setScanStruct(SpecAbstract::createHeaderScanStruct(&pListDetects->at(i)));
             _itemParent->appendChild(itemParent);
 
             mapParents.insert(pListDetects->at(i).id.uuid.toString(),itemParent);
@@ -60,7 +61,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
 StaticScanItemModel::~StaticScanItemModel()
 {
-    delete rootItem;
+    delete _rootItem;
 }
 
 QVariant StaticScanItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -69,7 +70,7 @@ QVariant StaticScanItemModel::headerData(int section, Qt::Orientation orientatio
 
     if((orientation==Qt::Horizontal)&&(role==Qt::DisplayRole))
     {
-        result=rootItem->data(section);
+        result=_rootItem->data(section);
     }
 
     return result;
@@ -85,7 +86,7 @@ QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &p
 
         if(!parent.isValid())
         {
-            parentItem=rootItem;
+            parentItem=_rootItem;
         }
         else
         {
@@ -111,7 +112,7 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
         StaticScanItem *childItem = static_cast<StaticScanItem *>(index.internalPointer());
         StaticScanItem *parentItem = childItem->parentItem();
 
-        if(parentItem!=rootItem)
+        if(parentItem!=_rootItem)
         {
             result=createIndex(parentItem->row(), 0, parentItem);
         }
@@ -127,7 +128,7 @@ int StaticScanItemModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     if (!parent.isValid())
-        parentItem = rootItem;
+        parentItem = _rootItem;
     else
         parentItem = static_cast<StaticScanItem *>(parent.internalPointer());
 
@@ -144,7 +145,7 @@ int StaticScanItemModel::columnCount(const QModelIndex &parent) const
     }
     else
     {
-        nResult=rootItem->columnCount();
+        nResult=_rootItem->columnCount();
     }
 
     return nResult;
@@ -205,7 +206,7 @@ QString StaticScanItemModel::toXML()
 
     xml.setAutoFormatting(true);
 
-    _toXML(&xml,rootItem);
+    _toXML(&xml,_rootItem);
 
     return sResult;
 }
@@ -214,7 +215,7 @@ QString StaticScanItemModel::toFormattedString()
 {
     QString sResult;
 
-    _toString(&sResult,rootItem,0);
+    _toString(&sResult,_rootItem,0);
 
     return sResult;
 }
@@ -232,6 +233,11 @@ QString StaticScanItemModel::toString(SpecAbstract::SCAN_OPTIONS *pScanOptions)
     }
 
     return sResult;
+}
+
+StaticScanItem *StaticScanItemModel::rootItem()
+{
+    return this->_rootItem;
 }
 
 void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *item)
