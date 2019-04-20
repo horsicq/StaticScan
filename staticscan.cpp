@@ -182,7 +182,7 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
                 {
                     SpecAbstract::ID _parentId=pe_info.basic_info.id;
                     _parentId.filepart=SpecAbstract::RECORD_FILEPART_OVERLAY;
-                    _process(pDevice,pScanResult,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions,nLevel++);
+                    _process(pDevice,pScanResult,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions,nLevel+1);
                 }
             }
         }
