@@ -124,13 +124,17 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 {
     StaticScanItem *parentItem;
-    if (parent.column() > 0)
+    if(parent.column()>0)
         return 0;
 
-    if (!parent.isValid())
-        parentItem = _rootItem;
+    if(!parent.isValid())
+    {
+        parentItem=_rootItem;
+    }
     else
-        parentItem = static_cast<StaticScanItem *>(parent.internalPointer());
+    {
+        parentItem=static_cast<StaticScanItem *>(parent.internalPointer());
+    }
 
     return parentItem->childCount();
 }
