@@ -45,6 +45,7 @@ public:
     ~DialogStaticScan();
 
     static bool saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName);
+
 private slots:
     void on_pushButtonCancel_clicked();
     void onCompleted(qint64 nElapsed);
