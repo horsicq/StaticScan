@@ -25,7 +25,8 @@
 #include "formresult.h"
 #include "dialogstaticscan.h"
 
-namespace Ui {
+namespace Ui
+{
 class FormStaticScan;
 }
 

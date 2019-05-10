@@ -5,7 +5,8 @@
 
 #include "dialogstaticscan.h"
 
-namespace Ui {
+namespace Ui
+{
 class FormResult;
 }
 

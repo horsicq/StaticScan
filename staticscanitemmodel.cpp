@@ -32,6 +32,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
         if(!mapParents.contains(pListDetects->at(i).id.uuid.toString()))
         {
             StaticScanItem *_itemParent;
+
             if(pListDetects->at(i).parentId.uuid=="")
             {
                 _itemParent=_rootItem;
@@ -94,6 +95,7 @@ QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &p
         }
 
         StaticScanItem *childItem=parentItem->child(row);
+
         if(childItem)
         {
             result=createIndex(row, column, childItem);
@@ -124,8 +126,11 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 {
     StaticScanItem *parentItem;
+
     if(parent.column()>0)
+    {
         return 0;
+    }
 
     if(!parent.isValid())
     {
@@ -162,25 +167,27 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
     if(index.isValid())
     {
         StaticScanItem *item = static_cast<StaticScanItem *>(index.internalPointer());
+
         if(role==Qt::DisplayRole)
         {
             result=item->data(index.column());
         }
+
 #ifdef QT_GUI_LIB
         else if(role==Qt::ForegroundRole)
         {
             SpecAbstract::RECORD_TYPE rt=item->scanStruct().type;
 
-            if(         (rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
-                        (rt==SpecAbstract::RECORD_TYPE_SFX)||
-                        (rt==SpecAbstract::RECORD_TYPE_ARCHIVE))
+            if((rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
+                    (rt==SpecAbstract::RECORD_TYPE_SFX)||
+                    (rt==SpecAbstract::RECORD_TYPE_ARCHIVE))
             {
                 result=QVariant(QColor(Qt::blue));
             }
-            else if(    (rt==SpecAbstract::RECORD_TYPE_PROTECTOR)||
-                        (rt==SpecAbstract::RECORD_TYPE_NETOBFUSCATOR)||
-                        (rt==SpecAbstract::RECORD_TYPE_DONGLEPROTECTION)||
-                        (rt==SpecAbstract::RECORD_TYPE_PACKER))
+            else if((rt==SpecAbstract::RECORD_TYPE_PROTECTOR)||
+                    (rt==SpecAbstract::RECORD_TYPE_NETOBFUSCATOR)||
+                    (rt==SpecAbstract::RECORD_TYPE_DONGLEPROTECTION)||
+                    (rt==SpecAbstract::RECORD_TYPE_PACKER))
             {
                 result=QVariant(QColor(Qt::red));
             }
@@ -189,6 +196,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
                 result=QVariant(QColor(Qt::black));
             }
         }
+
 #endif
     }
 
@@ -197,8 +205,10 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 
 Qt::ItemFlags StaticScanItemModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if(!index.isValid())
+    {
         return nullptr;
+    }
 
     return QAbstractItemModel::flags(index);
 }
@@ -227,6 +237,7 @@ QString StaticScanItemModel::toFormattedString()
 QString StaticScanItemModel::toString(SpecAbstract::SCAN_OPTIONS *pScanOptions)
 {
     QString sResult;
+
     if(pScanOptions->bResultAsXML)
     {
         sResult=toXML();
@@ -250,7 +261,7 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *item)
     {
         pXml->writeStartElement(item->data(0).toString());
 
-        for(int i=0;i<item->childCount();i++)
+        for(int i=0; i<item->childCount(); i++)
         {
             _toXML(pXml,item->child(i));
         }
@@ -268,7 +279,7 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *item)
         pXml->writeAttribute("info",ss.sInfo);
         pXml->writeCharacters(item->data(0).toString());
         pXml->writeEndElement();
-    } 
+    }
 }
 
 void StaticScanItemModel::_toString(QString *pString, StaticScanItem *item, int nLevel)
@@ -283,7 +294,7 @@ void StaticScanItemModel::_toString(QString *pString, StaticScanItem *item, int 
 
     if(item->childCount())
     {
-        for(int i=0;i<item->childCount();i++)
+        for(int i=0; i<item->childCount(); i++)
         {
             _toString(pString,item->child(i),nLevel+1);
         }

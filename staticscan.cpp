@@ -85,7 +85,7 @@ void StaticScan::process()
             currentStats.sStatus=tr("Directory scan");
             QList<QString> listFiles;
 
-            XBinary::FFOPTIONS ffoptions={};
+            XBinary::FFOPTIONS ffoptions= {};
             ffoptions.bSubdirectories=_pOptions->bSubdirectories;
             ffoptions.pbIsStop=&bIsStop;
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
@@ -95,7 +95,7 @@ void StaticScan::process()
 
             currentStats.nTotal=listFiles.count();
 
-            for(int i=0;(i<currentStats.nTotal)&&(!bIsStop);i++)
+            for(int i=0; (i<currentStats.nTotal)&&(!bIsStop); i++)
             {
                 currentStats.nCurrent=i+1;
                 currentStats.sStatus=listFiles.at(i);
@@ -222,7 +222,7 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 {
-    SpecAbstract::SCAN_RESULT result={0};
+    SpecAbstract::SCAN_RESULT result= {0};
 
     QFile file;
     file.setFileName(sFileName);
@@ -239,7 +239,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 
 SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
 {
-    SpecAbstract::SCAN_RESULT result={0};
+    SpecAbstract::SCAN_RESULT result= {0};
 
     SpecAbstract::ID parentId;
     parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
