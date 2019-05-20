@@ -172,7 +172,6 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
         {
             result=item->data(index.column());
         }
-
 #ifdef QT_GUI_LIB
         else if(role==Qt::ForegroundRole)
         {
@@ -196,7 +195,6 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
                 result=QVariant(QColor(Qt::black));
             }
         }
-
 #endif
     }
 
