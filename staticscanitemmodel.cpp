@@ -203,12 +203,14 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 
 Qt::ItemFlags StaticScanItemModel::flags(const QModelIndex &index) const
 {
-    if(!index.isValid())
+    Qt::ItemFlags result=nullptr;
+
+    if(index.isValid())
     {
-        return nullptr;
+        result=QAbstractItemModel::flags(index);
     }
 
-    return QAbstractItemModel::flags(index);
+    return result;
 }
 
 QString StaticScanItemModel::toXML()
