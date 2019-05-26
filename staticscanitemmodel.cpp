@@ -125,6 +125,7 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 
 int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 {
+    // TODO Check
     StaticScanItem *parentItem;
 
     if(parent.column()>0)
