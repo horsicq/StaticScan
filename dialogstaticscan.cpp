@@ -47,7 +47,7 @@ void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pO
     bIsRun=true;
     pScan->setData(sFileName,pOptions,pScanResult);
     pThread->start();
-    pTimer->start(1000);
+    pTimer->start(1000); // 1 sec
     ui->progressBarTotal->setMaximum(0);
 }
 
@@ -56,7 +56,7 @@ void DialogStaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *p
     bIsRun=true;
     pScan->setData(pDevice,pOptions,pScanResult);
     pThread->start();
-    pTimer->start(1000);
+    pTimer->start(1000); // 1 sec
     ui->progressBarTotal->setMaximum(0);
 }
 
