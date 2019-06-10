@@ -39,10 +39,11 @@ class DialogStaticScan : public QDialog
 
 public:
     explicit DialogStaticScan(QWidget *parent=nullptr);
+    ~DialogStaticScan();
+
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
-    ~DialogStaticScan();
 
     static bool saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName);
 

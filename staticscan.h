@@ -41,6 +41,7 @@ public:
         QString sStatus;
     };
     explicit StaticScan(QObject *parent=nullptr);
+
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
