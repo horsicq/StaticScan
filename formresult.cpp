@@ -34,5 +34,9 @@ void FormResult::on_pushButtonClear_clicked()
 void FormResult::on_pushButtonSave_clicked()
 {
     QAbstractItemModel *pModel=ui->treeViewResult->model();
-    DialogStaticScan::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+
+    if(pModel)
+    {
+        DialogStaticScan::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+    }
 }
