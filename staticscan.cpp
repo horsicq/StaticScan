@@ -203,6 +203,16 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
             SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions,nOffset);
 
             pScanResult->listRecords.append(msdos_info.basic_info.listDetects);
+
+            if(pOptions->bScanOverlay)
+            {
+                if(msdos_info.nOverlaySize)
+                {
+                    SpecAbstract::ID _parentId=msdos_info.basic_info.id;
+                    _parentId.filepart=SpecAbstract::RECORD_FILEPART_OVERLAY;
+                    _process(pDevice,pScanResult,msdos_info.nOverlayOffset,msdos_info.nOverlaySize,_parentId,pOptions,nLevel+1);
+                }
+            }
         }
         else
         {
