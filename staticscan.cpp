@@ -156,78 +156,7 @@ StaticScan::STATS StaticScan::getCurrentStats()
 
 void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel)
 {
-    QElapsedTimer scanTimer;
-    scanTimer.start();
-
-    if(QString(pDevice->metaObject()->className())=="QFile")
-    {
-        pScanResult->sFileName=((QFile *)pDevice)->fileName(); // TODO
-    }
-
-    SubDevice sd(pDevice,nOffset,nSize);
-
-    if(sd.open(QIODevice::ReadOnly))
-    {
-        QSet<XBinary::FT> stTypes=XBinary::getFileTypes(&sd);
-
-        if(stTypes.contains(XBinary::FT_PE32)||stTypes.contains(XBinary::FT_PE64))
-        {
-            SpecAbstract::PEINFO_STRUCT pe_info=SpecAbstract::getPEInfo(&sd,parentId,pOptions,nOffset);
-
-            pScanResult->listRecords.append(pe_info.basic_info.listDetects);
-
-            if(pOptions->bScanOverlay)
-            {
-                if(pe_info.nOverlaySize)
-                {
-                    SpecAbstract::ID _parentId=pe_info.basic_info.id;
-                    _parentId.filepart=SpecAbstract::RECORD_FILEPART_OVERLAY;
-                    _process(pDevice,pScanResult,pe_info.nOverlayOffset,pe_info.nOverlaySize,_parentId,pOptions,nLevel+1);
-                }
-            }
-        }
-        else if(stTypes.contains(XBinary::FT_ELF32)||stTypes.contains(XBinary::FT_ELF64))
-        {
-            SpecAbstract::ELFINFO_STRUCT elf_info=SpecAbstract::getELFInfo(&sd,parentId,pOptions,nOffset);
-
-            pScanResult->listRecords.append(elf_info.basic_info.listDetects);
-        }
-        else if(stTypes.contains(XBinary::FT_MACH32)||stTypes.contains(XBinary::FT_MACH64))
-        {
-            SpecAbstract::MACHINFO_STRUCT mach_info=SpecAbstract::getMACHInfo(&sd,parentId,pOptions,nOffset);
-
-            pScanResult->listRecords.append(mach_info.basic_info.listDetects);
-        }
-        else if(stTypes.contains(XBinary::FT_MSDOS))
-        {
-            SpecAbstract::MSDOSINFO_STRUCT msdos_info=SpecAbstract::getMSDOSInfo(&sd,parentId,pOptions,nOffset);
-
-            pScanResult->listRecords.append(msdos_info.basic_info.listDetects);
-
-            if(pOptions->bScanOverlay)
-            {
-                if(msdos_info.nOverlaySize)
-                {
-                    SpecAbstract::ID _parentId=msdos_info.basic_info.id;
-                    _parentId.filepart=SpecAbstract::RECORD_FILEPART_OVERLAY;
-                    _process(pDevice,pScanResult,msdos_info.nOverlayOffset,msdos_info.nOverlaySize,_parentId,pOptions,nLevel+1);
-                }
-            }
-        }
-        else
-        {
-            SpecAbstract::BINARYINFO_STRUCT binary_info=SpecAbstract::getBinaryInfo(&sd,parentId,pOptions,nOffset);
-
-            pScanResult->listRecords.append(binary_info.basic_info.listDetects);
-        }
-
-        sd.close();
-    }
-
-    if(nLevel==0)
-    {
-        pScanResult->nScanTime=scanTimer.elapsed();
-    }
+    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,nLevel);
 }
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
