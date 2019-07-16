@@ -28,7 +28,7 @@ FormStaticScan::FormStaticScan(QWidget *parent) :
     ui->setupUi(this);
 
     ui->checkBoxDeepScan->setChecked(true);
-    ui->checkBoxScanOverlay->setChecked(true);
+    ui->checkBoxRecursive->setChecked(true);
 }
 
 FormStaticScan::~FormStaticScan()
@@ -41,10 +41,10 @@ void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptio
     this->pDevice=pDevice;
     this->pOptions=pOptions;
 
-    if(pOptions->bHideOverlayScan)
+    if(pOptions->bHideRecursive)
     {
-        ui->checkBoxScanOverlay->setChecked(false);
-        ui->checkBoxScanOverlay->hide();
+        ui->checkBoxRecursive->setChecked(false);
+        ui->checkBoxRecursive->hide();
     }
 
     if(pOptions->bScanAfterOpen)
@@ -63,7 +63,7 @@ void FormStaticScan::scan()
     SpecAbstract::SCAN_RESULT scanResult;
 
     SpecAbstract::SCAN_OPTIONS options= {0};
-    options.bScanOverlay=ui->checkBoxScanOverlay->isChecked();
+    options.bRecursive=ui->checkBoxRecursive->isChecked();
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bIsImage=pOptions->bIsImage;
 
