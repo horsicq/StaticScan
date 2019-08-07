@@ -178,7 +178,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
         {
             SpecAbstract::RECORD_TYPE rt=item->scanStruct().type;
 
-            if((rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
+            if(     (rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
                     (rt==SpecAbstract::RECORD_TYPE_SFX)||
                     (rt==SpecAbstract::RECORD_TYPE_ARCHIVE))
             {
