@@ -154,9 +154,9 @@ StaticScan::STATS StaticScan::getCurrentStats()
     return currentStats;
 }
 
-void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel)
+void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,nLevel);
+    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true);
 }
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)

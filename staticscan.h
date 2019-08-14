@@ -56,7 +56,7 @@ private:
         SCAN_TYPE_FILE,
         SCAN_TYPE_DIRECTORY
     };
-    void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, SpecAbstract::ID parentId, SpecAbstract::SCAN_OPTIONS *pOptions,int nLevel=0);
+    void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, SpecAbstract::ID parentId, SpecAbstract::SCAN_OPTIONS *pOptions);
     SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
     SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice);
 
