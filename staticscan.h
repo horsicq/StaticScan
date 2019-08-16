@@ -23,15 +23,15 @@
 
 #include <QObject>
 #include <QElapsedTimer>
-#include <QMutex>
 #include <QTimer>
 #include "specabstract.h"
 
-#define SSE_VERSION "1.05"
+#define SSE_VERSION "1.06"
 
 class StaticScan : public QObject
 {
     Q_OBJECT
+
 public:
     struct STATS
     {
