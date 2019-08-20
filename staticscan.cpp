@@ -85,7 +85,7 @@ void StaticScan::process()
             currentStats.sStatus=tr("Directory scan");
             QList<QString> listFiles;
 
-            XBinary::FFOPTIONS ffoptions= {};
+            XBinary::FFOPTIONS ffoptions={};
             ffoptions.bSubdirectories=_pOptions->bSubdirectories;
             ffoptions.pbIsStop=&bIsStop;
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
