@@ -111,8 +111,8 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 
     if(index.isValid())
     {
-        StaticScanItem *childItem = static_cast<StaticScanItem *>(index.internalPointer());
-        StaticScanItem *parentItem = childItem->parentItem();
+        StaticScanItem *childItem=static_cast<StaticScanItem *>(index.internalPointer());
+        StaticScanItem *parentItem=childItem->parentItem();
 
         if(parentItem!=_rootItem)
         {
@@ -167,7 +167,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 
     if(index.isValid())
     {
-        StaticScanItem *item = static_cast<StaticScanItem *>(index.internalPointer());
+        StaticScanItem *item=static_cast<StaticScanItem *>(index.internalPointer());
 
         if(role==Qt::DisplayRole)
         {
