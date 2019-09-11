@@ -24,6 +24,8 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
     : QAbstractItemModel(parent)
 {
     _rootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
+    SpecAbstract::SCAN_STRUCT emptySS={};
+    _rootItem->setScanStruct(emptySS);
 
     QMap<QString,StaticScanItem *> mapParents;
 
@@ -226,6 +228,21 @@ QString StaticScanItemModel::toXML()
     return sResult;
 }
 
+QString StaticScanItemModel::toJSON()
+{
+    QString sResult;
+
+    QJsonObject jsonResult;
+
+    _toJSON(&jsonResult,_rootItem);
+
+    QJsonDocument saveFormat(jsonResult);
+
+    sResult=saveFormat.toJson(QJsonDocument::Indented).data();
+
+    return sResult;
+}
+
 QString StaticScanItemModel::toFormattedString()
 {
     QString sResult;
@@ -242,6 +259,10 @@ QString StaticScanItemModel::toString(SpecAbstract::SCAN_OPTIONS *pScanOptions)
     if(pScanOptions->bResultAsXML)
     {
         sResult=toXML();
+    }
+    else if(pScanOptions->bResultAsJSON)
+    {
+        sResult=toJSON();
     }
     else
     {
@@ -280,6 +301,39 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *item)
         pXml->writeAttribute("info",ss.sInfo);
         pXml->writeCharacters(item->data(0).toString());
         pXml->writeEndElement();
+    }
+}
+
+void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *item)
+{
+    if(item->childCount())
+    {
+        QString sName=item->data(0).toString();
+
+        pJsonObject->insert("name",sName);
+
+        QJsonArray jsArray;
+
+        for(int i=0; i<item->childCount(); i++)
+        {
+            QJsonObject jsRecord;
+
+            _toJSON(&jsRecord,item->child(i));
+
+            jsArray.append(jsRecord);
+        }
+
+        pJsonObject->insert("values",jsArray);
+    }
+    else
+    {
+        SpecAbstract::SCAN_STRUCT ss=item->scanStruct();
+
+        pJsonObject->insert("type",SpecAbstract::recordTypeIdToString(ss.type));
+        pJsonObject->insert("name",SpecAbstract::recordNameIdToString(ss.name));
+        pJsonObject->insert("version",ss.sVersion);
+        pJsonObject->insert("info",ss.sInfo);
+        pJsonObject->insert("string",item->data(0).toString());
     }
 }
 

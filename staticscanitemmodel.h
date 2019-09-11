@@ -23,6 +23,9 @@
 
 #include <QAbstractItemModel>
 #include <QXmlStreamWriter>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #ifdef QT_GUI_LIB
 #include <QColor>
 #endif
@@ -44,12 +47,14 @@ public:
     QVariant data(const QModelIndex &index,int role=Qt::DisplayRole) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     QString toXML();
+    QString toJSON();
     QString toFormattedString();
     QString toString(SpecAbstract::SCAN_OPTIONS *pScanOptions);
     StaticScanItem *rootItem();
 
 private:
     void _toXML(QXmlStreamWriter *pXml,StaticScanItem *item);
+    void _toJSON(QJsonObject *pJsonObject,StaticScanItem *item);
     void _toString(QString *pString,StaticScanItem *item,int nLevel);
     StaticScanItem *_rootItem;
 };
