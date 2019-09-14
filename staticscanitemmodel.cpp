@@ -127,24 +127,25 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 
 int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 {
-    // TODO Check
-    StaticScanItem *parentItem;
+    int nResult=0;
 
-    if(parent.column()>0)
+    if(parent.column()<=0)
     {
-        return 0;
+        StaticScanItem *parentItem;
+
+        if(!parent.isValid())
+        {
+            parentItem=_rootItem;
+        }
+        else
+        {
+            parentItem=static_cast<StaticScanItem *>(parent.internalPointer());
+        }
+
+        nResult= parentItem->childCount();
     }
 
-    if(!parent.isValid())
-    {
-        parentItem=_rootItem;
-    }
-    else
-    {
-        parentItem=static_cast<StaticScanItem *>(parent.internalPointer());
-    }
-
-    return parentItem->childCount();
+    return nResult;
 }
 
 int StaticScanItemModel::columnCount(const QModelIndex &parent) const
