@@ -309,9 +309,17 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *item
 {
     if(item->childCount())
     {
-        QString sName=item->data(0).toString();
+        SpecAbstract::SCAN_STRUCT ss=item->scanStruct();
 
-        pJsonObject->insert("name",sName);
+        QString sArrayName="detects";
+
+        if(ss.id.filepart!=SpecAbstract::RECORD_FILEPART_UNKNOWN)
+        {
+            pJsonObject->insert("parentfilepart",SpecAbstract::recordFilepartIdToString(ss.parentId.filepart));
+            pJsonObject->insert("filetype",SpecAbstract::recordFiletypeIdToString(ss.id.filetype));
+
+            sArrayName="values";
+        }
 
         QJsonArray jsArray;
 
@@ -324,7 +332,7 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *item
             jsArray.append(jsRecord);
         }
 
-        pJsonObject->insert("values",jsArray);
+        pJsonObject->insert(sArrayName,jsArray);
     }
     else
     {
