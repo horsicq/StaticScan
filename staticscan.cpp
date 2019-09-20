@@ -161,7 +161,7 @@ void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanRes
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 {
-    SpecAbstract::SCAN_RESULT result= {0};
+    SpecAbstract::SCAN_RESULT result={0};
 
     QFile file;
     file.setFileName(sFileName);
@@ -178,7 +178,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 
 SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
 {
-    SpecAbstract::SCAN_RESULT result= {0};
+    SpecAbstract::SCAN_RESULT result={0};
 
     SpecAbstract::ID parentId;
     parentId.filetype=SpecAbstract::RECORD_FILETYPE_UNKNOWN;
