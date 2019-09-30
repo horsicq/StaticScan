@@ -161,7 +161,7 @@ void DialogStaticScan::timerSlot()
 
     QDateTime dt;
     dt.setMSecsSinceEpoch(stats.nElapsed);
-    QString sDateTime=dt.time().addSecs(-60*60).toString("hh-mm-ss");
+    QString sDateTime=dt.time().addSecs(-60*60).toString("hh:mm:ss");
 
     ui->labelTime->setText(sDateTime);
 }
