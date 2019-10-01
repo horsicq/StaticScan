@@ -99,6 +99,7 @@ void StaticScan::process()
             {
                 currentStats.nCurrent=i+1;
                 currentStats.sStatus=listFiles.at(i);
+
                 SpecAbstract::SCAN_RESULT _scanResult=scanFile(currentStats.sStatus);
 
                 emit scanResult(_scanResult);
