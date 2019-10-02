@@ -61,6 +61,7 @@ private:
     SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice);
 
 signals:
+    void scanFileStarted(QString sFileName);
     void completed(qint64 nElapsedTime);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
 

@@ -55,6 +55,7 @@ private slots:
     void timerSlot();
 
 signals:
+    void scanFileStarted(QString sFileName);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
 
 private:

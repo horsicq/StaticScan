@@ -73,6 +73,8 @@ void StaticScan::process()
         {
             currentStats.sStatus=tr("File scan");
 
+            emit scanFileStarted(_sFileName);
+
             *_pScanResult=scanFile(_sFileName);
 
             emit scanResult(*_pScanResult);
@@ -100,6 +102,8 @@ void StaticScan::process()
                 currentStats.nCurrent=i+1;
                 currentStats.sStatus=listFiles.at(i);
 
+                emit scanFileStarted(_sFileName);
+
                 SpecAbstract::SCAN_RESULT _scanResult=scanFile(currentStats.sStatus);
 
                 emit scanResult(_scanResult);
@@ -109,7 +113,7 @@ void StaticScan::process()
     else if(this->scanType==SCAN_TYPE_DEVICE)
     {
         if(_pDevice)
-        {
+        { 
             currentStats.sStatus=tr("Device scan");
 
             *_pScanResult=scanDevice(_pDevice);

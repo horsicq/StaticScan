@@ -34,6 +34,7 @@ DialogStaticScan::DialogStaticScan(QWidget *parent) :
 
     connect(pThread, SIGNAL(started()), pScan, SLOT(process()));
     connect(pScan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(pScan, SIGNAL(scanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
     connect(pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
 
     bIsRun=false;
