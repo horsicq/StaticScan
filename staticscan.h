@@ -44,7 +44,7 @@ public:
 
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
     STATS getCurrentStats();
@@ -71,6 +71,7 @@ public slots:
 
 private:
     QString _sFileName;
+    QString _sDirectoryName;
     QIODevice *_pDevice;
     SpecAbstract::SCAN_OPTIONS *_pOptions;
     SpecAbstract::SCAN_RESULT *_pScanResult;

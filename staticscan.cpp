@@ -49,9 +49,9 @@ void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOption
     this->scanType=SCAN_TYPE_DEVICE;
 }
 
-void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
+void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    this->_sFileName=sFileName;
+    this->_sDirectoryName=sDirectoryName;
     this->_pOptions=pOptions;
 
     this->scanType=SCAN_TYPE_DIRECTORY;
@@ -82,7 +82,7 @@ void StaticScan::process()
     }
     else if(this->scanType==SCAN_TYPE_DIRECTORY)
     {
-        if(_sFileName!="")
+        if(_sDirectoryName!="")
         {
             currentStats.sStatus=tr("Directory scan");
             QList<QString> listFiles;
@@ -93,7 +93,7 @@ void StaticScan::process()
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
             ffoptions.pListFiles=&listFiles;
 
-            XBinary::findFiles(_sFileName,&ffoptions);
+            XBinary::findFiles(_sDirectoryName,&ffoptions);
 
             currentStats.nTotal=listFiles.count();
 

@@ -137,9 +137,9 @@ void DialogStaticScan::onCompleted(qint64 nElapsed)
     this->close();
 }
 
-void DialogStaticScan::onSetProgressMaximum(int nMax)
+void DialogStaticScan::onSetProgressMaximum(int nValue)
 {
-    ui->progressBarTotal->setMaximum(nMax);
+    ui->progressBarTotal->setMaximum(nValue);
 }
 
 void DialogStaticScan::onSetProgressValue(int nValue)
