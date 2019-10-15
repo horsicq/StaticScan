@@ -194,6 +194,10 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
             {
                 result=QVariant(QColor(Qt::red));
             }
+            else if(rt==SpecAbstract::RECORD_TYPE_PETOOL)
+            {
+                result=QVariant(QColor(Qt::green));
+            }
             else
             {
                 result=QVariant(QColor(Qt::black));
