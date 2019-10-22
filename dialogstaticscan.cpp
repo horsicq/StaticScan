@@ -131,7 +131,7 @@ void DialogStaticScan::on_pushButtonCancel_clicked()
 
 void DialogStaticScan::onCompleted(qint64 nElapsed)
 {
-    Q_UNUSED(nElapsed);
+    Q_UNUSED(nElapsed)
     // TODO
     bIsRun=false;
     this->close();
