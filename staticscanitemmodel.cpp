@@ -190,6 +190,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
             else if((rt==SpecAbstract::RECORD_TYPE_PROTECTOR)||
                     (rt==SpecAbstract::RECORD_TYPE_NETOBFUSCATOR)||
                     (rt==SpecAbstract::RECORD_TYPE_DONGLEPROTECTION)||
+                    (rt==SpecAbstract::RECORD_TYPE_JOINER)||
                     (rt==SpecAbstract::RECORD_TYPE_PACKER))
             {
                 result=QVariant(QColor(Qt::red));
