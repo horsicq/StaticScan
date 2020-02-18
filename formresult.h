@@ -27,6 +27,7 @@ private:
     Ui::FormResult *ui;
     SpecAbstract::SCAN_RESULT scanResult;
     QString sSaveFileName;
+    QAbstractItemModel *pModel;
 };
 
 #endif // FORMRESULT_H

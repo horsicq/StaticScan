@@ -6,6 +6,7 @@ FormResult::FormResult(QWidget *parent) :
     ui(new Ui::FormResult)
 {
     ui->setupUi(this);
+    pModel=0;
 }
 
 FormResult::~FormResult()
@@ -18,8 +19,13 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
     this->scanResult=scanResult;
     this->sSaveFileName=sSaveFileName;
 
-    StaticScanItemModel *model=new StaticScanItemModel(&(this->scanResult.listRecords),this,1);
-    ui->treeViewResult->setModel(model);
+    if(pModel)
+    {
+        delete pModel;
+    }
+
+    pModel=new StaticScanItemModel(&(this->scanResult.listRecords),this,1);
+    ui->treeViewResult->setModel(pModel);
     ui->treeViewResult->expandAll();
 
     ui->labelTime->setText(QString("%1 %2").arg(this->scanResult.nScanTime).arg(tr("msec")));
