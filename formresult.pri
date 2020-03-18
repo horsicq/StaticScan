@@ -12,7 +12,7 @@ FORMS += \
 
 !contains(XCONFIG, dialogstaticscan) {
     XCONFIG += dialogstaticscan
-    include(dialogstaticscan.pri)
+    include($$PWD/dialogstaticscan.pri)
 }
 
 

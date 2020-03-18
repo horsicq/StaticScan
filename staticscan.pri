@@ -13,5 +13,5 @@ SOURCES += \
 
 !contains(XCONFIG, specabstract) {
     XCONFIG += specabstract
-    include(../SpecAbstract/specabstract.pri)
+    include($$PWD/../SpecAbstract/specabstract.pri)
 }

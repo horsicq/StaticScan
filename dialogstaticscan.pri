@@ -12,7 +12,7 @@ FORMS += \
 
 !contains(XCONFIG, staticscan) {
     XCONFIG += staticscan
-    include(staticscan.pri)
+    include($$PWD/staticscan.pri)
 }
 
 
