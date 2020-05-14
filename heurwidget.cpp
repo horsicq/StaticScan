@@ -32,3 +32,8 @@ HeurWidget::~HeurWidget()
 {
     delete ui;
 }
+
+void HeurWidget::setData(QIODevice *pDevice, bool bAuto)
+{
+
+}

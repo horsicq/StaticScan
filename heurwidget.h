@@ -34,6 +34,7 @@ class HeurWidget : public QWidget
 public:
     explicit HeurWidget(QWidget *parent = nullptr);
     ~HeurWidget();
+    void setData(QIODevice *pDevice,bool bAuto=false);
 
 private:
     Ui::HeurWidget *ui;
