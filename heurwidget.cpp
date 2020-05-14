@@ -35,5 +35,5 @@ HeurWidget::~HeurWidget()
 
 void HeurWidget::setData(QIODevice *pDevice, bool bAuto)
 {
-
+    this->pDevice=pDevice;
 }

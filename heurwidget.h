@@ -38,6 +38,7 @@ public:
 
 private:
     Ui::HeurWidget *ui;
+    QIODevice *pDevice;
 };
 
 #endif // HEURWIDGET_H
