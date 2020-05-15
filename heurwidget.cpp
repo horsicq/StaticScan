@@ -26,6 +26,10 @@ HeurWidget::HeurWidget(QWidget *parent) :
     ui(new Ui::HeurWidget)
 {
     ui->setupUi(this);
+
+    ui->checkBoxDeepScan->setChecked(true);
+    ui->checkBoxRecursiveScan->setChecked(true);
+    ui->checkBoxHeuristicScan->setChecked(false);
 }
 
 HeurWidget::~HeurWidget()
@@ -36,4 +40,39 @@ HeurWidget::~HeurWidget()
 void HeurWidget::setData(QIODevice *pDevice, bool bAuto)
 {
     this->pDevice=pDevice;
+
+    if(bAuto)
+    {
+        scan();
+    }
+}
+
+void HeurWidget::on_pushButtonScan_clicked()
+{
+    scan();
+}
+
+void HeurWidget::scan()
+{
+    SpecAbstract::SCAN_RESULT scanResult={0};
+
+    SpecAbstract::SCAN_OPTIONS options={0};
+
+    options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
+    options.bDeepScan=ui->checkBoxDeepScan->isChecked();
+    options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
+
+    DialogStaticScan ds(this);
+    ds.setData(pDevice,&options,&scanResult);
+    ds.exec();
+
+    QAbstractItemModel *pOldModel=ui->treeViewScan->model();
+
+    StaticScanItemModel *pModel=new StaticScanItemModel(&(scanResult.listRecords),this,1);
+    ui->treeViewScan->setModel(pModel);
+    ui->treeViewScan->expandAll();
+
+    delete pOldModel;
+
+    // mb TODO scan time
 }

@@ -22,6 +22,7 @@
 #define HEURWIDGET_H
 
 #include <QWidget>
+#include "dialogstaticscan.h"
 
 namespace Ui {
 class HeurWidget;
@@ -35,6 +36,10 @@ public:
     explicit HeurWidget(QWidget *parent = nullptr);
     ~HeurWidget();
     void setData(QIODevice *pDevice,bool bAuto=false);
+
+private slots:
+    void on_pushButtonScan_clicked();
+    void scan();
 
 private:
     Ui::HeurWidget *ui;
