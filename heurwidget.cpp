@@ -61,18 +61,29 @@ void HeurWidget::scan()
     options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
+    options.bShowHeuristic=true;
 
     DialogStaticScan ds(this);
     ds.setData(pDevice,&options,&scanResult);
     ds.exec();
 
-    QAbstractItemModel *pOldModel=ui->treeViewScan->model();
+    QAbstractItemModel *pOldTreeModel=ui->treeViewScan->model();
 
     StaticScanItemModel *pModel=new StaticScanItemModel(&(scanResult.listRecords),this,1);
     ui->treeViewScan->setModel(pModel);
     ui->treeViewScan->expandAll();
 
-    delete pOldModel;
+    delete pOldTreeModel;
+
+    int nNumberOfHeurs=scanResult.listHeurs.count();
+
+    QAbstractItemModel *pOldTableModel=ui->tableViewHeur->model();
+
+    QStandardItemModel *pHeurModel=new QStandardItemModel(nNumberOfHeurs,1,this);
+
+    ui->tableViewHeur->setModel(pHeurModel);
+
+    delete pOldTableModel;
 
     // mb TODO scan time
 }
