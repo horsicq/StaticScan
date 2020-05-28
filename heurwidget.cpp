@@ -79,9 +79,32 @@ void HeurWidget::scan()
 
     QAbstractItemModel *pOldTableModel=ui->tableViewHeur->model();
 
-    QStandardItemModel *pHeurModel=new QStandardItemModel(nNumberOfHeurs,1,this);
+    QStandardItemModel *pHeurModel=new QStandardItemModel(nNumberOfHeurs,3,this);
+
+    pHeurModel->setHeaderData(0,Qt::Horizontal,tr("Type"));
+    pHeurModel->setHeaderData(1,Qt::Horizontal,tr("Name"));
+    pHeurModel->setHeaderData(2,Qt::Horizontal,tr("Value"));
+
+    for(int i=0;i<nNumberOfHeurs;i++)
+    {
+        QStandardItem *pHeurType=new QStandardItem;
+        pHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).heurType));
+        pHeurModel->setItem(i,0,pHeurType);
+
+        QStandardItem *pName=new QStandardItem;
+        pName->setText(QString("%1(%2)[%3]").arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name)).arg(scanResult.listHeurs.at(i).sVersion).arg(scanResult.listHeurs.at(i).sInfo));
+        pHeurModel->setItem(i,1,pName);
+
+        QStandardItem *pValue=new QStandardItem;
+        pValue->setText(scanResult.listHeurs.at(i).sValue);
+        pHeurModel->setItem(i,2,pValue);
+    }
 
     ui->tableViewHeur->setModel(pHeurModel);
+
+    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Interactive);
+    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Interactive);
+    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
 
     delete pOldTableModel;
 
