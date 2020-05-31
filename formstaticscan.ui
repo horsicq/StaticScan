@@ -41,7 +41,7 @@
      <item>
       <widget class="QCheckBox" name="checkBoxDeepScan">
        <property name="text">
-        <string>Deep Scan</string>
+        <string>Deep scan</string>
        </property>
        <property name="checked">
         <bool>true</bool>
