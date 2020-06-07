@@ -33,7 +33,7 @@ class HeurWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit HeurWidget(QWidget *parent = nullptr);
+    explicit HeurWidget(QWidget *parent=nullptr);
     ~HeurWidget();
     void setData(QIODevice *pDevice,bool bAuto=false);
 
