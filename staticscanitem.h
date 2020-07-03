@@ -46,7 +46,6 @@ private:
     QString _sString;
     StaticScanItem *_parentItem;
     int nColumnCount;
-
     SpecAbstract::SCAN_STRUCT _ss;
 };
 
