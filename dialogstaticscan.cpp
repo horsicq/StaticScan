@@ -37,10 +37,10 @@ DialogStaticScan::DialogStaticScan(QWidget *parent) :
     connect(pScan, SIGNAL(scanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
     connect(pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
 
-    bIsRun=false;
-
     pTimer=new QTimer(this);
     connect(pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
+
+    bIsRun=false;
 }
 
 void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
@@ -48,7 +48,7 @@ void DialogStaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pO
     bIsRun=true;
     pScan->setData(sFileName,pOptions,pScanResult);
     pThread->start();
-    pTimer->start(1000); // 1 sec
+    pTimer->start(1000); // 1 sec TODO const
     ui->progressBarTotal->setMaximum(0);
 }
 
@@ -57,7 +57,7 @@ void DialogStaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *p
     bIsRun=true;
     pScan->setData(pDevice,pOptions,pScanResult);
     pThread->start();
-    pTimer->start(1000); // 1 sec
+    pTimer->start(1000); // 1 sec TODO const
     ui->progressBarTotal->setMaximum(0);
 }
 
@@ -66,7 +66,7 @@ void DialogStaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTION
     bIsRun=true;
     pScan->setData(sDirectoryName,pOptions);
     pThread->start();
-    pTimer->start(1000);
+    pTimer->start(1000); // 1 sec TODO const
     ui->progressBarTotal->setMaximum(100);
 }
 
