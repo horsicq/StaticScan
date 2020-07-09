@@ -213,7 +213,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 
 Qt::ItemFlags StaticScanItemModel::flags(const QModelIndex &index) const
 {
-    Qt::ItemFlags result=nullptr;
+    Qt::ItemFlags result=Qt::NoItemFlags;
 
     if(index.isValid())
     {
