@@ -14,6 +14,3 @@ FORMS += \
     XCONFIG += dialogstaticscan
     include($$PWD/dialogstaticscan.pri)
 }
-
-
-

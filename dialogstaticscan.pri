@@ -14,6 +14,3 @@ FORMS += \
     XCONFIG += staticscan
     include($$PWD/staticscan.pri)
 }
-
-
-
