@@ -47,13 +47,13 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
 
     delete pOldModel;
 
-    ui->labelTime->setText(QString("%1 %2").arg(this->scanResult.nScanTime).arg(tr("msec")));
+    ui->labelElapsedTime->setText(QString("%1 %2").arg(this->scanResult.nScanTime).arg(tr("msec")));
 }
 
 void FormResult::on_pushButtonClear_clicked()
 {
     ui->treeViewResult->setModel(nullptr);
-    ui->labelTime->clear();
+    ui->labelElapsedTime->clear();
 }
 
 void FormResult::on_pushButtonSave_clicked()
