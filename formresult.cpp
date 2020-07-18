@@ -39,6 +39,8 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
     this->scanResult=scanResult;
     this->sSaveFileName=sSaveFileName;
 
+    ui->labelElapsedTime->clear();
+
     QAbstractItemModel *pOldModel=ui->treeViewResult->model();
 
     pModel=new StaticScanItemModel(&(this->scanResult.listRecords),this,1);
@@ -52,7 +54,12 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
 
 void FormResult::on_pushButtonClear_clicked()
 {
+    QAbstractItemModel *pOldModel=ui->treeViewResult->model();
+
     ui->treeViewResult->setModel(nullptr);
+
+     delete pOldModel;
+
     ui->labelElapsedTime->clear();
 }
 
