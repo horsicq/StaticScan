@@ -58,7 +58,7 @@ void FormResult::on_pushButtonClear_clicked()
 
     ui->treeViewResult->setModel(nullptr);
 
-     delete pOldModel;
+    delete pOldModel;
 
     ui->labelElapsedTime->clear();
 }
