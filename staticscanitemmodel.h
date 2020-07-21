@@ -53,10 +53,10 @@ public:
     StaticScanItem *rootItem();
 
 private:
-    void _toXML(QXmlStreamWriter *pXml,StaticScanItem *item);
-    void _toJSON(QJsonObject *pJsonObject,StaticScanItem *item);
-    void _toString(QString *pString,StaticScanItem *item,int nLevel);
-    StaticScanItem *_rootItem;
+    void _toXML(QXmlStreamWriter *pXml,StaticScanItem *pItem);
+    void _toJSON(QJsonObject *pJsonObject,StaticScanItem *pItem);
+    void _toString(QString *pString,StaticScanItem *pItem,int nLevel);
+    StaticScanItem *_pRootItem;
 };
 
 #endif // STATICSCANITEMMODEL_H

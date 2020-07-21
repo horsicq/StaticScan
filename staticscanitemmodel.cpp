@@ -23,9 +23,9 @@
 StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects, QObject *parent, int nColumnCount)
     : QAbstractItemModel(parent)
 {
-    _rootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
+    _pRootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
     SpecAbstract::SCAN_STRUCT emptySS={};
-    _rootItem->setScanStruct(emptySS);
+    _pRootItem->setScanStruct(emptySS);
 
     QMap<QString,StaticScanItem *> mapParents;
 
@@ -37,7 +37,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
             if(pListDetects->at(i).parentId.uuid=="")
             {
-                _itemParent=_rootItem;
+                _itemParent=_pRootItem;
             }
             else
             {
@@ -64,7 +64,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
 StaticScanItemModel::~StaticScanItemModel()
 {
-    delete _rootItem;
+    delete _pRootItem;
 }
 
 QVariant StaticScanItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -73,7 +73,7 @@ QVariant StaticScanItemModel::headerData(int section, Qt::Orientation orientatio
 
     if((orientation==Qt::Horizontal)&&(role==Qt::DisplayRole))
     {
-        result=_rootItem->data(section);
+        result=_pRootItem->data(section);
     }
 
     return result;
@@ -89,7 +89,7 @@ QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &p
 
         if(!parent.isValid())
         {
-            parentItem=_rootItem;
+            parentItem=_pRootItem;
         }
         else
         {
@@ -116,7 +116,7 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
         StaticScanItem *childItem=static_cast<StaticScanItem *>(index.internalPointer());
         StaticScanItem *parentItem=childItem->parentItem();
 
-        if(parentItem!=_rootItem)
+        if(parentItem!=_pRootItem)
         {
             result=createIndex(parentItem->row(), 0, parentItem);
         }
@@ -135,7 +135,7 @@ int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 
         if(!parent.isValid())
         {
-            parentItem=_rootItem;
+            parentItem=_pRootItem;
         }
         else
         {
@@ -158,7 +158,7 @@ int StaticScanItemModel::columnCount(const QModelIndex &parent) const
     }
     else
     {
-        nResult=_rootItem->columnCount();
+        nResult=_pRootItem->columnCount();
     }
 
     return nResult;
@@ -230,7 +230,7 @@ QString StaticScanItemModel::toXML()
 
     xml.setAutoFormatting(true);
 
-    _toXML(&xml,_rootItem);
+    _toXML(&xml,_pRootItem);
 
     return sResult;
 }
@@ -241,7 +241,7 @@ QString StaticScanItemModel::toJSON()
 
     QJsonObject jsonResult;
 
-    _toJSON(&jsonResult,_rootItem);
+    _toJSON(&jsonResult,_pRootItem);
 
     QJsonDocument saveFormat(jsonResult);
 
@@ -254,7 +254,7 @@ QString StaticScanItemModel::toFormattedString()
 {
     QString sResult;
 
-    _toString(&sResult,_rootItem,0);
+    _toString(&sResult,_pRootItem,0);
 
     return sResult;
 }
@@ -281,41 +281,41 @@ QString StaticScanItemModel::toString(SpecAbstract::SCAN_OPTIONS *pScanOptions)
 
 StaticScanItem *StaticScanItemModel::rootItem()
 {
-    return this->_rootItem;
+    return this->_pRootItem;
 }
 
-void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *item)
+void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *pItem)
 {
-    if(item->childCount())
+    if(pItem->childCount())
     {
-        pXml->writeStartElement(item->data(0).toString());
+        pXml->writeStartElement(pItem->data(0).toString());
 
-        for(int i=0; i<item->childCount(); i++)
+        for(int i=0; i<pItem->childCount(); i++)
         {
-            _toXML(pXml,item->child(i));
+            _toXML(pXml,pItem->child(i));
         }
 
         pXml->writeEndElement();
     }
     else
     {
-        SpecAbstract::SCAN_STRUCT ss=item->scanStruct();
+        SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
 
         pXml->writeStartElement("detect");
         pXml->writeAttribute("type",SpecAbstract::recordTypeIdToString(ss.type));
         pXml->writeAttribute("name",SpecAbstract::recordNameIdToString(ss.name));
         pXml->writeAttribute("version",ss.sVersion);
         pXml->writeAttribute("info",ss.sInfo);
-        pXml->writeCharacters(item->data(0).toString());
+        pXml->writeCharacters(pItem->data(0).toString());
         pXml->writeEndElement();
     }
 }
 
-void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *item)
+void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *pItem)
 {
-    if(item->childCount())
+    if(pItem->childCount())
     {
-        SpecAbstract::SCAN_STRUCT ss=item->scanStruct();
+        SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
 
         QString sArrayName="detects";
 
@@ -329,11 +329,11 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *item
 
         QJsonArray jsArray;
 
-        for(int i=0; i<item->childCount(); i++)
+        for(int i=0; i<pItem->childCount(); i++)
         {
             QJsonObject jsRecord;
 
-            _toJSON(&jsRecord,item->child(i));
+            _toJSON(&jsRecord,pItem->child(i));
 
             jsArray.append(jsRecord);
         }
@@ -342,31 +342,31 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *item
     }
     else
     {
-        SpecAbstract::SCAN_STRUCT ss=item->scanStruct();
+        SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
 
         pJsonObject->insert("type",SpecAbstract::recordTypeIdToString(ss.type));
         pJsonObject->insert("name",SpecAbstract::recordNameIdToString(ss.name));
         pJsonObject->insert("version",ss.sVersion);
         pJsonObject->insert("info",ss.sInfo);
-        pJsonObject->insert("string",item->data(0).toString());
+        pJsonObject->insert("string",pItem->data(0).toString());
     }
 }
 
-void StaticScanItemModel::_toString(QString *pString, StaticScanItem *item, int nLevel)
+void StaticScanItemModel::_toString(QString *pString, StaticScanItem *pItem, int nLevel)
 {
     if(nLevel)
     {
         QString sResult;
         sResult=sResult.leftJustified(4*(nLevel-1),' ');
-        sResult.append(QString("%1\n").arg(item->data(0).toString()));
+        sResult.append(QString("%1\n").arg(pItem->data(0).toString()));
         pString->append(sResult);
     }
 
-    if(item->childCount())
+    if(pItem->childCount())
     {
-        for(int i=0; i<item->childCount(); i++)
+        for(int i=0; i<pItem->childCount(); i++)
         {
-            _toString(pString,item->child(i),nLevel+1);
+            _toString(pString,pItem->child(i),nLevel+1);
         }
     }
 }
