@@ -85,18 +85,18 @@ QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &p
 
     if(hasIndex(row, column, parent))
     {
-        StaticScanItem *parentItem;
+        StaticScanItem *pParentItem=nullptr;
 
         if(!parent.isValid())
         {
-            parentItem=_pRootItem;
+            pParentItem=_pRootItem;
         }
         else
         {
-            parentItem=static_cast<StaticScanItem *>(parent.internalPointer());
+            pParentItem=static_cast<StaticScanItem *>(parent.internalPointer());
         }
 
-        StaticScanItem *childItem=parentItem->child(row);
+        StaticScanItem *childItem=pParentItem->child(row);
 
         if(childItem)
         {
@@ -113,12 +113,12 @@ QModelIndex StaticScanItemModel::pParent(const QModelIndex &index) const
 
     if(index.isValid())
     {
-        StaticScanItem *childItem=static_cast<StaticScanItem *>(index.internalPointer());
-        StaticScanItem *parentItem=childItem->parentItem();
+        StaticScanItem *pChildItem=static_cast<StaticScanItem *>(index.internalPointer());
+        StaticScanItem *pParentItem=pChildItem->parentItem();
 
-        if(parentItem!=_pRootItem)
+        if(pParentItem!=_pRootItem)
         {
-            result=createIndex(parentItem->row(), 0, parentItem);
+            result=createIndex(pParentItem->row(),0,pParentItem);
         }
     }
 
@@ -131,18 +131,18 @@ int StaticScanItemModel::rowCount(const QModelIndex &parent) const
 
     if(parent.column()<=0)
     {
-        StaticScanItem *parentItem;
+        StaticScanItem *pParentItem=nullptr;
 
         if(!parent.isValid())
         {
-            parentItem=_pRootItem;
+            pParentItem=_pRootItem;
         }
         else
         {
-            parentItem=static_cast<StaticScanItem *>(parent.internalPointer());
+            pParentItem=static_cast<StaticScanItem *>(parent.internalPointer());
         }
 
-        nResult= parentItem->childCount();
+        nResult= pParentItem->childCount();
     }
 
     return nResult;
