@@ -20,8 +20,8 @@
 //
 #include "staticscanitemmodel.h"
 
-StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects, QObject *parent, int nColumnCount)
-    : QAbstractItemModel(parent)
+StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects, QObject *pParent, int nColumnCount)
+    : QAbstractItemModel(pParent)
 {
     _pRootItem=new StaticScanItem(tr("Result"),nullptr,nColumnCount);
     SpecAbstract::SCAN_STRUCT emptySS={};
