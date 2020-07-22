@@ -21,8 +21,8 @@
 #include "formresult.h"
 #include "ui_formresult.h"
 
-FormResult::FormResult(QWidget *parent) :
-    QWidget(parent),
+FormResult::FormResult(QWidget *pParent) :
+    QWidget(pParent),
     ui(new Ui::FormResult)
 {
     ui->setupUi(this);

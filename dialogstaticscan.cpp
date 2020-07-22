@@ -21,8 +21,8 @@
 #include "dialogstaticscan.h"
 #include "ui_dialogstaticscan.h"
 
-DialogStaticScan::DialogStaticScan(QWidget *parent) :
-    QDialog(parent),
+DialogStaticScan::DialogStaticScan(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogStaticScan)
 {
     ui->setupUi(this);
