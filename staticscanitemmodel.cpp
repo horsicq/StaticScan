@@ -67,13 +67,13 @@ StaticScanItemModel::~StaticScanItemModel()
     delete _pRootItem;
 }
 
-QVariant StaticScanItemModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant StaticScanItemModel::headerData(int nSection, Qt::Orientation orientation, int nRole) const
 {
     QVariant result;
 
-    if((orientation==Qt::Horizontal)&&(role==Qt::DisplayRole))
+    if((orientation==Qt::Horizontal)&&(nRole==Qt::DisplayRole))
     {
-        result=_pRootItem->data(section);
+        result=_pRootItem->data(nSection);
     }
 
     return result;

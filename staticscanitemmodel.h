@@ -39,7 +39,7 @@ public:
     explicit StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects,QObject *pParent=nullptr,int nColumnCount=1);
     ~StaticScanItemModel() override;
 
-    QVariant headerData(int section,Qt::Orientation orientation,int role=Qt::DisplayRole) const override;
+    QVariant headerData(int nSection,Qt::Orientation orientation,int nRole=Qt::DisplayRole) const override;
     QModelIndex index(int row,int column,const QModelIndex &pParent=QModelIndex()) const override;
     QModelIndex pParent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &pParent=QModelIndex()) const override;
