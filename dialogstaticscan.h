@@ -38,7 +38,7 @@ class DialogStaticScan : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogStaticScan(QWidget *parent=nullptr);
+    explicit DialogStaticScan(QWidget *pParent=nullptr);
     ~DialogStaticScan();
 
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
