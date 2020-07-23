@@ -107,7 +107,7 @@ QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &p
     return result;
 }
 
-QModelIndex StaticScanItemModel::pParent(const QModelIndex &index) const
+QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
 {
     QModelIndex result;
 
