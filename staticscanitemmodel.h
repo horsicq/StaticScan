@@ -28,6 +28,8 @@
 #include <QJsonArray>
 #ifdef QT_GUI_LIB
 #include <QColor>
+#include <QApplication>
+#include <QPalette>
 #endif
 #include "staticscanitem.h"
 

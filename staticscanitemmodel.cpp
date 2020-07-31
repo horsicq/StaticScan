@@ -202,7 +202,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
             }
             else
             {
-                result=QVariant(QColor(Qt::black));
+                result=QVariant(QApplication::palette().text().color());
             }
         }
 #endif
