@@ -35,7 +35,7 @@ class HeurWidget : public QWidget
 public:
     explicit HeurWidget(QWidget *parent=nullptr);
     ~HeurWidget();
-    void setData(QIODevice *pDevice,bool bAuto=false);
+    void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
 
 private slots:
     void on_pushButtonScan_clicked();
@@ -44,6 +44,7 @@ private slots:
 private:
     Ui::HeurWidget *ui;
     QIODevice *pDevice;
+    XBinary::FT fileType;
 };
 
 #endif // HEURWIDGET_H

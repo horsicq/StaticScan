@@ -37,9 +37,10 @@ HeurWidget::~HeurWidget()
     delete ui;
 }
 
-void HeurWidget::setData(QIODevice *pDevice, bool bAuto)
+void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType)
 {
     this->pDevice=pDevice;
+    this->fileType=fileType;
 
     if(bAuto)
     {
@@ -61,6 +62,7 @@ void HeurWidget::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
     options.bShowHeuristic=true;
+    options.fileType=fileType;
 
     DialogStaticScan ds(this);
     ds.setData(pDevice,&options,&scanResult);
