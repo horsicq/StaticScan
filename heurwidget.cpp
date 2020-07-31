@@ -55,7 +55,6 @@ void HeurWidget::on_pushButtonScan_clicked()
 void HeurWidget::scan()
 {
     SpecAbstract::SCAN_RESULT scanResult={0};
-
     SpecAbstract::SCAN_OPTIONS options={0};
 
     options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
