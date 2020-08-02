@@ -21,8 +21,8 @@
 #include "heurwidget.h"
 #include "ui_heurwidget.h"
 
-HeurWidget::HeurWidget(QWidget *parent) :
-    QWidget(parent),
+HeurWidget::HeurWidget(QWidget *pParent) :
+    QWidget(pParent),
     ui(new Ui::HeurWidget)
 {
     ui->setupUi(this);
