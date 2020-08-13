@@ -42,7 +42,7 @@ public:
     ~StaticScanItemModel() override;
 
     QVariant headerData(int nSection,Qt::Orientation orientation,int nRole=Qt::DisplayRole) const override;
-    QModelIndex index(int row,int column,const QModelIndex &pParent=QModelIndex()) const override;
+    QModelIndex index(int nRow,int nColumn,const QModelIndex &parent=QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent=QModelIndex()) const override;
     int columnCount(const QModelIndex &parent=QModelIndex()) const override;

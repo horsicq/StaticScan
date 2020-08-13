@@ -79,11 +79,11 @@ QVariant StaticScanItemModel::headerData(int nSection, Qt::Orientation orientati
     return result;
 }
 
-QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex StaticScanItemModel::index(int nRow, int nColumn, const QModelIndex &parent) const
 {
     QModelIndex result;
 
-    if(hasIndex(row, column, parent))
+    if(hasIndex(nRow, nColumn, parent))
     {
         StaticScanItem *pParentItem=nullptr;
 
@@ -96,11 +96,11 @@ QModelIndex StaticScanItemModel::index(int row, int column, const QModelIndex &p
             pParentItem=static_cast<StaticScanItem *>(parent.internalPointer());
         }
 
-        StaticScanItem *childItem=pParentItem->child(row);
+        StaticScanItem *childItem=pParentItem->child(nRow);
 
         if(childItem)
         {
-            result=createIndex(row, column, childItem);
+            result=createIndex(nRow, nColumn, childItem);
         }
     }
 
