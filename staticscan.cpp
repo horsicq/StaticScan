@@ -136,12 +136,12 @@ void StaticScan::stop()
 
 SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    SpecAbstract::SCAN_RESULT scanResult;
+    SpecAbstract::SCAN_RESULT result={0};
     StaticScan scan;
-    scan.setData(sFileName,pOptions,&scanResult);
+    scan.setData(sFileName,pOptions,&result);
     scan.process();
 
-    return scanResult;
+    return result;
 }
 
 QString StaticScan::getEngineVersion()
