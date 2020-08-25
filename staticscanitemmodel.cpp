@@ -164,7 +164,7 @@ int StaticScanItemModel::columnCount(const QModelIndex &parent) const
     return nResult;
 }
 
-QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
+QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
 {
     QVariant result;
 
@@ -172,12 +172,12 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
     {
         StaticScanItem *pItem=static_cast<StaticScanItem *>(index.internalPointer());
 
-        if(role==Qt::DisplayRole)
+        if(nRole==Qt::DisplayRole)
         {
             result=pItem->data(index.column());
         }
 #ifdef QT_GUI_LIB
-        else if(role==Qt::ForegroundRole)
+        else if(nRole==Qt::ForegroundRole)
         {
             SpecAbstract::RECORD_TYPE rt=pItem->scanStruct().type;
 
