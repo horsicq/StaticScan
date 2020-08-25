@@ -170,16 +170,16 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int role) const
 
     if(index.isValid())
     {
-        StaticScanItem *item=static_cast<StaticScanItem *>(index.internalPointer());
+        StaticScanItem *pItem=static_cast<StaticScanItem *>(index.internalPointer());
 
         if(role==Qt::DisplayRole)
         {
-            result=item->data(index.column());
+            result=pItem->data(index.column());
         }
 #ifdef QT_GUI_LIB
         else if(role==Qt::ForegroundRole)
         {
-            SpecAbstract::RECORD_TYPE rt=item->scanStruct().type;
+            SpecAbstract::RECORD_TYPE rt=pItem->scanStruct().type;
 
             if(     (rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
                     (rt==SpecAbstract::RECORD_TYPE_SFX)||
