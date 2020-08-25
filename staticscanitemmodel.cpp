@@ -46,19 +46,19 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
             QString sParent=SpecAbstract::createTypeString(&pListDetects->at(i));
 
-            StaticScanItem *itemParent=new StaticScanItem(sParent,_itemParent,nColumnCount);
-            itemParent->setScanStruct(SpecAbstract::createHeaderScanStruct(&pListDetects->at(i)));
-            _itemParent->appendChild(itemParent);
+            StaticScanItem *pItemParent=new StaticScanItem(sParent,_itemParent,nColumnCount);
+            pItemParent->setScanStruct(SpecAbstract::createHeaderScanStruct(&pListDetects->at(i)));
+            _itemParent->appendChild(pItemParent);
 
-            mapParents.insert(pListDetects->at(i).id.uuid.toString(),itemParent);
+            mapParents.insert(pListDetects->at(i).id.uuid.toString(),pItemParent);
         }
 
-        StaticScanItem *itemParent=mapParents.value(pListDetects->at(i).id.uuid.toString());
+        StaticScanItem *pItemParent=mapParents.value(pListDetects->at(i).id.uuid.toString());
 
         QString sItem=SpecAbstract::createResultString2(&pListDetects->at(i));
-        StaticScanItem *item=new StaticScanItem(sItem,itemParent,nColumnCount);
-        item->setScanStruct(pListDetects->at(i));
-        itemParent->appendChild(item);
+        StaticScanItem *pItem=new StaticScanItem(sItem,pItemParent,nColumnCount);
+        pItem->setScanStruct(pListDetects->at(i));
+        pItemParent->appendChild(pItem);
     }
 }
 
