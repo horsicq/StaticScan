@@ -20,11 +20,11 @@
 //
 #include "staticscanitem.h"
 
-StaticScanItem::StaticScanItem(const QString &_sString, StaticScanItem *pParentItem, int nColumnCount)
+StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentItem, int nColumnCount)
 {
-    this->_parentItem=pParentItem;
-    this->_sString=_sString;
-    this->nColumnCount=nColumnCount;
+    this->pParentItem=pParentItem;
+    this->g_sString=sString;
+    this->g_nColumnCount=nColumnCount;
 }
 
 StaticScanItem::~StaticScanItem()
@@ -49,7 +49,7 @@ int StaticScanItem::childCount() const
 
 int StaticScanItem::columnCount() const
 {
-    return nColumnCount;
+    return g_nColumnCount;
 }
 
 QVariant StaticScanItem::data(int nColumn) const
@@ -58,29 +58,29 @@ QVariant StaticScanItem::data(int nColumn) const
 
     if(nColumn==0)
     {
-        result=_sString;
+        result=g_sString;
     }
 
     return result;
 }
 
-void StaticScanItem::setScanStruct(const SpecAbstract::SCAN_STRUCT &_ss)
+void StaticScanItem::setScanStruct(const SpecAbstract::SCAN_STRUCT &scanStruct)
 {
-    this->_ss=_ss;
+    this->g_scanStruct=scanStruct;
 }
 
 SpecAbstract::SCAN_STRUCT StaticScanItem::scanStruct() const
 {
-    return _ss;
+    return g_scanStruct;
 }
 
 int StaticScanItem::row() const
 {
     int nResult=0;
 
-    if(_parentItem)
+    if(pParentItem)
     {
-        nResult=_parentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
+        nResult=pParentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
     }
 
     return nResult;
@@ -88,5 +88,5 @@ int StaticScanItem::row() const
 
 StaticScanItem *StaticScanItem::parentItem()
 {
-    return _parentItem;
+    return pParentItem;
 }
