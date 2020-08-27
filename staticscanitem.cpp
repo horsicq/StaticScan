@@ -22,7 +22,7 @@
 
 StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentItem, int nColumnCount)
 {
-    this->pParentItem=pParentItem;
+    this->g_pParentItem=pParentItem;
     this->g_sString=sString;
     this->g_nColumnCount=nColumnCount;
 }
@@ -78,9 +78,9 @@ int StaticScanItem::row() const
 {
     int nResult=0;
 
-    if(pParentItem)
+    if(g_pParentItem)
     {
-        nResult=pParentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
+        nResult=g_pParentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
     }
 
     return nResult;
@@ -88,5 +88,5 @@ int StaticScanItem::row() const
 
 StaticScanItem *StaticScanItem::parentItem()
 {
-    return pParentItem;
+    return g_pParentItem;
 }
