@@ -29,7 +29,9 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
     QMap<QString,StaticScanItem *> mapParents;
 
-    for(int i=0; i<pListDetects->count(); i++)
+    int nNumberOfDetects=pListDetects->count();
+
+    for(int i=0; i<nNumberOfDetects; i++)
     {
         if(!mapParents.contains(pListDetects->at(i).id.uuid.toString()))
         {
