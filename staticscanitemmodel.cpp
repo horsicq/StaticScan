@@ -366,7 +366,9 @@ void StaticScanItemModel::_toString(QString *pString, StaticScanItem *pItem, int
 
     if(pItem->childCount())
     {
-        for(int i=0; i<pItem->childCount(); i++)
+        int nNumberOfChildren=pItem->childCount();
+
+        for(int i=0; i<nNumberOfChildren; i++)
         {
             _toString(pString,pItem->child(i),nLevel+1);
         }
