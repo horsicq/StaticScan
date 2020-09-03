@@ -292,7 +292,9 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *pItem)
     {
         pXml->writeStartElement(pItem->data(0).toString());
 
-        for(int i=0; i<pItem->childCount(); i++)
+        int nNumberOfChildren=pItem->childCount();
+
+        for(int i=0; i<nNumberOfChildren; i++)
         {
             _toXML(pXml,pItem->child(i));
         }
@@ -331,7 +333,9 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *pIte
 
         QJsonArray jsArray;
 
-        for(int i=0; i<pItem->childCount(); i++)
+        int nNumberOfChildren=pItem->childCount();
+
+        for(int i=0; i<nNumberOfChildren; i++)
         {
             QJsonObject jsRecord;
 
