@@ -323,10 +323,10 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *pIte
 
         QString sArrayName="detects";
 
-        if(ss.id.filepart!=SpecAbstract::RECORD_FILEPART_UNKNOWN)
+        if(ss.id.filePart!=SpecAbstract::RECORD_FILEPART_UNKNOWN)
         {
-            pJsonObject->insert("parentfilepart",SpecAbstract::recordFilepartIdToString(ss.parentId.filepart));
-            pJsonObject->insert("filetype",SpecAbstract::recordFiletypeIdToString(ss.id.filetype));
+            pJsonObject->insert("parentfilepart",SpecAbstract::recordFilePartIdToString(ss.parentId.filePart));
+            pJsonObject->insert("filetype",SpecAbstract::recordFileTypeIdToString(ss.id.fileType));
 
             sArrayName="values";
         }
