@@ -20,11 +20,11 @@
 //
 #include "staticscanitem.h"
 
-StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentItem, int nColumnCount)
+StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentItem, int nNumberOfColumns)
 {
     this->g_pParentItem=pParentItem;
     this->g_sString=sString;
-    this->g_nColumnCount=nColumnCount;
+    this->g_nNumberOfColumns=nNumberOfColumns;
 }
 
 StaticScanItem::~StaticScanItem()
@@ -49,7 +49,7 @@ int StaticScanItem::childCount() const
 
 int StaticScanItem::columnCount() const
 {
-    return g_nColumnCount;
+    return g_nNumberOfColumns;
 }
 
 QVariant StaticScanItem::data(int nColumn) const
