@@ -161,7 +161,7 @@ StaticScan::STATS StaticScan::getCurrentStats()
 
 void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true);
+    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true,&bIsStop);
 }
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
