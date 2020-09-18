@@ -91,7 +91,7 @@ void StaticScan::process()
             ffoptions.bSubdirectories=_pOptions->bSubdirectories;
             ffoptions.pbIsStop=&bIsStop;
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
-            ffoptions.pListFiles=&listFiles;
+            ffoptions.pListFileNames=&listFiles;
 
             XBinary::findFiles(_sDirectoryName,&ffoptions);
 
