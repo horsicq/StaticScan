@@ -20,7 +20,7 @@
 //
 #include "staticscanitemmodel.h"
 
-StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListDetects, QObject *pParent, int nNumberOfColumns)
+StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pListScanStructs, QObject *pParent, int nNumberOfColumns)
     : QAbstractItemModel(pParent)
 {
     _pRootItem=new StaticScanItem(tr("Result"),nullptr,nNumberOfColumns);
@@ -29,37 +29,37 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
     QMap<QString,StaticScanItem *> mapParents;
 
-    int nNumberOfDetects=pListDetects->count();
+    int nNumberOfDetects=pListScanStructs->count();
 
     for(int i=0; i<nNumberOfDetects; i++)
     {
-        if(!mapParents.contains(pListDetects->at(i).id.uuid.toString()))
+        if(!mapParents.contains(pListScanStructs->at(i).id.uuid.toString()))
         {
             StaticScanItem *_itemParent;
 
-            if(pListDetects->at(i).parentId.uuid=="")
+            if(pListScanStructs->at(i).parentId.uuid=="")
             {
                 _itemParent=_pRootItem;
             }
             else
             {
-                _itemParent=mapParents.value(pListDetects->at(i).parentId.uuid.toString());
+                _itemParent=mapParents.value(pListScanStructs->at(i).parentId.uuid.toString());
             }
 
-            QString sParent=SpecAbstract::createTypeString(&pListDetects->at(i));
+            QString sParent=SpecAbstract::createTypeString(&pListScanStructs->at(i));
 
             StaticScanItem *pItemParent=new StaticScanItem(sParent,_itemParent,nNumberOfColumns);
-            pItemParent->setScanStruct(SpecAbstract::createHeaderScanStruct(&pListDetects->at(i)));
+            pItemParent->setScanStruct(SpecAbstract::createHeaderScanStruct(&pListScanStructs->at(i)));
             _itemParent->appendChild(pItemParent);
 
-            mapParents.insert(pListDetects->at(i).id.uuid.toString(),pItemParent);
+            mapParents.insert(pListScanStructs->at(i).id.uuid.toString(),pItemParent);
         }
 
-        StaticScanItem *pItemParent=mapParents.value(pListDetects->at(i).id.uuid.toString());
+        StaticScanItem *pItemParent=mapParents.value(pListScanStructs->at(i).id.uuid.toString());
 
-        QString sItem=SpecAbstract::createResultString2(&pListDetects->at(i));
+        QString sItem=SpecAbstract::createResultString2(&pListScanStructs->at(i));
         StaticScanItem *pItem=new StaticScanItem(sItem,pItemParent,nNumberOfColumns);
-        pItem->setScanStruct(pListDetects->at(i));
+        pItem->setScanStruct(pListScanStructs->at(i));
         pItemParent->appendChild(pItem);
     }
 }
