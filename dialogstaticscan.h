@@ -22,6 +22,7 @@
 #define DIALOGSTATICSCAN_H
 
 #include <QDialog>
+#include "dialogstaticscanprocess.h"
 
 namespace Ui {
 class DialogStaticScan;
@@ -32,14 +33,16 @@ class DialogStaticScan : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogStaticScan(QWidget *pParent=nullptr);
+    explicit DialogStaticScan(QWidget *pParent,QIODevice *pDevice);
     ~DialogStaticScan();
 
 private slots:
     void on_pushButtonClose_clicked();
+    void on_pushButtonScan_clicked();
 
 private:
     Ui::DialogStaticScan *ui;
+    QIODevice *pDevice;
 };
 
 #endif // DIALOGSTATICSCAN_H

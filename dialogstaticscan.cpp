@@ -21,11 +21,13 @@
 #include "dialogstaticscan.h"
 #include "ui_dialogstaticscan.h"
 
-DialogStaticScan::DialogStaticScan(QWidget *pParent) :
+DialogStaticScan::DialogStaticScan(QWidget *pParent, QIODevice *pDevice) :
     QDialog(pParent),
     ui(new Ui::DialogStaticScan)
 {
     ui->setupUi(this);
+
+    this->pDevice=pDevice;
 }
 
 DialogStaticScan::~DialogStaticScan()
@@ -36,4 +38,22 @@ DialogStaticScan::~DialogStaticScan()
 void DialogStaticScan::on_pushButtonClose_clicked()
 {
     this->close();
+}
+
+void DialogStaticScan::on_pushButtonScan_clicked()
+{
+    SpecAbstract::SCAN_RESULT scanResult={0};
+
+    SpecAbstract::SCAN_OPTIONS options={0};
+
+    options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
+    options.bDeepScan=ui->checkBoxDeepScan->isChecked();
+    options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
+
+    DialogStaticScanProcess ds(this);
+    ds.setData(pDevice,&options,&scanResult);
+    ds.exec();
+
+    QString sSaveDirectory=XBinary::getDeviceFilePath(pDevice)+QDir::separator()+"result"; // mb TODO
+    ui->widgetResult->setData(scanResult,sSaveDirectory);
 }
