@@ -64,7 +64,7 @@ void HeurWidget::scan()
     options.bShowHeuristic=true;
     options.fileType=fileType;
 
-    DialogStaticScan ds(this);
+    DialogStaticScanProcess ds(this);
     ds.setData(pDevice,&options,&scanResult);
     ds.exec();
 

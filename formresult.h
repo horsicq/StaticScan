@@ -23,7 +23,7 @@
 
 #include <QWidget>
 
-#include "dialogstaticscan.h"
+#include "dialogstaticscanprocess.h"
 
 namespace Ui
 {

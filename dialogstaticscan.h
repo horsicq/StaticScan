@@ -22,14 +22,8 @@
 #define DIALOGSTATICSCAN_H
 
 #include <QDialog>
-#include <QThread>
-#include <QDateTime>
-#include <QFileDialog>
-#include <QStandardItemModel>
-#include "staticscanitemmodel.h"
 
-namespace Ui
-{
+namespace Ui {
 class DialogStaticScan;
 }
 
@@ -41,29 +35,11 @@ public:
     explicit DialogStaticScan(QWidget *pParent=nullptr);
     ~DialogStaticScan();
 
-    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
-
-    static bool saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName);
-
 private slots:
-    void on_pushButtonCancel_clicked();
-    void onCompleted(qint64 nElapsed);
-    void onSetProgressMaximum(int nValue);
-    void onSetProgressValue(int nValue);
-    void timerSlot();
-
-signals:
-    void scanFileStarted(QString sFileName);
-    void scanResult(SpecAbstract::SCAN_RESULT scanResult);
+    void on_pushButtonClose_clicked();
 
 private:
     Ui::DialogStaticScan *ui;
-    StaticScan *pScan;
-    QThread *pThread;
-    bool bIsRun;
-    QTimer *pTimer;
 };
 
 #endif // DIALOGSTATICSCAN_H

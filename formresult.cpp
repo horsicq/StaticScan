@@ -71,6 +71,6 @@ void FormResult::on_pushButtonSave_clicked()
 
     if(pModel)
     {
-        DialogStaticScan::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
     }
 }

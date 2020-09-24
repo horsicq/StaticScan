@@ -22,7 +22,7 @@
 #define HEURWIDGET_H
 
 #include <QWidget>
-#include "dialogstaticscan.h"
+#include "dialogstaticscanprocess.h"
 
 namespace Ui {
 class HeurWidget;
