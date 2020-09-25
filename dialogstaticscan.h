@@ -33,12 +33,13 @@ class DialogStaticScan : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogStaticScan(QWidget *pParent,QIODevice *pDevice);
+    explicit DialogStaticScan(QWidget *pParent,QIODevice *pDevice,bool bAuto=false);
     ~DialogStaticScan();
 
 private slots:
     void on_pushButtonClose_clicked();
     void on_pushButtonScan_clicked();
+    void scan();
 
 private:
     Ui::DialogStaticScan *ui;

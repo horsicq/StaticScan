@@ -21,13 +21,18 @@
 #include "dialogstaticscan.h"
 #include "ui_dialogstaticscan.h"
 
-DialogStaticScan::DialogStaticScan(QWidget *pParent, QIODevice *pDevice) :
+DialogStaticScan::DialogStaticScan(QWidget *pParent, QIODevice *pDevice, bool bAuto) :
     QDialog(pParent),
     ui(new Ui::DialogStaticScan)
 {
     ui->setupUi(this);
 
     this->pDevice=pDevice;
+
+    if(bAuto)
+    {
+        scan();
+    }
 }
 
 DialogStaticScan::~DialogStaticScan()
@@ -41,6 +46,11 @@ void DialogStaticScan::on_pushButtonClose_clicked()
 }
 
 void DialogStaticScan::on_pushButtonScan_clicked()
+{
+    scan();
+}
+
+void DialogStaticScan::scan()
 {
     SpecAbstract::SCAN_RESULT scanResult={0};
 
