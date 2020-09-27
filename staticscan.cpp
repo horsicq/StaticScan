@@ -85,22 +85,22 @@ void StaticScan::process()
         if(_sDirectoryName!="")
         {
             currentStats.sStatus=tr("Directory scan");
-            QList<QString> listFiles;
+            QList<QString> listFileNames;
 
             XBinary::FFOPTIONS ffoptions={};
             ffoptions.bSubdirectories=_pOptions->bSubdirectories;
             ffoptions.pbIsStop=&bIsStop;
             ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
-            ffoptions.pListFileNames=&listFiles;
+            ffoptions.pListFileNames=&listFileNames;
 
             XBinary::findFiles(_sDirectoryName,&ffoptions);
 
-            currentStats.nTotal=listFiles.count();
+            currentStats.nTotal=listFileNames.count();
 
             for(int i=0; (i<currentStats.nTotal)&&(!bIsStop); i++)
             {
                 currentStats.nCurrent=i+1;
-                currentStats.sStatus=listFiles.at(i);
+                currentStats.sStatus=listFileNames.at(i);
 
                 emit scanFileStarted(currentStats.sStatus);
 
