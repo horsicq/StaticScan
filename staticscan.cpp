@@ -22,116 +22,116 @@
 
 StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
 {
-    bIsStop=false;
-    _pOptions=nullptr;
-    _pScanResult=nullptr;
-    currentStats={};
-    pElapsedTimer=nullptr;
+    g_bIsStop=false;
+    g_pOptions=nullptr;
+    g_pScanResult=nullptr;
+    g_currentStats={};
+    g_pElapsedTimer=nullptr;
 
-    scanType=SCAN_TYPE_DEVICE;
+    g_scanType=SCAN_TYPE_DEVICE;
 }
 
 void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    this->_sFileName=sFileName;
-    this->_pOptions=pOptions;
-    this->_pScanResult=pScanResult;
+    this->g_sFileName=sFileName;
+    this->g_pOptions=pOptions;
+    this->g_pScanResult=pScanResult;
 
-    this->scanType=SCAN_TYPE_FILE;
+    this->g_scanType=SCAN_TYPE_FILE;
 }
 
 void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    this->_pDevice=pDevice;
-    this->_pOptions=pOptions;
-    this->_pScanResult=pScanResult;
+    this->g_pDevice=pDevice;
+    this->g_pOptions=pOptions;
+    this->g_pScanResult=pScanResult;
 
-    this->scanType=SCAN_TYPE_DEVICE;
+    this->g_scanType=SCAN_TYPE_DEVICE;
 }
 
 void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    this->_sDirectoryName=sDirectoryName;
-    this->_pOptions=pOptions;
+    this->g_sDirectoryName=sDirectoryName;
+    this->g_pOptions=pOptions;
 
-    this->scanType=SCAN_TYPE_DIRECTORY;
+    this->g_scanType=SCAN_TYPE_DIRECTORY;
 }
 
 void StaticScan::process()
 {
-    pElapsedTimer=new QElapsedTimer;
-    pElapsedTimer->start();
+    g_pElapsedTimer=new QElapsedTimer;
+    g_pElapsedTimer->start();
 
-    currentStats.nTotal=0;
-    currentStats.nCurrent=0;
+    g_currentStats.nTotal=0;
+    g_currentStats.nCurrent=0;
 
-    bIsStop=false;
+    g_bIsStop=false;
 
-    if(this->scanType==SCAN_TYPE_FILE)
+    if(this->g_scanType==SCAN_TYPE_FILE)
     {
-        if((_pScanResult)&&(_sFileName!=""))
+        if((g_pScanResult)&&(g_sFileName!=""))
         {
-            currentStats.sStatus=tr("File scan");
+            g_currentStats.sStatus=tr("File scan");
 
-            emit scanFileStarted(_sFileName);
+            emit scanFileStarted(g_sFileName);
 
-            *_pScanResult=scanFile(_sFileName);
+            *g_pScanResult=scanFile(g_sFileName);
 
-            emit scanResult(*_pScanResult);
+            emit scanResult(*g_pScanResult);
         }
     }
-    else if(this->scanType==SCAN_TYPE_DIRECTORY)
+    else if(this->g_scanType==SCAN_TYPE_DIRECTORY)
     {
-        if(_sDirectoryName!="")
+        if(g_sDirectoryName!="")
         {
-            currentStats.sStatus=tr("Directory scan");
+            g_currentStats.sStatus=tr("Directory scan");
             QList<QString> listFileNames;
 
             XBinary::FFOPTIONS ffoptions={};
-            ffoptions.bSubdirectories=_pOptions->bSubdirectories;
-            ffoptions.pbIsStop=&bIsStop;
-            ffoptions.pnNumberOfFiles=&(currentStats.nTotal);
+            ffoptions.bSubdirectories=g_pOptions->bSubdirectories;
+            ffoptions.pbIsStop=&g_bIsStop;
+            ffoptions.pnNumberOfFiles=&(g_currentStats.nTotal);
             ffoptions.pListFileNames=&listFileNames;
 
-            XBinary::findFiles(_sDirectoryName,&ffoptions);
+            XBinary::findFiles(g_sDirectoryName,&ffoptions);
 
-            currentStats.nTotal=listFileNames.count();
+            g_currentStats.nTotal=listFileNames.count();
 
-            for(int i=0; (i<currentStats.nTotal)&&(!bIsStop); i++)
+            for(int i=0; (i<g_currentStats.nTotal)&&(!g_bIsStop); i++)
             {
-                currentStats.nCurrent=i+1;
-                currentStats.sStatus=listFileNames.at(i);
+                g_currentStats.nCurrent=i+1;
+                g_currentStats.sStatus=listFileNames.at(i);
 
-                emit scanFileStarted(currentStats.sStatus);
+                emit scanFileStarted(g_currentStats.sStatus);
 
-                SpecAbstract::SCAN_RESULT _scanResult=scanFile(currentStats.sStatus);
+                SpecAbstract::SCAN_RESULT _scanResult=scanFile(g_currentStats.sStatus);
 
                 emit scanResult(_scanResult);
             }
         }
     }
-    else if(this->scanType==SCAN_TYPE_DEVICE)
+    else if(this->g_scanType==SCAN_TYPE_DEVICE)
     {
-        if(_pDevice)
+        if(g_pDevice)
         { 
-            currentStats.sStatus=tr("Device scan");
+            g_currentStats.sStatus=tr("Device scan");
 
-            *_pScanResult=scanDevice(_pDevice);
+            *g_pScanResult=scanDevice(g_pDevice);
 
-            emit scanResult(*_pScanResult);
+            emit scanResult(*g_pScanResult);
         }
     }
 
-    emit completed(pElapsedTimer->elapsed());
-    delete pElapsedTimer;
-    pElapsedTimer=nullptr;
+    emit completed(g_pElapsedTimer->elapsed());
+    delete g_pElapsedTimer;
+    g_pElapsedTimer=nullptr;
 
-    bIsStop=false;
+    g_bIsStop=false;
 }
 
 void StaticScan::stop()
 {
-    bIsStop=true;
+    g_bIsStop=true;
 }
 
 SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
@@ -151,17 +151,17 @@ QString StaticScan::getEngineVersion()
 
 StaticScan::STATS StaticScan::getCurrentStats()
 {
-    if(pElapsedTimer)
+    if(g_pElapsedTimer)
     {
-        currentStats.nElapsed=pElapsedTimer->elapsed();
+        g_currentStats.nElapsed=g_pElapsedTimer->elapsed();
     }
 
-    return currentStats;
+    return g_currentStats;
 }
 
 void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true,&bIsStop);
+    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true,&g_bIsStop);
 }
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
@@ -188,7 +188,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
     SpecAbstract::ID parentId={0};
     parentId.fileType=XBinary::FT_UNKNOWN;
     parentId.filePart=SpecAbstract::RECORD_FILEPART_HEADER;
-    _process(pDevice,&result,0,pDevice->size(),parentId,_pOptions);
+    _process(pDevice,&result,0,pDevice->size(),parentId,g_pOptions);
 
     return result;
 }

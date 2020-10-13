@@ -71,15 +71,15 @@ public slots:
     void stop();
 
 private:
-    QString _sFileName;
-    QString _sDirectoryName;
-    QIODevice *_pDevice;
-    SpecAbstract::SCAN_OPTIONS *_pOptions;
-    SpecAbstract::SCAN_RESULT *_pScanResult;
-    bool bIsStop;
-    STATS currentStats;
-    QElapsedTimer *pElapsedTimer;
-    SCAN_TYPE scanType;
+    QString g_sFileName;
+    QString g_sDirectoryName;
+    QIODevice *g_pDevice;
+    SpecAbstract::SCAN_OPTIONS *g_pOptions;
+    SpecAbstract::SCAN_RESULT *g_pScanResult;
+    bool g_bIsStop;
+    STATS g_currentStats;
+    QElapsedTimer *g_pElapsedTimer;
+    SCAN_TYPE g_scanType;
 };
 
 #endif // STATICSCAN_H
