@@ -42,7 +42,7 @@ public:
     StaticScanItem *parentItem();
 
 private:
-    QList<StaticScanItem *> listChildItems;
+    QList<StaticScanItem *> g_listChildItems;
     QString g_sString;
     StaticScanItem *g_pParentItem;
     int g_nNumberOfColumns;

@@ -29,22 +29,22 @@ StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentIt
 
 StaticScanItem::~StaticScanItem()
 {
-    qDeleteAll(listChildItems);
+    qDeleteAll(g_listChildItems);
 }
 
 void StaticScanItem::appendChild(StaticScanItem *pChild)
 {
-    listChildItems.append(pChild);
+    g_listChildItems.append(pChild);
 }
 
 StaticScanItem *StaticScanItem::child(int nRow)
 {
-    return listChildItems.value(nRow);
+    return g_listChildItems.value(nRow);
 }
 
 int StaticScanItem::childCount() const
 {
-    return listChildItems.count();
+    return g_listChildItems.count();
 }
 
 int StaticScanItem::columnCount() const
@@ -80,7 +80,7 @@ int StaticScanItem::row() const
 
     if(g_pParentItem)
     {
-        nResult=g_pParentItem->listChildItems.indexOf(const_cast<StaticScanItem*>(this));
+        nResult=g_pParentItem->g_listChildItems.indexOf(const_cast<StaticScanItem*>(this));
     }
 
     return nResult;
