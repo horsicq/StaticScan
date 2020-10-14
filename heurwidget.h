@@ -43,8 +43,8 @@ private slots:
 
 private:
     Ui::HeurWidget *ui;
-    QIODevice *pDevice;
-    XBinary::FT fileType;
+    QIODevice *g_pDevice;
+    XBinary::FT g_fileType;
 };
 
 #endif // HEURWIDGET_H

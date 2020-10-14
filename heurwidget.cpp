@@ -39,8 +39,8 @@ HeurWidget::~HeurWidget()
 
 void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType)
 {
-    this->pDevice=pDevice;
-    this->fileType=fileType;
+    this->g_pDevice=pDevice;
+    this->g_fileType=fileType;
 
     if(bAuto)
     {
@@ -62,10 +62,10 @@ void HeurWidget::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
     options.bShowHeuristic=true;
-    options.fileType=fileType;
+    options.fileType=g_fileType;
 
     DialogStaticScanProcess ds(this);
-    ds.setData(pDevice,&options,&scanResult);
+    ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 
     QAbstractItemModel *pOldTreeModel=ui->treeViewScan->model();
