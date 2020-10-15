@@ -49,7 +49,8 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
             QString sParent=SpecAbstract::createTypeString(&pListScanStructs->at(i));
 
             StaticScanItem *pItemParent=new StaticScanItem(sParent,_itemParent,nNumberOfColumns);
-            pItemParent->setScanStruct(SpecAbstract::createHeaderScanStruct(&pListScanStructs->at(i)));
+            SpecAbstract::SCAN_STRUCT ss=SpecAbstract::createHeaderScanStruct(&pListScanStructs->at(i));
+            pItemParent->setScanStruct(ss);
             _itemParent->appendChild(pItemParent);
 
             mapParents.insert(pListScanStructs->at(i).id.uuid.toString(),pItemParent);
