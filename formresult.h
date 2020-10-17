@@ -37,7 +37,7 @@ class FormResult : public QWidget
 public:
     explicit FormResult(QWidget *pParent=nullptr);
     ~FormResult();
-    void setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName);
+    void setData(SpecAbstract::SCAN_RESULT scanResult,QString sSaveFileName);
 
 private slots:
     void on_pushButtonClear_clicked();
