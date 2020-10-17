@@ -45,7 +45,7 @@ public:
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
 
-    static bool saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName);
+    static bool saveResult(QWidget *pParent,StaticScanItemModel *pModel,QString sResultFileName);
 
 private slots:
     void on_pushButtonCancel_clicked();
