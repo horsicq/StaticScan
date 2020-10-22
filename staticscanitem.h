@@ -28,7 +28,7 @@
 class StaticScanItem
 {
 public:
-    StaticScanItem(const QString &sString, StaticScanItem *pParentItem=nullptr, int nNumberOfColumns=1);
+    StaticScanItem(const QString &sString,StaticScanItem *pParentItem=nullptr,int nNumberOfColumns=1);
     ~StaticScanItem();
 
     void appendChild(StaticScanItem *pChild);
