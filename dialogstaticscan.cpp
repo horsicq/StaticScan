@@ -27,6 +27,8 @@ DialogStaticScan::DialogStaticScan(QWidget *pParent, QIODevice *pDevice, bool bA
 {
     ui->setupUi(this);
 
+    this->pParent=pParent;
+
     setWindowFlags(Qt::Window);
 
     this->pDevice=pDevice;
@@ -62,7 +64,7 @@ void DialogStaticScan::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
 
-    DialogStaticScanProcess ds(this);
+    DialogStaticScanProcess ds(pParent);
     ds.setData(pDevice,&options,&scanResult);
     ds.exec();
 

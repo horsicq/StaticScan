@@ -185,12 +185,13 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
             SpecAbstract::RECORD_TYPE rt=pItem->scanStruct().type;
 
             if(     (rt==SpecAbstract::RECORD_TYPE_INSTALLER)||
-                    (rt==SpecAbstract::RECORD_TYPE_SFX)||
-                    (rt==SpecAbstract::RECORD_TYPE_ARCHIVE))
+                    (rt==SpecAbstract::RECORD_TYPE_SFX))
             {
                 result=QVariant(QColor(Qt::blue));
             }
             else if((rt==SpecAbstract::RECORD_TYPE_PROTECTOR)||
+                    (rt==SpecAbstract::RECORD_TYPE_APKOBFUSCATOR)||
+                    (rt==SpecAbstract::RECORD_TYPE_JAROBFUSCATOR)||
                     (rt==SpecAbstract::RECORD_TYPE_NETOBFUSCATOR)||
                     (rt==SpecAbstract::RECORD_TYPE_NETCOMPRESSOR)||
                     (rt==SpecAbstract::RECORD_TYPE_DONGLEPROTECTION)||
@@ -199,7 +200,8 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
             {
                 result=QVariant(QColor(Qt::red));
             }
-            else if(rt==SpecAbstract::RECORD_TYPE_PETOOL)
+            else if((rt==SpecAbstract::RECORD_TYPE_PETOOL)||
+                    (rt==SpecAbstract::RECORD_TYPE_APKTOOL))
             {
                 result=QVariant(QColor(Qt::green));
             }

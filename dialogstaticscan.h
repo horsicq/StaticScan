@@ -44,6 +44,7 @@ private slots:
 private:
     Ui::DialogStaticScan *ui;
     QIODevice *pDevice;
+    QWidget *pParent;
 };
 
 #endif // DIALOGSTATICSCAN_H
