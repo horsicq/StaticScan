@@ -64,7 +64,7 @@ void HeurWidget::scan()
     options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
-    options.bShowHeuristic=true;
+    options.bShowDetects=true;
     options.fileType=g_fileType;
 
     DialogStaticScanProcess ds(pParent);
@@ -92,7 +92,7 @@ void HeurWidget::scan()
     for(int i=0;i<nNumberOfHeurs;i++)
     {
         QStandardItem *pHeurType=new QStandardItem;
-        pHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).heurType));
+        pHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).detectType));
         pHeurModel->setItem(i,0,pHeurType);
 
         QStandardItem *pName=new QStandardItem;
