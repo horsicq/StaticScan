@@ -27,7 +27,7 @@ HeurWidget::HeurWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    this->pParent=pParent;
+    this->g_pParent=pParent;
 
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(true);
@@ -43,7 +43,7 @@ void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType, Q
 {
     this->g_pDevice=pDevice;
     this->g_fileType=fileType;
-    this->pParent=pParent;
+    this->g_pParent=pParent;
 
     if(bAuto)
     {
@@ -67,7 +67,7 @@ void HeurWidget::scan()
     options.bShowDetects=true;
     options.fileType=g_fileType;
 
-    DialogStaticScanProcess ds(pParent);
+    DialogStaticScanProcess ds(g_pParent);
     ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 

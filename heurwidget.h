@@ -44,7 +44,7 @@ private slots:
 private:
     Ui::HeurWidget *ui;
     QIODevice *g_pDevice;
-    QWidget *pParent;
+    QWidget *g_pParent;
     XBinary::FT g_fileType;
 };
 
