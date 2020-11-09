@@ -134,6 +134,16 @@ void StaticScan::stop()
     g_bIsStop=true;
 }
 
+SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions)
+{
+    SpecAbstract::SCAN_RESULT result={0};
+    StaticScan scan;
+    scan.setData(pDevice,pOptions,&result);
+    scan.process();
+
+    return result;
+}
+
 SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     SpecAbstract::SCAN_RESULT result={0};
