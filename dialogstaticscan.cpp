@@ -27,11 +27,11 @@ DialogStaticScan::DialogStaticScan(QWidget *pParent, QIODevice *pDevice, bool bA
 {
     ui->setupUi(this);
 
-    this->pParent=pParent;
+    this->g_pParent=pParent;
 
     setWindowFlags(Qt::Window);
 
-    this->pDevice=pDevice;
+    this->g_pDevice=pDevice;
 
     if(bAuto)
     {
@@ -64,10 +64,10 @@ void DialogStaticScan::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
 
-    DialogStaticScanProcess ds(pParent);
-    ds.setData(pDevice,&options,&scanResult);
+    DialogStaticScanProcess ds(g_pParent);
+    ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 
-    QString sSaveDirectory=XBinary::getDeviceFilePath(pDevice)+QDir::separator()+"result"; // mb TODO
+    QString sSaveDirectory=XBinary::getDeviceFilePath(g_pDevice)+QDir::separator()+"result"; // mb TODO
     ui->widgetResult->setData(scanResult,sSaveDirectory);
 }
