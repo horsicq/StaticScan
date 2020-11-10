@@ -45,9 +45,9 @@ private slots:
 
 private:
     Ui::FormResult *ui;
-    SpecAbstract::SCAN_RESULT scanResult;
-    QString sSaveFileName;
-    QAbstractItemModel *pModel;
+    SpecAbstract::SCAN_RESULT g_scanResult;
+    QString g_sSaveFileName;
+    QAbstractItemModel *g_pModel;
 };
 
 #endif // FORMRESULT_H

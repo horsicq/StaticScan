@@ -26,9 +26,9 @@ FormResult::FormResult(QWidget *pParent) :
     ui(new Ui::FormResult)
 {
     ui->setupUi(this);
-    pModel=0;
+    g_pModel=0;
 
-    scanResult={0};
+    g_scanResult={0};
 }
 
 FormResult::~FormResult()
@@ -38,20 +38,20 @@ FormResult::~FormResult()
 
 void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName)
 {
-    this->scanResult=scanResult;
-    this->sSaveFileName=sSaveFileName;
+    this->g_scanResult=scanResult;
+    this->g_sSaveFileName=sSaveFileName;
 
     ui->labelElapsedTime->clear();
 
     QAbstractItemModel *pOldModel=ui->treeViewResult->model();
 
-    pModel=new StaticScanItemModel(&(this->scanResult.listRecords),this,1);
-    ui->treeViewResult->setModel(pModel);
+    g_pModel=new StaticScanItemModel(&(this->g_scanResult.listRecords),this,1);
+    ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
     delete pOldModel;
 
-    ui->labelElapsedTime->setText(QString("%1 %2").arg(this->scanResult.nScanTime).arg(tr("msec")));
+    ui->labelElapsedTime->setText(QString("%1 %2").arg(this->g_scanResult.nScanTime).arg(tr("msec")));
 }
 
 void FormResult::on_pushButtonClear_clicked()
@@ -71,6 +71,6 @@ void FormResult::on_pushButtonSave_clicked()
 
     if(pModel)
     {
-        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,g_sSaveFileName);
     }
 }
