@@ -12,7 +12,7 @@ FORMS += \
 
 !contains(XCONFIG, formresult) {
     XCONFIG += formresult
-    include(formresult.pri)
+    include($$PWD/formresult.pri)
 }
 
 
