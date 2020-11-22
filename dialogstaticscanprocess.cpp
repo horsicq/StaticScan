@@ -27,65 +27,65 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    pScan=new StaticScan;
-    pThread=new QThread;
+    g_pScan=new StaticScan;
+    g_pThread=new QThread;
 
-    pScan->moveToThread(pThread);
+    g_pScan->moveToThread(g_pThread);
 
-    connect(pThread, SIGNAL(started()), pScan, SLOT(process()));
-    connect(pScan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
-    connect(pScan, SIGNAL(scanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
-    connect(pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
+    connect(g_pThread, SIGNAL(started()), g_pScan, SLOT(process()));
+    connect(g_pScan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(g_pScan, SIGNAL(scanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
+    connect(g_pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
 
-    pTimer=new QTimer(this);
-    connect(pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
+    g_pTimer=new QTimer(this);
+    connect(g_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 
-    bIsRun=false;
+    g_bIsRun=false;
 }
 
 void DialogStaticScanProcess::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    bIsRun=true;
-    pScan->setData(sFileName,pOptions,pScanResult);
-    pThread->start();
-    pTimer->start(1000); // 1 sec TODO const
+    g_bIsRun=true;
+    g_pScan->setData(sFileName,pOptions,pScanResult);
+    g_pThread->start();
+    g_pTimer->start(1000); // 1 sec TODO const
     ui->progressBarTotal->setMaximum(0);
 }
 
 void DialogStaticScanProcess::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    bIsRun=true;
-    pScan->setData(pDevice,pOptions,pScanResult);
-    pThread->start();
-    pTimer->start(1000); // 1 sec TODO const
+    g_bIsRun=true;
+    g_pScan->setData(pDevice,pOptions,pScanResult);
+    g_pThread->start();
+    g_pTimer->start(1000); // 1 sec TODO const
     ui->progressBarTotal->setMaximum(0);
 }
 
 void DialogStaticScanProcess::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    bIsRun=true;
-    pScan->setData(sDirectoryName,pOptions);
-    pThread->start();
-    pTimer->start(1000); // 1 sec TODO const
+    g_bIsRun=true;
+    g_pScan->setData(sDirectoryName,pOptions);
+    g_pThread->start();
+    g_pTimer->start(1000); // 1 sec TODO const
     ui->progressBarTotal->setMaximum(100);
 }
 
 DialogStaticScanProcess::~DialogStaticScanProcess()
 {
-    if(bIsRun)
+    if(g_bIsRun)
     {
-        pScan->stop();
+        g_pScan->stop();
     }
 
-    pTimer->stop();
+    g_pTimer->stop();
 
-    pThread->quit();
-    pThread->wait();
+    g_pThread->quit();
+    g_pThread->wait();
 
     delete ui;
 
-    delete pThread;
-    delete pScan;
+    delete g_pThread;
+    delete g_pScan;
 }
 
 bool DialogStaticScanProcess::saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName)
@@ -121,11 +121,11 @@ bool DialogStaticScanProcess::saveResult(QWidget *pParent, StaticScanItemModel *
 
 void DialogStaticScanProcess::on_pushButtonCancel_clicked()
 {
-    if(bIsRun)
+    if(g_bIsRun)
     {
-        pScan->stop();
-        pTimer->stop();
-        bIsRun=false;
+        g_pScan->stop();
+        g_pTimer->stop();
+        g_bIsRun=false;
     }
 }
 
@@ -133,7 +133,7 @@ void DialogStaticScanProcess::onCompleted(qint64 nElapsed)
 {
     Q_UNUSED(nElapsed)
 
-    bIsRun=false;
+    g_bIsRun=false;
     this->close();
 }
 
@@ -149,7 +149,7 @@ void DialogStaticScanProcess::onSetProgressValue(int nValue)
 
 void DialogStaticScanProcess::timerSlot()
 {
-    StaticScan::STATS stats=pScan->getCurrentStats();
+    StaticScan::STATS stats=g_pScan->getCurrentStats();
 
     ui->labelTotal->setText(QString::number(stats.nTotal));
     ui->labelCurrent->setText(QString::number(stats.nCurrent));

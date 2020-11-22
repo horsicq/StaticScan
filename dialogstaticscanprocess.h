@@ -60,10 +60,10 @@ signals:
 
 private:
     Ui::DialogStaticScanProcess *ui;
-    StaticScan *pScan;
-    QThread *pThread;
-    bool bIsRun;
-    QTimer *pTimer;
+    StaticScan *g_pScan;
+    QThread *g_pThread;
+    bool g_bIsRun;
+    QTimer *g_pTimer;
 };
 
 #endif // DIALOGSTATICSCANPROCESS_H
