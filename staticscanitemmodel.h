@@ -58,7 +58,9 @@ private:
     void _toXML(QXmlStreamWriter *pXml,StaticScanItem *pItem);
     void _toJSON(QJsonObject *pJsonObject,StaticScanItem *pItem);
     void _toString(QString *pString,StaticScanItem *pItem,int nLevel);
-    StaticScanItem *_pRootItem;
+
+private:
+    StaticScanItem *g_pRootItem;
 };
 
 #endif // STATICSCANITEMMODEL_H
