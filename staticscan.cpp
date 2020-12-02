@@ -178,14 +178,17 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName)
 {
     SpecAbstract::SCAN_RESULT result={0};
 
-    QFile file;
-    file.setFileName(sFileName);
-
-    if(file.open(QIODevice::ReadOnly))
+    if(sFileName!="")
     {
-        result=scanDevice(&file);
+        QFile file;
+        file.setFileName(sFileName);
 
-        file.close();
+        if(file.open(QIODevice::ReadOnly))
+        {
+            result=scanDevice(&file);
+
+            file.close();
+        }
     }
 
     return result;
