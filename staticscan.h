@@ -21,7 +21,6 @@
 #ifndef STATICSCAN_H
 #define STATICSCAN_H
 
-#include <QObject>
 #include <QElapsedTimer>
 #include <QTimer>
 #include "specabstract.h"
