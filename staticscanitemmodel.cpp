@@ -37,7 +37,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
         {
             StaticScanItem *_itemParent;
 
-            if(pListScanStructs->at(i).parentId.uuid=="")
+            if(pListScanStructs->at(i).parentId.uuid.toString()=="{00000000-0000-0000-0000-000000000000}")
             {
                 _itemParent=g_pRootItem;
             }

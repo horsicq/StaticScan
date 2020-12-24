@@ -199,6 +199,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
     SpecAbstract::SCAN_RESULT result={0};
 
     SpecAbstract::ID parentId={0};
+    qDebug(parentId.uuid.toString().toLatin1().data());
     parentId.fileType=XBinary::FT_UNKNOWN;
     parentId.filePart=SpecAbstract::RECORD_FILEPART_HEADER;
     _process(pDevice,&result,0,pDevice->size(),parentId,g_pOptions);
