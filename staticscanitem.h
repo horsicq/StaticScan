@@ -21,7 +21,6 @@
 #ifndef STATICSCANITEM_H
 #define STATICSCANITEM_H
 
-#include <QList>
 #include "staticscan.h"
 
 class StaticScanItem
