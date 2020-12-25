@@ -22,7 +22,6 @@
 #define STATICSCANITEM_H
 
 #include <QList>
-#include <QVariant>
 #include "staticscan.h"
 
 class StaticScanItem
