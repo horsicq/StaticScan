@@ -22,6 +22,7 @@
 #define HEURWIDGET_H
 
 #include "dialogstaticscanprocess.h"
+#include "xshortcuts.h"
 
 namespace Ui {
 class HeurWidget;
@@ -34,6 +35,7 @@ class HeurWidget : public QWidget
 public:
     explicit HeurWidget(QWidget *pParent=nullptr);
     ~HeurWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
     void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType,QWidget *pParent=nullptr);
 
 private slots:

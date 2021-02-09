@@ -39,6 +39,11 @@ HeurWidget::~HeurWidget()
     delete ui;
 }
 
+void HeurWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    // TODO
+}
+
 void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType, QWidget *pParent)
 {
     this->g_pDevice=pDevice;
