@@ -142,7 +142,7 @@ void DialogStaticScanProcess::onSetProgressMaximum(int nValue)
     ui->progressBarTotal->setMaximum(nValue);
 }
 
-void DialogStaticScanProcess::onSetProgressValue(int nValue)
+void DialogStaticScanProcess::onSetProgressValueChanged(int nValue)
 {
     ui->progressBarTotal->setValue(nValue);
 }

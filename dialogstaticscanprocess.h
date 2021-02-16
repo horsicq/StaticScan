@@ -51,7 +51,7 @@ private slots:
     void on_pushButtonCancel_clicked();
     void onCompleted(qint64 nElapsed);
     void onSetProgressMaximum(int nValue);
-    void onSetProgressValue(int nValue);
+    void onSetProgressValueChanged(int nValue);
     void timerSlot();
 
 signals:
