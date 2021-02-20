@@ -205,3 +205,12 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
 
     return result;
 }
+
+SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint64 nSize)
+{
+    SpecAbstract::SCAN_RESULT result={0};
+
+    // TODO !!!
+
+    return result;
+}
