@@ -44,6 +44,7 @@ public:
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    // TODO setData memory
     static SpecAbstract::SCAN_RESULT processDevice(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions);
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
