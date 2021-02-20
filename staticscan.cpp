@@ -210,7 +210,11 @@ SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize)
 {
     SpecAbstract::SCAN_RESULT result={0};
 
-    // TODO !!!
+    QBuffer buffer;
+
+    buffer.setData(pData,nSize);
+
+    result=scanDevice(&buffer);
 
     return result;
 }
