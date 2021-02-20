@@ -60,6 +60,7 @@ private:
     void _process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions);
     SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
     SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice);
+    // TODO ScanMemory function
 
 signals:
     void scanFileStarted(QString sFileName);
