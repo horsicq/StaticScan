@@ -22,7 +22,7 @@
 #include "ui_heurwidget.h"
 
 HeurWidget::HeurWidget(QWidget *pParent) :
-    QWidget(pParent),
+    XShortcutsWidget(pParent),
     ui(new Ui::HeurWidget)
 {
     ui->setupUi(this);
@@ -37,11 +37,6 @@ HeurWidget::HeurWidget(QWidget *pParent) :
 HeurWidget::~HeurWidget()
 {
     delete ui;
-}
-
-void HeurWidget::setShortcuts(XShortcuts *pShortcuts)
-{
-    // TODO
 }
 
 void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType, QWidget *pParent)
