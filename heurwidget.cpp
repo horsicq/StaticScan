@@ -114,3 +114,8 @@ void HeurWidget::scan()
 
     // mb TODO scan time
 }
+
+void HeurWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}

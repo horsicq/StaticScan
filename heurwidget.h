@@ -41,6 +41,9 @@ private slots:
     void on_pushButtonScan_clicked();
     void scan();
 
+protected:
+    virtual void registerShortcuts(bool bState);
+
 private:
     Ui::HeurWidget *ui;
     QIODevice *g_pDevice;
