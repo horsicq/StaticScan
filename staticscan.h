@@ -25,7 +25,7 @@
 #include <QTimer>
 #include "specabstract.h"
 
-#define SSE_VERSION "1.09"
+#define SSE_VERSION "1.10"
 
 class StaticScan : public QObject
 {
