@@ -77,7 +77,7 @@ void HeurWidget::scan()
     ui->treeViewScan->setModel(pModel);
     ui->treeViewScan->expandAll();
 
-    delete pOldTreeModel;
+    delete pOldTreeModel; // mb TODO in thread
 
     int nNumberOfHeurs=scanResult.listHeurs.count();
 
