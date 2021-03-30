@@ -67,6 +67,8 @@ void HeurWidget::scan()
     options.bShowDetects=true;
     options.fileType=g_fileType;
 
+    qDebug("PARENT %x",g_pParent);
+
     DialogStaticScanProcess ds(g_pParent);
     ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
