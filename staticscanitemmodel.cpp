@@ -33,17 +33,17 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
     for(int i=0; i<nNumberOfDetects; i++)
     {
-        if(!mapParents.contains(pListScanStructs->at(i).id.uuid.toString()))
+        if(!mapParents.contains(pListScanStructs->at(i).id.sUuid))
         {
             StaticScanItem *_itemParent;
 
-            if(pListScanStructs->at(i).parentId.uuid.toString()=="{00000000-0000-0000-0000-000000000000}")
+            if(pListScanStructs->at(i).parentId.sUuid=="")
             {
                 _itemParent=g_pRootItem;
             }
             else
             {
-                _itemParent=mapParents.value(pListScanStructs->at(i).parentId.uuid.toString());
+                _itemParent=mapParents.value(pListScanStructs->at(i).parentId.sUuid);
             }
 
             QString sParent=SpecAbstract::createTypeString(&pListScanStructs->at(i));
@@ -53,10 +53,10 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
             pItemParent->setScanStruct(ss);
             _itemParent->appendChild(pItemParent);
 
-            mapParents.insert(pListScanStructs->at(i).id.uuid.toString(),pItemParent);
+            mapParents.insert(pListScanStructs->at(i).id.sUuid,pItemParent);
         }
 
-        StaticScanItem *pItemParent=mapParents.value(pListScanStructs->at(i).id.uuid.toString());
+        StaticScanItem *pItemParent=mapParents.value(pListScanStructs->at(i).id.sUuid);
 
         QString sItem=SpecAbstract::createResultString2(&pListScanStructs->at(i));
         StaticScanItem *pItem=new StaticScanItem(sItem,pItemParent,nNumberOfColumns);
