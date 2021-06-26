@@ -35,7 +35,7 @@ class HeurWidget : public XShortcutsWidget
 public:
     explicit HeurWidget(QWidget *pParent=nullptr);
     ~HeurWidget();
-    void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType,QWidget *pParent=nullptr);
+    void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
 
 private slots:
     void on_pushButtonScan_clicked();
@@ -47,7 +47,6 @@ protected:
 private:
     Ui::HeurWidget *ui;
     QIODevice *g_pDevice;
-    QWidget *g_pParent;
     XBinary::FT g_fileType;
 };
 

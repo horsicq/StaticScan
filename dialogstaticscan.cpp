@@ -21,27 +21,28 @@
 #include "dialogstaticscan.h"
 #include "ui_dialogstaticscan.h"
 
-DialogStaticScan::DialogStaticScan(QWidget *pParent, QIODevice *pDevice, bool bAuto) :
+DialogStaticScan::DialogStaticScan(QWidget *pParent) :
     QDialog(pParent),
     ui(new Ui::DialogStaticScan)
 {
     ui->setupUi(this);
 
-    this->g_pParent=pParent;
-
     setWindowFlags(Qt::Window);
+}
 
+DialogStaticScan::~DialogStaticScan()
+{
+    delete ui;
+}
+
+void DialogStaticScan::setData(QIODevice *pDevice, bool bAuto)
+{
     this->g_pDevice=pDevice;
 
     if(bAuto)
     {
         scan();
     }
-}
-
-DialogStaticScan::~DialogStaticScan()
-{
-    delete ui;
 }
 
 void DialogStaticScan::on_pushButtonClose_clicked()
@@ -64,7 +65,7 @@ void DialogStaticScan::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
 
-    DialogStaticScanProcess ds(g_pParent);
+    DialogStaticScanProcess ds(this);
     ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 
