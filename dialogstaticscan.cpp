@@ -65,7 +65,7 @@ void DialogStaticScan::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
 
-    DialogStaticScanProcess ds(this);
+    DialogStaticScanProcess ds(XShortcutsWidget::getMainWidget(this));
     ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 

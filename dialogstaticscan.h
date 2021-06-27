@@ -22,6 +22,7 @@
 #define DIALOGSTATICSCAN_H
 
 #include <QDialog>
+#include "xshortcutswidget.h"
 #include "dialogstaticscanprocess.h"
 
 namespace Ui {
