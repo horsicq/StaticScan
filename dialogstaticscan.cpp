@@ -65,10 +65,10 @@ void DialogStaticScan::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
 
-    DialogStaticScanProcess ds(XShortcutsWidget::getMainWidget(this));
+    DialogStaticScanProcess ds(XOptions::getMainWidget(this));
     ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 
-    QString sSaveDirectory=XBinary::getDeviceFilePath(g_pDevice)+QDir::separator()+"result"; // mb TODO
-    ui->widgetResult->setData(scanResult,sSaveDirectory);
+    QString sSaveFileName=XBinary::getResultFileName(g_pDevice,"result.txt"); // mb TODO
+    ui->widgetResult->setData(scanResult,sSaveFileName);
 }
