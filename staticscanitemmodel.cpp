@@ -209,6 +209,10 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
             {
                 result=QVariant(QColor(Qt::darkYellow));
             }
+            else if(rt==SpecAbstract::RECORD_TYPE_SIGNTOOL)
+            {
+                result=QVariant(QColor(Qt::darkMagenta));
+            }
             else
             {
                 result=QVariant(QApplication::palette().text().color());
