@@ -25,13 +25,14 @@
 #include <QTimer>
 #include "specabstract.h"
 
-#define SSE_VERSION "1.10"
+#define SSE_VERSION "0.06"
 
 class StaticScan : public QObject
 {
     Q_OBJECT
 
 public:
+
     struct STATS
     {
         qint32 nTotal;
@@ -43,21 +44,25 @@ public:
 
     void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
+    void setData(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
-    // TODO setData memory
+
     static SpecAbstract::SCAN_RESULT processDevice(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions);
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
+    static SpecAbstract::SCAN_RESULT processMemory(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
     STATS getCurrentStats();
 
 private:
+
     enum SCAN_TYPE
     {
         SCAN_TYPE_DEVICE=0,
         SCAN_TYPE_FILE,
         SCAN_TYPE_DIRECTORY,
-        SCAN_TYPE_MEMORY // TODO
+        SCAN_TYPE_MEMORY
     };
+
     void _process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions);
     SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
     SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice);
@@ -76,6 +81,8 @@ private:
     QString g_sFileName;
     QString g_sDirectoryName;
     QIODevice *g_pDevice;
+    char *g_pData;
+    qint32 g_nDataSize;
     SpecAbstract::SCAN_OPTIONS *g_pOptions;
     SpecAbstract::SCAN_RESULT *g_pScanResult;
     bool g_bIsStop;

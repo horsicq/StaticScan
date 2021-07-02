@@ -49,6 +49,16 @@ void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOption
     this->g_scanType=SCAN_TYPE_DEVICE;
 }
 
+void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+{
+    this->g_pData=pData;
+    this->g_nDataSize=nDataSize;
+    this->g_pOptions=pOptions;
+    this->g_pScanResult=pScanResult;
+
+    this->g_scanType=SCAN_TYPE_MEMORY;
+}
+
 void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     this->g_sDirectoryName=sDirectoryName;
@@ -76,6 +86,28 @@ void StaticScan::process()
             emit scanFileStarted(g_sFileName);
 
             *g_pScanResult=scanFile(g_sFileName);
+
+            emit scanResult(*g_pScanResult);
+        }
+    }
+    else if(this->g_scanType==SCAN_TYPE_DEVICE)
+    {
+        if(g_pDevice)
+        {
+            g_currentStats.sStatus=tr("Device scan");
+
+            *g_pScanResult=scanDevice(g_pDevice);
+
+            emit scanResult(*g_pScanResult);
+        }
+    }
+    else if(this->g_scanType==SCAN_TYPE_MEMORY)
+    {
+        if(g_pDevice)
+        {
+            g_currentStats.sStatus=tr("Memory scan");
+
+            *g_pScanResult=scanMemory(g_pData,g_nDataSize);
 
             emit scanResult(*g_pScanResult);
         }
@@ -110,17 +142,6 @@ void StaticScan::process()
             }
         }
     }
-    else if(this->g_scanType==SCAN_TYPE_DEVICE)
-    {
-        if(g_pDevice)
-        { 
-            g_currentStats.sStatus=tr("Device scan");
-
-            *g_pScanResult=scanDevice(g_pDevice);
-
-            emit scanResult(*g_pScanResult);
-        }
-    }
 
     emit completed(g_pElapsedTimer->elapsed());
     delete g_pElapsedTimer;
@@ -149,6 +170,16 @@ SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstrac
     SpecAbstract::SCAN_RESULT result={0};
     StaticScan scan;
     scan.setData(sFileName,pOptions,&result);
+    scan.process();
+
+    return result;
+}
+
+SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions)
+{
+    SpecAbstract::SCAN_RESULT result={0};
+    StaticScan scan;
+    scan.setData(pData,nDataSize,pOptions,&result);
     scan.process();
 
     return result;
