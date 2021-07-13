@@ -50,6 +50,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     QString toXML();
     QString toJSON();
+    QString toCSV();
+    QString toTSV();
     QString toFormattedString();
     QString toString(SpecAbstract::SCAN_OPTIONS *pScanOptions);
     StaticScanItem *rootItem();
@@ -57,6 +59,8 @@ public:
 private:
     void _toXML(QXmlStreamWriter *pXml,StaticScanItem *pItem);
     void _toJSON(QJsonObject *pJsonObject,StaticScanItem *pItem);
+    void _toCSV(QString *pString,StaticScanItem *pItem);
+    void _toTSV(QString *pString,StaticScanItem *pItem);
     void _toString(QString *pString,StaticScanItem *pItem,int nLevel);
 
 private:

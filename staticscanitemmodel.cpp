@@ -263,6 +263,24 @@ QString StaticScanItemModel::toJSON()
     return sResult;
 }
 
+QString StaticScanItemModel::toCSV()
+{
+    QString sResult;
+
+    _toCSV(&sResult,g_pRootItem);
+
+    return sResult;
+}
+
+QString StaticScanItemModel::toTSV()
+{
+    QString sResult;
+
+    _toTSV(&sResult,g_pRootItem);
+
+    return sResult;
+}
+
 QString StaticScanItemModel::toFormattedString()
 {
     QString sResult;
@@ -283,6 +301,14 @@ QString StaticScanItemModel::toString(SpecAbstract::SCAN_OPTIONS *pScanOptions)
     else if(pScanOptions->bResultAsJSON)
     {
         sResult=toJSON();
+    }
+    else if(pScanOptions->bResultAsCSV)
+    {
+        sResult=toCSV();
+    }
+    else if(pScanOptions->bResultAsTSV)
+    {
+        sResult=toTSV();
     }
     else
     {
@@ -366,6 +392,58 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *pIte
         pJsonObject->insert("version",ss.sVersion);
         pJsonObject->insert("info",ss.sInfo);
         pJsonObject->insert("string",pItem->data(0).toString());
+    }
+}
+
+void StaticScanItemModel::_toCSV(QString *pString, StaticScanItem *pItem)
+{
+    if(pItem->childCount())
+    {
+        int nNumberOfChildren=pItem->childCount();
+
+        for(int i=0; i<nNumberOfChildren; i++)
+        {
+            _toCSV(pString,pItem->child(i));
+        }
+    }
+    else
+    {
+        SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
+
+        QString sResult=QString("%1;%2;%3;%4;%5\n")
+                        .arg(SpecAbstract::recordTypeIdToString(ss.type))
+                        .arg(SpecAbstract::recordNameIdToString(ss.name))
+                        .arg(ss.sVersion)
+                        .arg(ss.sInfo)
+                        .arg(pItem->data(0).toString());
+
+        pString->append(sResult);
+    }
+}
+
+void StaticScanItemModel::_toTSV(QString *pString, StaticScanItem *pItem)
+{
+    if(pItem->childCount())
+    {
+        int nNumberOfChildren=pItem->childCount();
+
+        for(int i=0; i<nNumberOfChildren; i++)
+        {
+            _toTSV(pString,pItem->child(i));
+        }
+    }
+    else
+    {
+        SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
+
+        QString sResult=QString("%1\t%2\t%3\t%4\t%5\n")
+                        .arg(SpecAbstract::recordTypeIdToString(ss.type))
+                        .arg(SpecAbstract::recordNameIdToString(ss.name))
+                        .arg(ss.sVersion)
+                        .arg(ss.sInfo)
+                        .arg(pItem->data(0).toString());
+
+        pString->append(sResult);
     }
 }
 
