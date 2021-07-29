@@ -69,6 +69,6 @@ void DialogStaticScan::scan()
     ds.setData(g_pDevice,&options,&scanResult);
     ds.exec();
 
-    QString sSaveFileName=XBinary::getResultFileName(g_pDevice,"result.txt"); // mb TODO
+    QString sSaveFileName=XBinary::getResultFileName(g_pDevice,"result.txt");
     ui->widgetResult->setData(scanResult,sSaveFileName);
 }

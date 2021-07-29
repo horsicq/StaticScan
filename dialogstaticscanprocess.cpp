@@ -48,7 +48,7 @@ void DialogStaticScanProcess::setData(QString sFileName, SpecAbstract::SCAN_OPTI
     g_bIsRun=true;
     g_pScan->setData(sFileName,pOptions,pScanResult);
     g_pThread->start();
-    g_pTimer->start(1000); // 1 sec TODO const
+    g_pTimer->start(N_REFRESH_DELAY);
     ui->progressBarTotal->setMaximum(0);
 }
 
@@ -57,7 +57,7 @@ void DialogStaticScanProcess::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPT
     g_bIsRun=true;
     g_pScan->setData(pDevice,pOptions,pScanResult);
     g_pThread->start();
-    g_pTimer->start(1000); // 1 sec TODO const
+    g_pTimer->start(N_REFRESH_DELAY);
     ui->progressBarTotal->setMaximum(0);
 }
 
@@ -66,7 +66,7 @@ void DialogStaticScanProcess::setData(QString sDirectoryName, SpecAbstract::SCAN
     g_bIsRun=true;
     g_pScan->setData(sDirectoryName,pOptions);
     g_pThread->start();
-    g_pTimer->start(1000); // 1 sec TODO const
+    g_pTimer->start(N_REFRESH_DELAY);
     ui->progressBarTotal->setMaximum(100);
 }
 
