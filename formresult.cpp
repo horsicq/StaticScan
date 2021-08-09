@@ -51,7 +51,7 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
 
     delete pOldModel;
 
-    ui->labelElapsedTime->setText(QString("%1 %2").arg(this->g_scanResult.nScanTime).arg(tr("msec")));
+    ui->labelElapsedTime->setText(QString("%1 %2").arg(QString::number(g_scanResult.nScanTime),tr("msec")));
 }
 
 void FormResult::on_pushButtonClear_clicked()

@@ -411,11 +411,11 @@ void StaticScanItemModel::_toCSV(QString *pString, StaticScanItem *pItem)
         SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
 
         QString sResult=QString("%1;%2;%3;%4;%5\n")
-                        .arg(SpecAbstract::recordTypeIdToString(ss.type))
-                        .arg(SpecAbstract::recordNameIdToString(ss.name))
-                        .arg(ss.sVersion)
-                        .arg(ss.sInfo)
-                        .arg(pItem->data(0).toString());
+                        .arg(SpecAbstract::recordTypeIdToString(ss.type),
+                             SpecAbstract::recordNameIdToString(ss.name),
+                             ss.sVersion,
+                             ss.sInfo,
+                             pItem->data(0).toString());
 
         pString->append(sResult);
     }
