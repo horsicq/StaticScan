@@ -436,12 +436,13 @@ void StaticScanItemModel::_toTSV(QString *pString, StaticScanItem *pItem)
     {
         SpecAbstract::SCAN_STRUCT ss=pItem->scanStruct();
 
-        QString sResult=QString("%1\t%2\t%3\t%4\t%5\n")
-                        .arg(SpecAbstract::recordTypeIdToString(ss.type))
-                        .arg(SpecAbstract::recordNameIdToString(ss.name))
-                        .arg(ss.sVersion)
-                        .arg(ss.sInfo)
-                        .arg(pItem->data(0).toString());
+        QString sResult=QString("%1\t%2\t%3\t%4\t%5\n").arg(
+                                SpecAbstract::recordTypeIdToString(ss.type),
+                                SpecAbstract::recordNameIdToString(ss.name),
+                                ss.sVersion,
+                                ss.sInfo,
+                                pItem->data(0).toString()
+                    );
 
         pString->append(sResult);
     }
