@@ -453,7 +453,7 @@ void StaticScanItemModel::_toString(QString *pString, StaticScanItem *pItem, int
     if(nLevel)
     {
         QString sResult;
-        sResult=sResult.leftJustified(4*(nLevel-1),' ');
+        sResult=sResult.leftJustified(4*(nLevel-1),' '); // TODO function
         sResult.append(QString("%1\n").arg(pItem->data(0).toString()));
         pString->append(sResult);
     }
