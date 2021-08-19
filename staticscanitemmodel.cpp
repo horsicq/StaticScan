@@ -213,6 +213,10 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
             {
                 result=QVariant(QColor(Qt::darkMagenta));
             }
+            else if(rt==SpecAbstract::RECORD_TYPE_LANGUAGE)
+            {
+                result=QVariant(QColor(Qt::cyan));
+            }
             else
             {
                 result=QVariant(QApplication::palette().text().color());
