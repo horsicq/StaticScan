@@ -32,7 +32,6 @@ class StaticScan : public QObject
     Q_OBJECT
 
 public:
-
     struct STATS
     {
         qint32 nTotal;
