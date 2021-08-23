@@ -206,7 +206,8 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
             {
                 result=QVariant(QColor(Qt::green));
             }
-            else if(rt==SpecAbstract::RECORD_TYPE_OPERATIONSYSTEM)
+            else if((rt==SpecAbstract::RECORD_TYPE_OPERATIONSYSTEM)||
+                    (rt==SpecAbstract::RECORD_TYPE_VIRTUALMACHINE))
             {
                 result=QVariant(QColor(Qt::darkYellow));
             }
