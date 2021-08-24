@@ -53,7 +53,6 @@ public:
     STATS getCurrentStats();
 
 private:
-
     enum SCAN_TYPE
     {
         SCAN_TYPE_DEVICE=0,
