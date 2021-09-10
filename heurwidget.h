@@ -36,6 +36,7 @@ public:
     explicit HeurWidget(QWidget *pParent=nullptr);
     ~HeurWidget();
     void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
+    // mb TODO QString sFileName
 
 private slots:
     void on_pushButtonScan_clicked();
