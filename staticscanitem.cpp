@@ -86,7 +86,7 @@ int StaticScanItem::row() const
     return nResult;
 }
 
-StaticScanItem *StaticScanItem::parentItem()
+StaticScanItem *StaticScanItem::getParentItem()
 {
     return g_pParentItem;
 }

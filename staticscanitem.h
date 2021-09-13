@@ -37,7 +37,7 @@ public:
     void setScanStruct(const SpecAbstract::SCAN_STRUCT &scanStruct);
     SpecAbstract::SCAN_STRUCT scanStruct() const;
     int row() const;
-    StaticScanItem *parentItem();
+    StaticScanItem *getParentItem();
 
 private:
     QList<StaticScanItem *> g_listChildItems;

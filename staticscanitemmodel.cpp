@@ -117,7 +117,7 @@ QModelIndex StaticScanItemModel::parent(const QModelIndex &index) const
     if(index.isValid())
     {
         StaticScanItem *pChildItem=static_cast<StaticScanItem *>(index.internalPointer());
-        StaticScanItem *pParentItem=pChildItem->parentItem();
+        StaticScanItem *pParentItem=pChildItem->getParentItem();
 
         if(pParentItem!=g_pRootItem)
         {
