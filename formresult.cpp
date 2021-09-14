@@ -26,8 +26,8 @@ FormResult::FormResult(QWidget *pParent) :
     ui(new Ui::FormResult)
 {
     ui->setupUi(this);
-    g_pModel=0;
 
+    g_pModel=0;
     g_scanResult={0};
 }
 
