@@ -116,3 +116,15 @@ void HeurWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
 }
+
+void HeurWidget::on_pushButtonSave_clicked()
+{
+    QAbstractItemModel *pModel=ui->treeViewScan->model();
+
+    if(pModel)
+    {
+        QString sSaveFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Result")));
+
+        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+    }
+}

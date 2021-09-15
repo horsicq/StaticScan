@@ -67,7 +67,7 @@ void FormStaticScan::scan()
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bIsImage=pOptions->bIsImage;
 
-    DialogStaticScan ds(this);
+    DialogStaticScanProcess ds(this);
     ds.setData(pDevice,&options,&scanResult);
     ds.exec();
 

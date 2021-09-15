@@ -90,6 +90,13 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButtonSave">
+          <property name="text">
+           <string>Save</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButtonScan">
           <property name="text">
            <string>Scan</string>
