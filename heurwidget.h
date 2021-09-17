@@ -40,8 +40,8 @@ public:
 
 private slots:
     void on_pushButtonScan_clicked();
-    void scan();
     void on_pushButtonSave_clicked();
+    void scan();
 
 protected:
     virtual void registerShortcuts(bool bState);

@@ -53,6 +53,23 @@ void HeurWidget::on_pushButtonScan_clicked()
     scan();
 }
 
+void HeurWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
+
+void HeurWidget::on_pushButtonSave_clicked()
+{
+    QAbstractItemModel *pModel=ui->treeViewScan->model();
+
+    if(pModel)
+    {
+        QString sSaveFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Result")));
+
+        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+    }
+}
+
 void HeurWidget::scan()
 {
     SpecAbstract::SCAN_RESULT scanResult={0};
@@ -110,21 +127,4 @@ void HeurWidget::scan()
     delete pOldTableModel;
 
     // mb TODO scan time
-}
-
-void HeurWidget::registerShortcuts(bool bState)
-{
-    Q_UNUSED(bState)
-}
-
-void HeurWidget::on_pushButtonSave_clicked()
-{
-    QAbstractItemModel *pModel=ui->treeViewScan->model();
-
-    if(pModel)
-    {
-        QString sSaveFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Result")));
-
-        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
-    }
 }
