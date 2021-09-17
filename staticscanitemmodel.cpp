@@ -217,7 +217,7 @@ QVariant StaticScanItemModel::data(const QModelIndex &index, int nRole) const
             }
             else if(rt==SpecAbstract::RECORD_TYPE_LANGUAGE)
             {
-                result=QVariant(QColor(Qt::cyan));
+                result=QVariant(QColor(Qt::darkCyan));
             }
             else
             {
