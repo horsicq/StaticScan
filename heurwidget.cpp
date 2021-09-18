@@ -105,17 +105,17 @@ void HeurWidget::scan()
 
     for(int i=0;i<nNumberOfHeurs;i++)
     {
-        QStandardItem *pHeurType=new QStandardItem;
-        pHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).detectType));
-        pHeurModel->setItem(i,0,pHeurType);
+        QStandardItem *pItemHeurType=new QStandardItem;
+        pItemHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).detectType));
+        pHeurModel->setItem(i,0,pItemHeurType);
 
-        QStandardItem *pName=new QStandardItem;
-        pName->setText(QString("%1(%2)[%3]").arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name),scanResult.listHeurs.at(i).sVersion,scanResult.listHeurs.at(i).sInfo));
-        pHeurModel->setItem(i,1,pName);
+        QStandardItem *pItemName=new QStandardItem;
+        pItemName->setText(QString("%1(%2)[%3]").arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name),scanResult.listHeurs.at(i).sVersion,scanResult.listHeurs.at(i).sInfo));
+        pHeurModel->setItem(i,1,pItemName);
 
-        QStandardItem *pValue=new QStandardItem;
-        pValue->setText(scanResult.listHeurs.at(i).sValue);
-        pHeurModel->setItem(i,2,pValue);
+        QStandardItem *pItemValue=new QStandardItem;
+        pItemValue->setText(scanResult.listHeurs.at(i).sValue);
+        pHeurModel->setItem(i,2,pItemValue);
     }
 
     ui->tableViewHeur->setModel(pHeurModel);
