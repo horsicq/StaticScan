@@ -22,10 +22,10 @@
 #define STATICSCANITEMMODEL_H
 
 #include <QAbstractItemModel>
-#include <QXmlStreamWriter>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
+#include <QXmlStreamWriter>
 #ifdef QT_GUI_LIB
 #include <QColor>
 #include <QApplication>
