@@ -56,8 +56,8 @@ private:
     enum SCAN_TYPE
     {
         SCAN_TYPE_DEVICE=0,
-        SCAN_TYPE_FILE,
         SCAN_TYPE_DIRECTORY,
+        SCAN_TYPE_FILE,
         SCAN_TYPE_MEMORY
     };
 

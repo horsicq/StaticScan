@@ -27,7 +27,6 @@ StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
     g_pScanResult=nullptr;
     g_currentStats={};
     g_pElapsedTimer=nullptr;
-
     g_scanType=SCAN_TYPE_DEVICE;
 }
 
