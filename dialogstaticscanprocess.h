@@ -21,11 +21,11 @@
 #ifndef DIALOGSTATICSCANPROCESS_H
 #define DIALOGSTATICSCANPROCESS_H
 
-#include <QDialog>
-#include <QThread>
 #include <QDateTime>
+#include <QDialog>
 #include <QFileDialog>
 #include <QStandardItemModel>
+#include <QThread>
 #include "staticscanitemmodel.h"
 
 namespace Ui
