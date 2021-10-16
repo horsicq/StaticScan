@@ -14,3 +14,7 @@ FORMS += \
     XCONFIG += formresult
     include($$PWD/formresult.pri)
 }
+
+DISTFILES += \
+    $$PWD/LICENSE \
+    $$PWD/README.md
