@@ -21,8 +21,8 @@
 #ifndef DIALOGSTATICSCAN_H
 #define DIALOGSTATICSCAN_H
 
-#include "xoptions.h"
 #include "dialogstaticscanprocess.h"
+#include "xoptions.h"
 
 namespace Ui {
 class DialogStaticScan;
