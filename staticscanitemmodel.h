@@ -27,8 +27,8 @@
 #include <QJsonObject>
 #include <QXmlStreamWriter>
 #ifdef QT_GUI_LIB
-#include <QColor>
 #include <QApplication>
+#include <QColor>
 #include <QPalette>
 #endif
 #include "staticscanitem.h"
