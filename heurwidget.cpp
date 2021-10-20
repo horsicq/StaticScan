@@ -103,7 +103,7 @@ void HeurWidget::scan()
     pHeurModel->setHeaderData(1,Qt::Horizontal,tr("Name"));
     pHeurModel->setHeaderData(2,Qt::Horizontal,tr("Value"));
 
-    for(int i=0;i<nNumberOfHeurs;i++)
+    for(qint32 i=0;i<nNumberOfHeurs;i++)
     {
         QStandardItem *pItemHeurType=new QStandardItem;
         pItemHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).detectType));
