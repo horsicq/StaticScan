@@ -337,7 +337,7 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *pItem)
 
         int nNumberOfChildren=pItem->childCount();
 
-        for(int i=0;i<nNumberOfChildren;i++)
+        for(qint32 i=0;i<nNumberOfChildren;i++)
         {
             _toXML(pXml,pItem->child(i));
         }
