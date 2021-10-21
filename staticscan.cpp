@@ -128,7 +128,7 @@ void StaticScan::process()
 
             g_currentStats.nTotal=listFileNames.count();
 
-            for(int i=0;(i<g_currentStats.nTotal)&&(!g_bIsStop);i++)
+            for(qint32 i=0;(i<g_currentStats.nTotal)&&(!g_bIsStop);i++)
             {
                 g_currentStats.nCurrent=i+1;
                 g_currentStats.sStatus=listFileNames.at(i);
