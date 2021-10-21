@@ -378,7 +378,7 @@ void StaticScanItemModel::_toJSON(QJsonObject *pJsonObject, StaticScanItem *pIte
 
         int nNumberOfChildren=pItem->childCount();
 
-        for(int i=0;i<nNumberOfChildren;i++)
+        for(qint32 i=0;i<nNumberOfChildren;i++)
         {
             QJsonObject jsRecord;
 
