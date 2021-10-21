@@ -31,7 +31,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
     int nNumberOfDetects=pListScanStructs->count();
 
-    for(int i=0;i<nNumberOfDetects;i++)
+    for(qint32 i=0;i<nNumberOfDetects;i++)
     {
         if(!mapParents.contains(pListScanStructs->at(i).id.sUuid))
         {
