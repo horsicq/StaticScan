@@ -407,7 +407,7 @@ void StaticScanItemModel::_toCSV(QString *pString, StaticScanItem *pItem)
     {
         int nNumberOfChildren=pItem->childCount();
 
-        for(int i=0;i<nNumberOfChildren;i++)
+        for(qint32 i=0;i<nNumberOfChildren;i++)
         {
             _toCSV(pString,pItem->child(i));
         }
