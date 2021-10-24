@@ -93,7 +93,7 @@ void HeurWidget::scan()
 
     delete pOldTreeModel; // mb TODO in thread
 
-    int nNumberOfHeurs=scanResult.listHeurs.count();
+    qint32 nNumberOfHeurs=scanResult.listHeurs.count();
 
     QAbstractItemModel *pOldTableModel=ui->tableViewHeur->model();
 
