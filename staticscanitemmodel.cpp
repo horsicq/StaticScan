@@ -29,7 +29,7 @@ StaticScanItemModel::StaticScanItemModel(QList<SpecAbstract::SCAN_STRUCT> *pList
 
     QMap<QString,StaticScanItem *> mapParents;
 
-    int nNumberOfDetects=pListScanStructs->count();
+    qint32 nNumberOfDetects=pListScanStructs->count();
 
     for(qint32 i=0;i<nNumberOfDetects;i++)
     {
