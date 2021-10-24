@@ -15,3 +15,6 @@ SOURCES += \
     XCONFIG += specabstract
     include($$PWD/../SpecAbstract/specabstract.pri)
 }
+
+DISTFILES += \
+    $$PWD/staticscan.cmake
