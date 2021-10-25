@@ -14,3 +14,6 @@ FORMS += \
     XCONFIG += staticscan
     include($$PWD/staticscan.pri)
 }
+
+DISTFILES += \
+    $$PWD/dialogstaticscanprocess.cmake

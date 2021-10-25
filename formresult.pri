@@ -17,3 +17,6 @@ FORMS += \
     XCONFIG += dialogstaticscanprocess
     include($$PWD/dialogstaticscanprocess.pri)
 }
+
+DISTFILES += \
+    $$PWD/formresult.cmake
