@@ -335,7 +335,7 @@ void StaticScanItemModel::_toXML(QXmlStreamWriter *pXml, StaticScanItem *pItem)
     {
         pXml->writeStartElement(pItem->data(0).toString());
 
-        int nNumberOfChildren=pItem->childCount();
+        qint32 nNumberOfChildren=pItem->childCount();
 
         for(qint32 i=0;i<nNumberOfChildren;i++)
         {
