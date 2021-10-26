@@ -431,7 +431,7 @@ void StaticScanItemModel::_toTSV(QString *pString, StaticScanItem *pItem)
 {
     if(pItem->childCount())
     {
-        int nNumberOfChildren=pItem->childCount();
+        qint32 nNumberOfChildren=pItem->childCount();
 
         for(qint32 i=0;i<nNumberOfChildren;i++)
         {
