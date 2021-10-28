@@ -15,5 +15,10 @@ FORMS += \
     include($$PWD/staticscan.pri)
 }
 
+!contains(XCONFIG, xoptions) {
+    XCONFIG += xoptions
+    include($$PWD/../XOptions/xoptions.pri)
+}
+
 DISTFILES += \
     $$PWD/dialogstaticscanprocess.cmake
