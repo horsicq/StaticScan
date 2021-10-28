@@ -20,7 +20,7 @@
 //
 #include "staticscanitem.h"
 
-StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentItem, int nNumberOfColumns)
+StaticScanItem::StaticScanItem(const QString &sString, StaticScanItem *pParentItem, qint32 nNumberOfColumns)
 {
     this->g_pParentItem=pParentItem;
     this->g_sString=sString;

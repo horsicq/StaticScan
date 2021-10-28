@@ -26,7 +26,7 @@
 class StaticScanItem
 {
 public:
-    StaticScanItem(const QString &sString,StaticScanItem *pParentItem=nullptr,int nNumberOfColumns=1);
+    StaticScanItem(const QString &sString,StaticScanItem *pParentItem=nullptr,qint32 nNumberOfColumns=1);
     ~StaticScanItem();
 
     void appendChild(StaticScanItem *pChild);
@@ -43,7 +43,7 @@ private:
     QList<StaticScanItem *> g_listChildItems;
     QString g_sString;
     StaticScanItem *g_pParentItem;
-    int g_nNumberOfColumns;
+    qint32 g_nNumberOfColumns;
     SpecAbstract::SCAN_STRUCT g_scanStruct;
 };
 
