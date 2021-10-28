@@ -61,7 +61,7 @@ private:
     void _toJSON(QJsonObject *pJsonObject,StaticScanItem *pItem);
     void _toCSV(QString *pString,StaticScanItem *pItem);
     void _toTSV(QString *pString,StaticScanItem *pItem);
-    void _toString(QString *pString,StaticScanItem *pItem,int nLevel);
+    void _toString(QString *pString,StaticScanItem *pItem,qint32 nLevel);
 
 private:
     StaticScanItem *g_pRootItem;

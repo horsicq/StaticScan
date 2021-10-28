@@ -454,7 +454,7 @@ void StaticScanItemModel::_toTSV(QString *pString, StaticScanItem *pItem)
     }
 }
 
-void StaticScanItemModel::_toString(QString *pString, StaticScanItem *pItem, int nLevel)
+void StaticScanItemModel::_toString(QString *pString, StaticScanItem *pItem, qint32 nLevel)
 {
     if(nLevel)
     {
