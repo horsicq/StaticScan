@@ -127,7 +127,7 @@ void DialogStaticScanDirectory::on_pushButtonSave_clicked()
         if(file.open(QIODevice::ReadWrite))
         {
             QString sText=ui->textBrowserResult->toPlainText();
-            file.write(sText.toLatin1().data());
+            file.write(sText.toUtf8().data());
 
             file.close();
         }

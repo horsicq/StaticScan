@@ -193,7 +193,14 @@ StaticScan::STATS StaticScan::getCurrentStats()
 {
     if(g_pElapsedTimer)
     {
-        g_currentStats.nElapsed=g_pElapsedTimer->elapsed();
+        if(g_pElapsedTimer->isValid())
+        {
+            g_currentStats.nElapsed=g_pElapsedTimer->elapsed();
+        }
+        else
+        {
+            g_currentStats.nElapsed=0;
+        }
     }
 
     return g_currentStats;

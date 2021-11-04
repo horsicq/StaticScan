@@ -84,8 +84,8 @@ DialogStaticScanProcess::~DialogStaticScanProcess()
 
     delete ui;
 
-    delete g_pThread;
-    delete g_pScan;
+    g_pThread->deleteLater(); // TODO
+    g_pScan->deleteLater(); // TODO
 }
 
 bool DialogStaticScanProcess::saveResult(QWidget *pParent, StaticScanItemModel *pModel, QString sResultFileName)
@@ -107,7 +107,7 @@ bool DialogStaticScanProcess::saveResult(QWidget *pParent, StaticScanItemModel *
             {
                 QString sText=pModel->toFormattedString();
 
-                file.write(sText.toLatin1().data());
+                file.write(sText.toUtf8().data());
 
                 file.close();
 
