@@ -28,6 +28,7 @@ StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
     g_currentStats={};
     g_pElapsedTimer=nullptr;
     g_scanType=SCAN_TYPE_DEVICE;
+    g_pDevice=nullptr;
 }
 
 void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
@@ -102,14 +103,11 @@ void StaticScan::process()
     }
     else if(this->g_scanType==SCAN_TYPE_MEMORY)
     {
-        if(g_pDevice)
-        {
-            g_currentStats.sStatus=tr("Memory scan");
+        g_currentStats.sStatus=tr("Memory scan");
 
-            *g_pScanResult=scanMemory(g_pData,g_nDataSize);
+        *g_pScanResult=scanMemory(g_pData,g_nDataSize);
 
-            emit scanResult(*g_pScanResult);
-        }
+        emit scanResult(*g_pScanResult);
     }
     else if(this->g_scanType==SCAN_TYPE_DIRECTORY)
     {
@@ -251,7 +249,12 @@ SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize)
 
     buffer.setData(pData,nSize);
 
-    result=scanDevice(&buffer);
+    if(buffer.open(QIODevice::ReadOnly))
+    {
+        result=scanDevice(&buffer);
+
+        buffer.close();
+    }
 
     return result;
 }
