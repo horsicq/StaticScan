@@ -235,7 +235,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
 
     SpecAbstract::ID parentId={0};
     parentId.fileType=XBinary::FT_UNKNOWN;
-    parentId.filePart=SpecAbstract::RECORD_FILEPART_HEADER;
+    parentId.filePart=XBinary::FILEPART_HEADER;
     _process(pDevice,&result,0,pDevice->size(),parentId,g_pOptions);
 
     return result;
