@@ -99,11 +99,11 @@ QModelIndex StaticScanItemModel::index(int nRow, int nColumn, const QModelIndex 
             pParentItem=static_cast<StaticScanItem *>(parent.internalPointer());
         }
 
-        StaticScanItem *childItem=pParentItem->child(nRow);
+        StaticScanItem *pChildItem=pParentItem->child(nRow);
 
-        if(childItem)
+        if(pChildItem)
         {
-            result=createIndex(nRow, nColumn, childItem);
+            result=createIndex(nRow, nColumn, pChildItem);
         }
     }
 
@@ -145,7 +145,7 @@ int StaticScanItemModel::rowCount(const QModelIndex &parent) const
             pParentItem=static_cast<StaticScanItem *>(parent.internalPointer());
         }
 
-        nResult= pParentItem->childCount();
+        nResult=pParentItem->childCount();
     }
 
     return nResult;
