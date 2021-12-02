@@ -74,3 +74,9 @@ void FormResult::on_pushButtonSave_clicked()
         DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,g_sSaveFileName);
     }
 }
+
+void FormResult::on_pushButtonExtraInformation_clicked()
+{
+    // TODO formatsdialog
+}
+

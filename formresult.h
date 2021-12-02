@@ -42,6 +42,7 @@ public:
 private slots:
     void on_pushButtonClear_clicked();
     void on_pushButtonSave_clicked();
+    void on_pushButtonExtraInformation_clicked();
 
 private:
     Ui::FormResult *ui;
