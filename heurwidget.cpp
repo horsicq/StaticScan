@@ -66,7 +66,7 @@ void HeurWidget::on_pushButtonSave_clicked()
     {
         QString sSaveFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Result")));
 
-        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,sSaveFileName);
+        DialogStaticScanProcess::saveResult(this,(ScanItemModel *)pModel,sSaveFileName);
     }
 }
 
@@ -87,7 +87,9 @@ void HeurWidget::scan()
 
     QAbstractItemModel *pOldTreeModel=ui->treeViewScan->model();
 
-    StaticScanItemModel *pModel=new StaticScanItemModel(&(scanResult.listRecords),this,1);
+    QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(scanResult.listRecords));
+
+    ScanItemModel *pModel=new ScanItemModel(&_listRecords,this,1);
     ui->treeViewScan->setModel(pModel);
     ui->treeViewScan->expandAll();
 
