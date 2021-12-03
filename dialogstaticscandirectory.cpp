@@ -90,9 +90,12 @@ void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
 {
     QString sResult=QString("%1 %2 %3").arg(scanResult.sFileName,QString::number(scanResult.nScanTime),tr("msec"));
     sResult+="\r\n";
-    StaticScanItemModel model(&scanResult.listRecords);
-    SpecAbstract::SCAN_OPTIONS scanOptions={};
-    sResult+=model.toString(&scanOptions).toLatin1().data();
+
+    static QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(scanResult.listRecords));
+
+    ScanItemModel model(&_listRecords);
+
+    sResult+=model.toString(ScanItemModel::FORMATTYPE_TEXT).toLatin1().data();
 
     emit resultSignal(sResult);
 }

@@ -204,7 +204,7 @@ StaticScan::STATS StaticScan::getCurrentStats()
     return g_currentStats;
 }
 
-void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,SpecAbstract::ID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
+void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,XBinary::SCANID parentId,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true,&g_bIsStop);
 }
@@ -233,7 +233,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice)
 {
     SpecAbstract::SCAN_RESULT result={0};
 
-    SpecAbstract::ID parentId={0};
+    XBinary::SCANID parentId={0};
     parentId.fileType=XBinary::FT_UNKNOWN;
     parentId.filePart=XBinary::FILEPART_HEADER;
     _process(pDevice,&result,0,pDevice->size(),parentId,g_pOptions);

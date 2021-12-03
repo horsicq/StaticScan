@@ -26,7 +26,8 @@
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QThread>
-#include "staticscanitemmodel.h"
+#include "staticscan.h"
+#include "scanitemmodel.h"
 
 namespace Ui
 {
@@ -45,7 +46,7 @@ public:
     void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
 
-    static bool saveResult(QWidget *pParent,StaticScanItemModel *pModel,QString sResultFileName);
+    static bool saveResult(QWidget *pParent,ScanItemModel *pModel,QString sResultFileName);
 
 private slots:
     void on_pushButtonCancel_clicked();

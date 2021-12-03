@@ -45,7 +45,9 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
 
     QAbstractItemModel *pOldModel=ui->treeViewResult->model();
 
-    g_pModel=new StaticScanItemModel(&(this->g_scanResult.listRecords),this,1);
+    static QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(this->g_scanResult.listRecords));
+
+    g_pModel=new ScanItemModel(&(_listRecords),this,1);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
@@ -71,7 +73,7 @@ void FormResult::on_pushButtonSave_clicked()
 
     if(pModel)
     {
-        DialogStaticScanProcess::saveResult(this,(StaticScanItemModel *)pModel,g_sSaveFileName);
+        DialogStaticScanProcess::saveResult(this,(ScanItemModel *)pModel,g_sSaveFileName);
     }
 }
 
