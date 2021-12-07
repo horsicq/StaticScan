@@ -81,9 +81,9 @@ void HeurWidget::scan()
     options.bShowDetects=true;
     options.fileType=g_fileType;
 
-    DialogStaticScanProcess ds(this);
-    ds.setData(g_pDevice,&options,&scanResult);
-    ds.exec();
+    DialogStaticScanProcess dialogStaticScanProcess(this);
+    dialogStaticScanProcess.setData(g_pDevice,&options,&scanResult);
+    dialogStaticScanProcess.exec();
 
     QAbstractItemModel *pOldTreeModel=ui->treeViewScan->model();
 
