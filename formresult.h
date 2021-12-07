@@ -24,6 +24,7 @@
 #include <QWidget>
 
 #include "dialogstaticscanprocess.h"
+#include "dialogtextinfo.h"
 
 namespace Ui
 {

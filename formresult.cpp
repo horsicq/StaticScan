@@ -79,6 +79,15 @@ void FormResult::on_pushButtonSave_clicked()
 
 void FormResult::on_pushButtonExtraInformation_clicked()
 {
-    // TODO formatsdialog
+    if(g_pModel)
+    {
+        DialogTextInfo dialogTextInfo(this);
+
+        QString sText=((ScanItemModel *)g_pModel)->toFormattedString();
+
+        dialogTextInfo.setText(sText);
+
+        dialogTextInfo.exec();
+    }
 }
 

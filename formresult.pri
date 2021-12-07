@@ -21,5 +21,10 @@ FORMS += \
     include($$PWD/dialogstaticscanprocess.pri)
 }
 
+!contains(XCONFIG, dialogtextinfo) {
+    XCONFIG += dialogtextinfo
+    include($$PWD/../FormatDialogs/dialogtextinfo.pri)
+}
+
 DISTFILES += \
     $$PWD/formresult.cmake
