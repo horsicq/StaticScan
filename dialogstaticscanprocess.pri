@@ -21,4 +21,6 @@ FORMS += \
 }
 
 DISTFILES += \
+    $$PWD/LICENSE \
+    $$PWD/README.md \
     $$PWD/dialogstaticscanprocess.cmake

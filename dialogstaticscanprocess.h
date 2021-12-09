@@ -26,8 +26,8 @@
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QThread>
-#include "staticscan.h"
 #include "scanitemmodel.h"
+#include "staticscan.h"
 
 namespace Ui
 {
