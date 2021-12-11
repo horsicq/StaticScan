@@ -67,6 +67,7 @@ private:
     SpecAbstract::SCAN_RESULT scanMemory(char *pData,qint32 nSize);
 
 signals:
+    // TODO error and info signals
     void scanFileStarted(QString sFileName);
     void completed(qint64 nElapsedTime);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
