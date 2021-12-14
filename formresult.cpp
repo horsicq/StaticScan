@@ -45,7 +45,7 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
 
     QAbstractItemModel *pOldModel=ui->treeViewResult->model();
 
-    static QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(this->g_scanResult.listRecords));
+    QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(this->g_scanResult.listRecords));
 
     g_pModel=new ScanItemModel(&(_listRecords),this,1);
     ui->treeViewResult->setModel(g_pModel);
