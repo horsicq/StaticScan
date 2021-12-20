@@ -35,6 +35,7 @@ class DialogStaticScan : public QDialog
 public:
     explicit DialogStaticScan(QWidget *pParent);
     ~DialogStaticScan();
+
     void setData(QIODevice *pDevice,bool bAuto=false);
 
 private slots:
