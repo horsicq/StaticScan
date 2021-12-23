@@ -15,9 +15,9 @@ FORMS += \
     include($$PWD/staticscan.pri)
 }
 
-!contains(XCONFIG, xoptions) {
-    XCONFIG += xoptions
-    include($$PWD/../XOptions/xoptions.pri)
+!contains(XCONFIG, xoptionswidget) {
+    XCONFIG += xoptionswidget
+    include($$PWD/../xoptions/xoptionswidget.pri)
 }
 
 DISTFILES += \
