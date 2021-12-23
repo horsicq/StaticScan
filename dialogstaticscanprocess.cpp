@@ -124,7 +124,6 @@ void DialogStaticScanProcess::on_pushButtonCancel_clicked()
     if(g_bIsRun)
     {
         g_pScan->stop();
-        g_pTimer->stop();
         g_bIsRun=false;
     }
 }

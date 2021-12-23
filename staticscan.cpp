@@ -141,6 +141,7 @@ void StaticScan::process()
     }
 
     emit completed(g_pElapsedTimer->elapsed());
+
     delete g_pElapsedTimer;
     g_pElapsedTimer=nullptr;
 
