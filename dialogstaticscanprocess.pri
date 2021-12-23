@@ -17,7 +17,7 @@ FORMS += \
 
 !contains(XCONFIG, xoptionswidget) {
     XCONFIG += xoptionswidget
-    include($$PWD/../xoptions/xoptionswidget.pri)
+    include($$PWD/../XOptions/xoptionswidget.pri)
 }
 
 DISTFILES += \
