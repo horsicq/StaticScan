@@ -35,6 +35,7 @@ class HeurWidget : public XShortcutsWidget
 public:
     explicit HeurWidget(QWidget *pParent=nullptr);
     ~HeurWidget();
+
     void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
     // mb TODO set sFileName
 
