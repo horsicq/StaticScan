@@ -33,6 +33,7 @@ class FormStaticScan;
 class FormStaticScan : public QWidget
 {
     Q_OBJECT
+
 public:
     struct OPTIONS
     {
