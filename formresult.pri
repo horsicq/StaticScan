@@ -4,17 +4,20 @@ DEPENDPATH += $$PWD
 HEADERS += \
     $$PWD/dialogstaticscan.h \
     $$PWD/dialogstaticscandirectory.h \
-    $$PWD/formresult.h
+    $$PWD/formresult.h \
+    $$PWD/staticscanoptionswidget.h
 
 SOURCES += \
     $$PWD/dialogstaticscan.cpp \
     $$PWD/dialogstaticscandirectory.cpp \
-    $$PWD/formresult.cpp
+    $$PWD/formresult.cpp \
+    $$PWD/staticscanoptionswidget.cpp
 
 FORMS += \
     $$PWD/dialogstaticscan.ui \
     $$PWD/dialogstaticscandirectory.ui \
-    $$PWD/formresult.ui
+    $$PWD/formresult.ui \
+    $$PWD/staticscanoptionswidget.ui
 
 !contains(XCONFIG, dialogstaticscanprocess) {
     XCONFIG += dialogstaticscanprocess

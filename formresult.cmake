@@ -12,4 +12,6 @@ set(FORMRESULT_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/dialogstaticscandirectory.ui
     ${CMAKE_CURRENT_LIST_DIR}/formresult.cpp
     ${CMAKE_CURRENT_LIST_DIR}/formresult.ui
+    ${CMAKE_CURRENT_LIST_DIR}/staticscanoptionswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/staticscanoptionswidget.ui
 )
