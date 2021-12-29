@@ -39,6 +39,8 @@ public:
     void setOptions(XOptions *pOptions);
     void save();
 
+    static void setDefaultValues(XOptions *pOptions);
+
 private:
     Ui::StaticScanOptionsWidget *ui;
     XOptions *g_pOptions;

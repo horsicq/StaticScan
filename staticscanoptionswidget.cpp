@@ -52,3 +52,12 @@ void StaticScanOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
 }
+
+void StaticScanOptionsWidget::setDefaultValues(XOptions *pOptions)
+{
+    pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN,true);
+    pOptions->addID(XOptions::ID_SCAN_RECURSIVE,true);
+    pOptions->addID(XOptions::ID_SCAN_DEEP,true);
+    pOptions->addID(XOptions::ID_SCAN_HEURISTIC,false);
+    pOptions->addID(XOptions::ID_SCAN_ALLTYPES,false);
+}
