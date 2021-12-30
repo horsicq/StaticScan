@@ -26,6 +26,8 @@ StaticScanOptionsWidget::StaticScanOptionsWidget(QWidget *pParent) :
     ui(new Ui::StaticScanOptionsWidget)
 {
     ui->setupUi(this);
+
+    g_pOptions=nullptr;
 }
 
 StaticScanOptionsWidget::~StaticScanOptionsWidget()
