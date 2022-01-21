@@ -59,7 +59,7 @@ signals:
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
 
 private:
-    static const qint32 N_REFRESH_DELAY=1000; // msec TODO set/get
+    static const qint32 N_REFRESH_DELAY=1000; // msec TODO set/get !!!
     Ui::DialogStaticScanProcess *ui;
     StaticScan *g_pScan;
     QThread *g_pThread;
