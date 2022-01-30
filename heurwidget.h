@@ -37,7 +37,7 @@ public:
     ~HeurWidget();
 
     void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
-    // mb TODO set sFileName
+    // mb TODO setFileName
     // mb Memory
 
 private slots:
