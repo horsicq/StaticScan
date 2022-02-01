@@ -32,7 +32,7 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) :
 
     g_pScan->moveToThread(g_pThread);
 
-    connect(g_pThread, SIGNAL(started()), g_pScan, SLOT(process()));
+    connect(g_pThread,SIGNAL(started()),g_pScan,SLOT(process()));
     connect(g_pScan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pScan, SIGNAL(scanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
     connect(g_pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
