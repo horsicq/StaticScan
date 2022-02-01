@@ -81,7 +81,7 @@ void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)
         // |flags|x all|
 
         DialogStaticScanProcess ds(this);
-        connect(&ds, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SLOT(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
+        connect(&ds,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SLOT(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
         ds.setData(sDirectoryName,&options);
         ds.exec();
     }
