@@ -38,7 +38,7 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) :
     connect(g_pScan,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
 
     g_pTimer=new QTimer(this);
-    connect(g_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
+    connect(g_pTimer,SIGNAL(timeout()),this,SLOT(timerSlot()));
 
     g_bIsRun=false;
 }
