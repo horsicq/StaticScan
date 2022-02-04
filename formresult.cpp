@@ -36,7 +36,7 @@ FormResult::~FormResult()
     delete ui;
 }
 
-void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName)
+void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult,QString sSaveFileName)
 {
     this->g_scanResult=scanResult;
     this->g_sSaveFileName=sSaveFileName;
