@@ -35,7 +35,7 @@ DialogStaticScan::~DialogStaticScan()
     delete ui;
 }
 
-void DialogStaticScan::setData(QIODevice *pDevice, bool bAuto)
+void DialogStaticScan::setData(QIODevice *pDevice,bool bAuto)
 {
     this->g_pDevice=pDevice;
 
