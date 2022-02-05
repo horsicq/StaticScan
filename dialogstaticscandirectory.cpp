@@ -21,7 +21,7 @@
 #include "dialogstaticscandirectory.h"
 #include "ui_dialogstaticscandirectory.h"
 
-DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, QString sDirName) :
+DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent,QString sDirName) :
     QDialog(pParent),
     ui(new Ui::DialogStaticScanDirectory)
 {
