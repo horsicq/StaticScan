@@ -36,7 +36,7 @@ FormStaticScan::~FormStaticScan()
     delete ui;
 }
 
-void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptions)
+void FormStaticScan::setData(QIODevice *pDevice,FormStaticScan::OPTIONS *pOptions)
 {
     this->pDevice=pDevice;
     this->pOptions=pOptions;
