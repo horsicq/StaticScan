@@ -31,7 +31,7 @@ StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
     g_pDevice=nullptr;
 }
 
-void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
+void StaticScan::setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
     this->g_sFileName=sFileName;
     this->g_pOptions=pOptions;
