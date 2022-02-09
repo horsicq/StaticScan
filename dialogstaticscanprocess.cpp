@@ -61,7 +61,7 @@ void DialogStaticScanProcess::setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTI
     ui->progressBarTotal->setMaximum(0);
 }
 
-void DialogStaticScanProcess::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
+void DialogStaticScanProcess::setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     g_bIsRun=true;
     g_pScan->setData(sDirectoryName,pOptions);
