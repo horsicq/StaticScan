@@ -21,7 +21,6 @@
 #ifndef DIALOGSTATICSCANDIRECTORY_H
 #define DIALOGSTATICSCANDIRECTORY_H
 
-#include "../global.h"
 #include <QDialog>
 #include <QFileDialog>
 #include "dialogoptions.h"
