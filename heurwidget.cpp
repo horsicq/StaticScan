@@ -38,7 +38,7 @@ HeurWidget::~HeurWidget()
     delete ui;
 }
 
-void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType)
+void HeurWidget::setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType)
 {
     this->g_pDevice=pDevice;
     this->g_fileType=fileType;
