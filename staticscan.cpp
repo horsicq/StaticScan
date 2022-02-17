@@ -40,7 +40,7 @@ void StaticScan::setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,
     this->g_scanType=SCAN_TYPE_FILE;
 }
 
-void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+void StaticScan::setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
     this->g_pDevice=pDevice;
     this->g_pOptions=pOptions;
