@@ -49,7 +49,7 @@ void StaticScan::setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions
     this->g_scanType=SCAN_TYPE_DEVICE;
 }
 
-void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+void StaticScan::setData(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
     this->g_pData=pData;
     this->g_nDataSize=nDataSize;
