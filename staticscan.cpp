@@ -59,7 +59,7 @@ void StaticScan::setData(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS
     this->g_scanType=SCAN_TYPE_MEMORY;
 }
 
-void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
+void StaticScan::setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     this->g_sDirectoryName=sDirectoryName;
     this->g_pOptions=pOptions;
