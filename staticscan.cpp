@@ -173,7 +173,7 @@ SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName,SpecAbstract
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions)
+SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     SpecAbstract::SCAN_RESULT result={0};
     StaticScan scan;
