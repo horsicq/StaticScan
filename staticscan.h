@@ -37,7 +37,9 @@ public:
         qint32 nTotal;
         qint32 nCurrent;
         qint64 nElapsed;
-        QString sStatus;
+        QString sFileName;
+        QString sStatus1;
+        QString sStatus2;
     };
     explicit StaticScan(QObject *pParent=nullptr);
 

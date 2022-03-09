@@ -81,7 +81,8 @@ void StaticScan::process()
     {
         if((g_pScanResult)&&(g_sFileName!=""))
         {
-            g_currentStats.sStatus=tr("File scan");
+            g_currentStats.sStatus1=tr("File scan");
+            g_currentStats.sFileName=g_sFileName;
 
             emit scanFileStarted(g_sFileName);
 
@@ -94,7 +95,8 @@ void StaticScan::process()
     {
         if(g_pDevice)
         {
-            g_currentStats.sStatus=tr("Device scan");
+            g_currentStats.sStatus1=tr("Device scan");
+            g_currentStats.sFileName=XBinary::getDeviceFileName(g_pDevice);
 
             *g_pScanResult=scanDevice(g_pDevice);
 
@@ -103,7 +105,7 @@ void StaticScan::process()
     }
     else if(this->g_scanType==SCAN_TYPE_MEMORY)
     {
-        g_currentStats.sStatus=tr("Memory scan");
+        g_currentStats.sStatus1=tr("Memory scan");
 
         *g_pScanResult=scanMemory(g_pData,g_nDataSize);
 
@@ -113,7 +115,7 @@ void StaticScan::process()
     {
         if(g_sDirectoryName!="")
         {
-            g_currentStats.sStatus=tr("Directory scan");
+            g_currentStats.sStatus1=tr("Directory scan");
             QList<QString> listFileNames;
 
             XBinary::FFOPTIONS ffoptions={};
@@ -129,11 +131,11 @@ void StaticScan::process()
             for(qint32 i=0;(i<g_currentStats.nTotal)&&(!g_bIsStop);i++)
             {
                 g_currentStats.nCurrent=i+1;
-                g_currentStats.sStatus=listFileNames.at(i);
+                g_currentStats.sFileName=listFileNames.at(i);
 
-                emit scanFileStarted(g_currentStats.sStatus);
+                emit scanFileStarted(g_currentStats.sFileName);
 
-                SpecAbstract::SCAN_RESULT _scanResult=scanFile(g_currentStats.sStatus);
+                SpecAbstract::SCAN_RESULT _scanResult=scanFile(g_currentStats.sFileName);
 
                 emit scanResult(_scanResult);
             }
@@ -200,6 +202,11 @@ StaticScan::STATS StaticScan::getCurrentStats()
         {
             g_currentStats.nElapsed=0;
         }
+    }
+
+    if(g_pOptions)
+    {
+        g_currentStats.sStatus2=g_pOptions->sStatus;
     }
 
     return g_currentStats;

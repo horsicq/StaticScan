@@ -152,7 +152,9 @@ void DialogStaticScanProcess::timerSlot()
 
     ui->labelTotal->setText(QString::number(stats.nTotal));
     ui->labelCurrent->setText(QString::number(stats.nCurrent));
-    ui->labelCurrentStatus->setText(stats.sStatus);
+    ui->labelStatus1->setText(stats.sStatus1);
+    ui->labelStatus2->setText(stats.sStatus2);
+    ui->labelFileName->setText(stats.sFileName);
 
     if(stats.nTotal)
     {
