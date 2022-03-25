@@ -52,6 +52,7 @@ public:
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static SpecAbstract::SCAN_RESULT processMemory(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions);
     static QString getEngineVersion();
+
     STATS getCurrentStats();
 
 private:
