@@ -29,6 +29,7 @@ StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
     g_pElapsedTimer=nullptr;
     g_scanType=SCAN_TYPE_UNKNOWN;
     g_pDevice=nullptr;
+    g_pData=nullptr;
 }
 
 void StaticScan::setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
