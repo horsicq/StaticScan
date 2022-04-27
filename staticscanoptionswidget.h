@@ -37,9 +37,12 @@ public:
     ~StaticScanOptionsWidget();
 
     void setOptions(XOptions *pOptions);
-    void save();
 
     static void setDefaultValues(XOptions *pOptions);
+
+public slots:
+    void save();
+    void reload();
 
 private:
     Ui::StaticScanOptionsWidget *ui;
