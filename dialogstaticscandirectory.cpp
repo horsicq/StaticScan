@@ -96,7 +96,7 @@ void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
 
     ScanItemModel model(&_listRecords);
 
-    sResult+=model.toString(XBinary::FORMATTYPE_TEXT).toLatin1().data();
+    sResult+=model.toString(XBinary::FORMATTYPE_TEXT).toUtf8().data();
 
     emit resultSignal(sResult);
 }
