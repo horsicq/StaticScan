@@ -128,7 +128,7 @@ void HeurWidget::scan()
     ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Interactive);
     ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
 
-    delete pOldTableModel;
+    delete pOldTableModel; // TODO remove in Thread
 
     // mb TODO scan time
 }
