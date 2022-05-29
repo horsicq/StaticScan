@@ -90,7 +90,7 @@ void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)
 void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
 {
     QString sResult=QString("%1 %2 %3").arg(scanResult.sFileName,QString::number(scanResult.nScanTime),tr("msec"));
-    sResult+="\r\n";
+    sResult+="\r\n"; // TODO Linux
 
     QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(scanResult.listRecords));
 
