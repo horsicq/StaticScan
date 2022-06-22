@@ -28,13 +28,14 @@
 #include <QThread>
 #include "scanitemmodel.h"
 #include "staticscan.h"
+#include "xdialogprocess.h"
 
 namespace Ui
 {
 class DialogStaticScanProcess;
 }
 
-class DialogStaticScanProcess : public QDialog // TODO XDialogProcess
+class DialogStaticScanProcess : public XDialogProcess
 {
     Q_OBJECT
 

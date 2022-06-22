@@ -22,7 +22,7 @@
 #include "ui_dialogstaticscanprocess.h"
 
 DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) :
-    QDialog(pParent),
+    XDialogProcess(pParent),
     ui(new Ui::DialogStaticScanProcess)
 {
     ui->setupUi(this);
