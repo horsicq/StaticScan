@@ -20,6 +20,11 @@ FORMS += \
     include($$PWD/../XOptions/xoptionswidget.pri)
 }
 
+!contains(XCONFIG, xdialogprocess) {
+    XCONFIG += xdialogprocess
+    include($$PWD/../FormatDialogs/xdialogprocess.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
