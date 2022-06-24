@@ -51,7 +51,7 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult,QString sSaveFileN
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
-    delete pOldModel;
+    delete pOldModel; // TODO Thread
 
     ui->labelElapsedTime->setText(QString("%1 %2").arg(QString::number(g_scanResult.nScanTime),tr("msec")));
 }
@@ -62,7 +62,7 @@ void FormResult::on_pushButtonClear_clicked()
 
     ui->treeViewResult->setModel(nullptr);
 
-    delete pOldModel;
+    delete pOldModel; // TODO Thread
 
     ui->labelElapsedTime->clear();
 }

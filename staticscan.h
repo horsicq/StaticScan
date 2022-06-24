@@ -66,7 +66,7 @@ private:
         // TODO mb More
     };
 
-    void _process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,XBinary::SCANID parentId,SpecAbstract::SCAN_OPTIONS *pOptions);
+    void _process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,XBinary::SCANID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct=nullptr);
     SpecAbstract::SCAN_RESULT scanFile(QString sFileName);
     SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice);
     SpecAbstract::SCAN_RESULT scanMemory(char *pData,qint32 nSize);
@@ -87,12 +87,13 @@ private:
     QIODevice *g_pDevice;
     char *g_pData;
     qint32 g_nDataSize;
+    bool g_bIsStop;
     SpecAbstract::SCAN_OPTIONS *g_pOptions;
     SpecAbstract::SCAN_RESULT *g_pScanResult;
-    bool g_bIsStop;
     STATS g_currentStats;
     QElapsedTimer *g_pElapsedTimer;
     SCAN_TYPE g_scanType;
+    XBinary::PDSTRUCT *g_pPdStruct;
 };
 
 #endif // STATICSCAN_H
