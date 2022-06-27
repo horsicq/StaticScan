@@ -36,48 +36,32 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) :
     connect(g_pScan,SIGNAL(completed(qint64)),this,SLOT(onCompleted(qint64)));
     connect(g_pScan,SIGNAL(scanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
     connect(g_pScan,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
-
-    g_pTimer=new QTimer(this);
-    connect(g_pTimer,SIGNAL(timeout()),this,SLOT(timerSlot()));
-
-    g_bIsRun=false;
 }
 
 void DialogStaticScanProcess::setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    g_bIsRun=true;
-    g_pScan->setData(sFileName,pOptions,pScanResult);
+    g_pScan->setData(sFileName,pOptions,pScanResult,getPdStruct());
     g_pThread->start();
-    g_pTimer->start(N_REFRESH_DELAY);
     ui->progressBarTotal->setMaximum(0);
 }
 
 void DialogStaticScanProcess::setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult)
 {
-    g_bIsRun=true;
-    g_pScan->setData(pDevice,pOptions,pScanResult);
+    g_pScan->setData(pDevice,pOptions,pScanResult,getPdStruct());
     g_pThread->start();
-    g_pTimer->start(N_REFRESH_DELAY);
     ui->progressBarTotal->setMaximum(0);
 }
 
 void DialogStaticScanProcess::setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions)
 {
-    g_bIsRun=true;
-    g_pScan->setData(sDirectoryName,pOptions);
+    g_pScan->setData(sDirectoryName,pOptions,getPdStruct());
     g_pThread->start();
-    g_pTimer->start(N_REFRESH_DELAY);
-    ui->progressBarTotal->setMaximum(100);
+    ui->progressBarTotal->setMaximum(1000);
 }
 
 DialogStaticScanProcess::~DialogStaticScanProcess()
 {
-    if(g_bIsRun)
-    {
-        g_pScan->stop();
-    }
-
-    g_pTimer->stop();
+    stop();
 
     g_pThread->quit();
     g_pThread->wait();
@@ -121,19 +105,7 @@ bool DialogStaticScanProcess::saveResult(QWidget *pParent,ScanItemModel *pModel,
 
 void DialogStaticScanProcess::on_pushButtonCancel_clicked()
 {
-    if(g_bIsRun)
-    {
-        g_pScan->stop();
-        g_bIsRun=false;
-    }
-}
-
-void DialogStaticScanProcess::onCompleted(qint64 nElapsed)
-{
-    Q_UNUSED(nElapsed)
-
-    g_bIsRun=false;
-    this->close();
+    stop();
 }
 
 void DialogStaticScanProcess::onSetProgressMaximum(int nValue)
@@ -146,24 +118,22 @@ void DialogStaticScanProcess::onSetProgressValueChanged(int nValue)
     ui->progressBarTotal->setValue(nValue);
 }
 
-void DialogStaticScanProcess::timerSlot()
+void DialogStaticScanProcess::_timerSlot()
 {
-    StaticScan::STATS stats=g_pScan->getCurrentStats();
+    ui->labelTotal->setText(QString::number(getPdStruct()->pdRecordOpt.nTotal));
+    ui->labelCurrent->setText(QString::number(getPdStruct()->pdRecordOpt.nCurrent));
+    ui->labelStatus1->setText(getPdStruct()->pdRecord.sStatus);
+    ui->labelStatus2->setText(getPdStruct()->pdRecordOpt.sStatus);
+    ui->labelStatus3->setText(getPdStruct()->sStatus);
 
-    ui->labelTotal->setText(QString::number(stats.nTotal));
-    ui->labelCurrent->setText(QString::number(stats.nCurrent));
-    ui->labelStatus1->setText(stats.sStatus1);
-    ui->labelStatus2->setText(stats.sStatus2);
-    ui->labelFileName->setText(stats.sFileName);
-
-    if(stats.nTotal)
+    if(getPdStruct()->pdRecordOpt.nTotal)
     {
-        ui->progressBarTotal->setValue((int)((stats.nCurrent*100)/stats.nTotal));
+        ui->progressBarTotal->setValue((int)((getPdStruct()->pdRecordOpt.nCurrent*1000)/getPdStruct()->pdRecordOpt.nTotal));
     }
 
-    QDateTime dt;
-    dt.setMSecsSinceEpoch(stats.nElapsed);
-    QString sDateTime=dt.time().addSecs(-60*60).toString("hh:mm:ss");
+//    QDateTime dt;
+//    dt.setMSecsSinceEpoch(stats.nElapsed);
+//    QString sDateTime=dt.time().addSecs(-60*60).toString("hh:mm:ss");
 
-    ui->labelTime->setText(sDateTime);
+//    ui->labelTime->setText(sDateTime);
 }

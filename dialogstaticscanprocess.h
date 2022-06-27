@@ -50,22 +50,18 @@ public:
 
 private slots:
     void on_pushButtonCancel_clicked();
-    void onCompleted(qint64 nElapsed);
     void onSetProgressMaximum(int nValue);
     void onSetProgressValueChanged(int nValue);
-    void timerSlot();
+    void _timerSlot();
 
 signals:
     void scanFileStarted(QString sFileName);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
 
 private:
-    static const qint32 N_REFRESH_DELAY=1000; // msec TODO set/get !!!
     Ui::DialogStaticScanProcess *ui;
     StaticScan *g_pScan;
     QThread *g_pThread;
-    bool g_bIsRun;
-    QTimer *g_pTimer;
 };
 
 #endif // DIALOGSTATICSCANPROCESS_H

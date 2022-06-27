@@ -85,7 +85,7 @@ void HeurWidget::scan()
 
     DialogStaticScanProcess dialogStaticScanProcess(this);
     dialogStaticScanProcess.setData(g_pDevice,&options,&scanResult);
-    dialogStaticScanProcess.exec();
+    dialogStaticScanProcess.showDialogDelay(1000);
 
     QAbstractItemModel *pOldTreeModel=ui->treeViewScan->model();
 
