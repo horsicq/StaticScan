@@ -30,11 +30,6 @@
 #include "staticscan.h"
 #include "xdialogprocess.h"
 
-namespace Ui
-{
-class DialogStaticScanProcess;
-}
-
 class DialogStaticScanProcess : public XDialogProcess
 {
     Q_OBJECT
@@ -48,18 +43,11 @@ public:
     void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
     static bool saveResult(QWidget *pParent,ScanItemModel *pModel,QString sResultFileName);
 
-private slots:
-    void on_pushButtonCancel_clicked();
-    void onSetProgressMaximum(int nValue);
-    void onSetProgressValueChanged(int nValue);
-    void _timerSlot();
-
 signals:
     void scanFileStarted(QString sFileName);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
 
 private:
-    Ui::DialogStaticScanProcess *ui;
     StaticScan *g_pScan;
     QThread *g_pThread;
 };
