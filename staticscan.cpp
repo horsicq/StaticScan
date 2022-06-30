@@ -128,19 +128,28 @@ void StaticScan::process()
 
             XBinary::findFiles(g_sDirectoryName,&listFileNames,g_pOptions->bSubdirectories,0,pPdStruct);
 
-            pPdStruct->pdRecordOpt.nTotal=listFileNames.count();
+            pPdStruct->pdRecordObj.bIsValid=true;
 
-            for(qint32 i=0;(i<pPdStruct->pdRecordOpt.nTotal)&&(!(pPdStruct->bIsStop));i++)
+            pPdStruct->pdRecordObj.nTotal=listFileNames.count();
+
+            for(qint32 i=0;(i<pPdStruct->pdRecordObj.nTotal)&&(!(pPdStruct->bIsStop));i++)
             {
-                pPdStruct->pdRecordOpt.nCurrent=i+1;
-                pPdStruct->pdRecordOpt.sStatus=listFileNames.at(i);
+                pPdStruct->pdRecordObj.nCurrent=i+1;
+                pPdStruct->pdRecordObj.sStatus=listFileNames.at(i);
 
-                emit scanFileStarted(pPdStruct->pdRecordOpt.sStatus);
+                emit scanFileStarted(pPdStruct->pdRecordObj.sStatus);
 
-                SpecAbstract::SCAN_RESULT _scanResult=scanFile(pPdStruct->pdRecordOpt.sStatus,pPdStruct);
+                SpecAbstract::SCAN_RESULT _scanResult=scanFile(pPdStruct->pdRecordObj.sStatus,pPdStruct);
 
                 emit scanResult(_scanResult);
             }
+
+            if(!(pPdStruct->bIsStop))
+            {
+                pPdStruct->pdRecordObj.bSuccess=true;
+            }
+
+            pPdStruct->pdRecordObj.bFinished=true;
         }
     }
 

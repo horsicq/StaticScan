@@ -56,6 +56,7 @@ void DialogStaticScanProcess::setData(QString sDirectoryName,SpecAbstract::SCAN_
 DialogStaticScanProcess::~DialogStaticScanProcess()
 {
     stop();
+    waitForFinished();
 
     g_pThread->quit();
     g_pThread->wait();
