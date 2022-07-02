@@ -30,7 +30,7 @@ StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
     g_pPdStruct=nullptr;
 }
 
-void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
+void StaticScan::setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_sFileName=sFileName;
     this->g_pOptions=pOptions;
