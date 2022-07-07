@@ -83,14 +83,14 @@ void StaticScan::process()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    pPdStruct->pdRecordOpt.bIsValid=true;
+    pPdStruct->pdRecordObj.bIsValid=true;
 
     if(this->g_scanType==SCAN_TYPE_FILE)
     {
         if((g_pScanResult)&&(g_sFileName!=""))
         {
             pPdStruct->sStatus=tr("File scan");
-            pPdStruct->pdRecordOpt.sStatus=g_sFileName;
+            pPdStruct->pdRecordObj.sStatus=g_sFileName;
 
             emit scanFileStarted(g_sFileName);
 
@@ -104,7 +104,7 @@ void StaticScan::process()
         if(g_pDevice)
         {
             pPdStruct->sStatus=tr("Device scan");
-            pPdStruct->pdRecordOpt.sStatus=XBinary::getDeviceFileName(g_pDevice);
+            pPdStruct->pdRecordObj.sStatus=XBinary::getDeviceFileName(g_pDevice);
 
             *g_pScanResult=scanDevice(g_pDevice,pPdStruct);
 
@@ -128,37 +128,40 @@ void StaticScan::process()
 
             XBinary::findFiles(g_sDirectoryName,&listFileNames,g_pOptions->bSubdirectories,0,pPdStruct);
 
-            pPdStruct->pdRecordObj.bIsValid=true;
+            pPdStruct->pdRecordFiles.bIsValid=true;
 
-            pPdStruct->pdRecordObj.nTotal=listFileNames.count();
+            qint32 nTotal=listFileNames.count();
+            pPdStruct->pdRecordFiles.nTotal=nTotal;
 
-            for(qint32 i=0;(i<pPdStruct->pdRecordObj.nTotal)&&(!(pPdStruct->bIsStop));i++)
+            for(qint32 i=0;(i<nTotal)&&(!(pPdStruct->bIsStop));i++)
             {
-                pPdStruct->pdRecordObj.nCurrent=i+1;
-                pPdStruct->pdRecordObj.sStatus=listFileNames.at(i);
+                QString sFileName=listFileNames.at(i);
 
-                emit scanFileStarted(pPdStruct->pdRecordObj.sStatus);
+                pPdStruct->pdRecordFiles.nCurrent=i;
+                pPdStruct->pdRecordFiles.sStatus=sFileName;
 
-                SpecAbstract::SCAN_RESULT _scanResult=scanFile(pPdStruct->pdRecordObj.sStatus,pPdStruct);
+                emit scanFileStarted(sFileName);
+
+                SpecAbstract::SCAN_RESULT _scanResult=scanFile(sFileName,pPdStruct);
 
                 emit scanResult(_scanResult);
             }
 
             if(!(pPdStruct->bIsStop))
             {
-                pPdStruct->pdRecordObj.bSuccess=true;
+                pPdStruct->pdRecordFiles.bSuccess=true;
             }
 
-            pPdStruct->pdRecordObj.bFinished=true;
+            pPdStruct->pdRecordFiles.bFinished=true;
         }
     }
 
     if(!(pPdStruct->bIsStop))
     {
-        pPdStruct->pdRecordOpt.bSuccess=true;
+        pPdStruct->pdRecordObj.bSuccess=true;
     }
 
-    pPdStruct->pdRecordOpt.bFinished=true;
+    pPdStruct->pdRecordObj.bFinished=true;
 
     emit completed(scanTimer.elapsed());
 }

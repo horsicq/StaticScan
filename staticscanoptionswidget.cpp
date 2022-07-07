@@ -50,6 +50,7 @@ void StaticScanOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCAN_RECURSIVE);
     g_pOptions->getCheckBox(ui->checkBoxRecursiveScan,XOptions::ID_SCAN_DEEP);
     g_pOptions->getCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
+    g_pOptions->getCheckBox(ui->checkBoxVerbose,XOptions::ID_SCAN_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
 }
 
@@ -59,6 +60,7 @@ void StaticScanOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_RECURSIVE,true);
     pOptions->addID(XOptions::ID_SCAN_DEEP,true);
     pOptions->addID(XOptions::ID_SCAN_HEURISTIC,false);
+    pOptions->addID(XOptions::ID_SCAN_VERBOSE,false);
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES,false);
 }
 
@@ -68,5 +70,6 @@ void StaticScanOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxRecursiveScan,XOptions::ID_SCAN_RECURSIVE);
     g_pOptions->setCheckBox(ui->checkBoxDeepScan,XOptions::ID_SCAN_DEEP);
     g_pOptions->setCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
+    g_pOptions->setCheckBox(ui->checkBoxVerbose,XOptions::ID_SCAN_VERBOSE);
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
 }
