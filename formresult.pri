@@ -29,6 +29,11 @@ FORMS += \
     include($$PWD/../FormatDialogs/dialogtextinfo.pri)
 }
 
+!contains(XCONFIG, xshortcuts) {
+    XCONFIG += xshortcuts
+    include($$PWD/../XShortcuts/xshortcuts.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \

@@ -22,7 +22,7 @@
 #include "ui_dialogstaticscandirectory.h"
 
 DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent,QString sDirName) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogStaticScanDirectory)
 {
     ui->setupUi(this);
@@ -63,6 +63,8 @@ void DialogStaticScanDirectory::on_pushButtonScan_clicked()
     QString sDirectoryName=ui->lineEditDirectoryName->text().trimmed();
 
     scanDirectory(sDirectoryName);
+
+    getGlobalOptions()->setLastDirectory(sDirectoryName);
 }
 
 void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)

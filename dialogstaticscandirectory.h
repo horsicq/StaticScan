@@ -26,12 +26,13 @@
 #include "dialogoptions.h"
 #include "dialogstaticscanprocess.h"
 #include "xoptions.h"
+#include "xshortcutsdialog.h"
 
 namespace Ui {
 class DialogStaticScanDirectory;
 }
 
-class DialogStaticScanDirectory : public QDialog
+class DialogStaticScanDirectory : public XShortcutsDialog
 {
     Q_OBJECT
 
