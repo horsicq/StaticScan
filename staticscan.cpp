@@ -166,7 +166,7 @@ void StaticScan::process()
     emit completed(scanTimer.elapsed());
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
 {
     SpecAbstract::SCAN_RESULT result={0};
     StaticScan scan;
