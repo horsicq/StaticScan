@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
-    <height>295</height>
+    <width>631</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -70,6 +70,16 @@
          <widget class="QCheckBox" name="checkBoxHeuristicScan">
           <property name="text">
            <string>Heuristic scan</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxVerbose">
+          <property name="text">
+           <string>Verbose</string>
           </property>
           <property name="checked">
            <bool>true</bool>

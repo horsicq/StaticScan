@@ -176,7 +176,7 @@ SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice,SpecAbstr
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
 {
     SpecAbstract::SCAN_RESULT result={0};
     StaticScan scan;

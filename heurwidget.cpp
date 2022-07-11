@@ -30,6 +30,7 @@ HeurWidget::HeurWidget(QWidget *pParent) :
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(true);
     ui->checkBoxHeuristicScan->setChecked(false);
+    ui->checkBoxVerbose->setChecked(false);
     ui->checkBoxAllTypesScan->setChecked(false);
 }
 
@@ -79,6 +80,7 @@ void HeurWidget::scan()
     options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
     options.bDeepScan=ui->checkBoxDeepScan->isChecked();
     options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
+    options.bVerbose=ui->checkBoxVerbose->isChecked();
     options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
     options.bShowDetects=true;
     options.fileType=g_fileType;
