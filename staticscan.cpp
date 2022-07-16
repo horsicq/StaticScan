@@ -267,7 +267,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PD
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct)
+SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData,qint32 nSize,XBinary::PDSTRUCT *pPdStruct)
 {
     SpecAbstract::SCAN_RESULT result={0};
 
