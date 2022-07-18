@@ -255,7 +255,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName,XBinary::PDSTRU
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PDSTRUCT *pPdStruct)
+SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice,XBinary::PDSTRUCT *pPdStruct)
 {
     SpecAbstract::SCAN_RESULT result={0};
 
