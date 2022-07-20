@@ -79,7 +79,6 @@ signals:
 
 public slots:
     void process();
-//    void stop();
 
 private:
     QString g_sFileName;
