@@ -54,7 +54,7 @@ void DialogStaticScanDirectory::on_pushButtonOpenDirectory_clicked()
 
     if(!sDirectoryName.isEmpty())
     {
-        ui->lineEditDirectoryName->setText(sDirectoryName);
+        ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirectoryName));
     }
 }
 
@@ -92,7 +92,7 @@ void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)
 
 void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
 {
-    QString sResult=QString("%1 %2 %3").arg(scanResult.sFileName,QString::number(scanResult.nScanTime),tr("msec"));
+    QString sResult=QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName),QString::number(scanResult.nScanTime),tr("msec"));
     sResult+="\r\n"; // TODO Linux
 
     QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(scanResult.listRecords));
