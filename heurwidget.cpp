@@ -93,7 +93,7 @@ void HeurWidget::scan()
 
     QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(scanResult.listRecords));
 
-    ScanItemModel *pModel=new ScanItemModel(&_listRecords,this,1);
+    ScanItemModel *pModel=new ScanItemModel(&_listRecords,1);
     ui->treeViewScan->setModel(pModel);
     ui->treeViewScan->expandAll();
 

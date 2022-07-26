@@ -47,7 +47,7 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult,QString sSaveFileN
 
     QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(this->g_scanResult.listRecords));
 
-    g_pModel=new ScanItemModel(&(_listRecords),this,1);
+    g_pModel=new ScanItemModel(&(_listRecords),1);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 

@@ -26,7 +26,7 @@
 #include "dialogstaticscanprocess.h"
 #include "dialogtextinfo.h"
 
-// TODO rename
+// TODO rename class
 namespace Ui
 {
 class FormResult;
