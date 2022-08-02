@@ -44,6 +44,8 @@ void HeurWidget::setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType)
     this->g_pDevice=pDevice;
     this->g_fileType=fileType;
 
+    XFormats::setFileTypeComboBox(fileType,pDevice,ui->comboBoxType);
+
     if(bAuto)
     {
         scan();
@@ -83,7 +85,7 @@ void HeurWidget::scan()
     options.bVerbose=ui->checkBoxVerbose->isChecked();
     options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
     options.bShowDetects=true;
-    options.fileType=g_fileType;
+    options.fileType=(XBinary::FT)(ui->comboBoxType->currentData().toInt());
 
     DialogStaticScanProcess dialogStaticScanProcess(this);
     dialogStaticScanProcess.setData(g_pDevice,&options,&scanResult);
@@ -133,4 +135,11 @@ void HeurWidget::scan()
     delete pOldTableModel; // TODO remove in Thread
 
     // mb TODO scan time
+}
+
+void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex)
+{
+    Q_UNUSED(nIndex)
+
+    scan();
 }
