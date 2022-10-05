@@ -7,9 +7,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/dialogstaticscanprocess.cpp 
 
-FORMS += \
-    $$PWD/dialogstaticscanprocess.ui 
-
 !contains(XCONFIG, staticscan) {
     XCONFIG += staticscan
     include($$PWD/staticscan.pri)

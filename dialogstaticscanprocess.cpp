@@ -19,7 +19,6 @@
  * SOFTWARE.
  */
 #include "dialogstaticscanprocess.h"
-#include "ui_dialogstaticscanprocess.h"
 
 DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) :
     XDialogProcess(pParent)

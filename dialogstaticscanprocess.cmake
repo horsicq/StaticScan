@@ -9,5 +9,4 @@ set(DIALOGSTATICSCANPROCESS_SOURCES
     ${XOPTIONSWIDGET_SOURCES}
     ${XDIALOGPROCESS_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogstaticscanprocess.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/dialogstaticscanprocess.ui
 )
