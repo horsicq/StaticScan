@@ -27,6 +27,7 @@
 #include "dialogtextinfo.h"
 
 // TODO rename class
+// TODO XShortcutsWidget
 namespace Ui
 {
 class FormResult;

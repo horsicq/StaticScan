@@ -99,7 +99,7 @@ void HeurWidget::scan()
     ui->treeViewScan->setModel(pModel);
     ui->treeViewScan->expandAll();
 
-    delete pOldTreeModel; // mb TODO in thread
+    deleteOldAbstractModel(&pOldTreeModel);
 
     qint32 nNumberOfHeurs=scanResult.listHeurs.count();
 
@@ -132,7 +132,7 @@ void HeurWidget::scan()
     ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Interactive);
     ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
 
-    delete pOldTableModel; // TODO remove in Thread
+    deleteOldAbstractModel(&pOldTableModel);
 
     // mb TODO scan time
 }
