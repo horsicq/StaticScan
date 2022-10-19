@@ -38,7 +38,7 @@ public:
 
     void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
     // TODO setFileName
-    // TODO Memory
+    // TODO Memory scan
 
 private slots:
     void on_pushButtonScan_clicked();
