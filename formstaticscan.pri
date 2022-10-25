@@ -14,6 +14,3 @@ FORMS += \
     XCONFIG += formresult
     include($$PWD/formresult.pri)
 }
-
-
-
