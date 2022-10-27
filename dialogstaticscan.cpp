@@ -27,9 +27,9 @@ DialogStaticScan::DialogStaticScan(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    setWindowFlags(Qt::Window);
-
     g_pDevice=nullptr;
+
+    setWindowFlags(Qt::Window);
 }
 
 DialogStaticScan::~DialogStaticScan()
