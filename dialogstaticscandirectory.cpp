@@ -27,9 +27,7 @@ DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent,QString sD
 {
     ui->setupUi(this);
 
-    setWindowFlags(windowFlags()|Qt::WindowMinMaxButtonsHint);
-
-//    Qt::WindowTitleHint
+    setWindowFlags(windowFlags()|Qt::WindowMinMaxButtonsHint); // Qt::WindowTitleHint
 
     connect(this,SIGNAL(resultSignal(QString)),this,SLOT(appendResult(QString)));
 
