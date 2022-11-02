@@ -53,8 +53,6 @@ public:
     static SpecAbstract::SCAN_RESULT processMemory(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct=nullptr);
     static QString getEngineVersion();
 
-//    STATS getCurrentStats();
-
 private:
     enum SCAN_TYPE
     {
