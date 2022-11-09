@@ -27,6 +27,9 @@ HeurWidget::HeurWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    this->g_pDevice=nullptr;
+    this->g_fileType=XBinary::FT_UNKNOWN;
+
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(true);
     ui->checkBoxHeuristicScan->setChecked(false);
