@@ -23,40 +23,39 @@
 
 #include <QElapsedTimer>
 #include <QTimer>
+
 #include "specabstract.h"
 
-#define SSE_VERSION "0.08" // TODO
+#define SSE_VERSION "0.08"  // TODO
 
-class StaticScan : public QObject
-{
+class StaticScan : public QObject {
     Q_OBJECT
 
 public:
-//    struct STATS
-//    {
-//        qint32 nTotal;
-//        qint32 nCurrent;
-//        qint64 nElapsed;
-//        QString sFileName;
-//        QString sStatus1;
-//        QString sStatus2;
-//    };
-    explicit StaticScan(QObject *pParent=nullptr);
+    //    struct STATS
+    //    {
+    //        qint32 nTotal;
+    //        qint32 nCurrent;
+    //        qint64 nElapsed;
+    //        QString sFileName;
+    //        QString sStatus1;
+    //        QString sStatus2;
+    //    };
+    explicit StaticScan(QObject *pParent = nullptr);
 
-    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct);
-    void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct);
-    void setData(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct);
-    void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct);
+    void setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct);
+    void setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct);
+    void setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct);
+    void setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct);
 
-    static SpecAbstract::SCAN_RESULT processDevice(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct=nullptr);
-    static SpecAbstract::SCAN_RESULT processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct=nullptr);
-    static SpecAbstract::SCAN_RESULT processMemory(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct=nullptr);
+    static SpecAbstract::SCAN_RESULT processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    static SpecAbstract::SCAN_RESULT processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    static SpecAbstract::SCAN_RESULT processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
     static QString getEngineVersion();
 
 private:
-    enum SCAN_TYPE
-    {
-        SCAN_TYPE_UNKNOWN=0,
+    enum SCAN_TYPE {
+        SCAN_TYPE_UNKNOWN = 0,
         SCAN_TYPE_DEVICE,
         SCAN_TYPE_DIRECTORY,
         SCAN_TYPE_FILE,
@@ -64,10 +63,11 @@ private:
         // TODO mb More
     };
 
-    void _process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,XBinary::SCANID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct=nullptr);
-    SpecAbstract::SCAN_RESULT scanFile(QString sFileName,XBinary::PDSTRUCT *pPdStruct=nullptr);
-    SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice,XBinary::PDSTRUCT *pPdStruct=nullptr);
-    SpecAbstract::SCAN_RESULT scanMemory(char *pData,qint32 nSize,XBinary::PDSTRUCT *pPdStruct=nullptr);
+    void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId,
+                  SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    SpecAbstract::SCAN_RESULT scanFile(QString sFileName, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    SpecAbstract::SCAN_RESULT scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct = nullptr);
 
 signals:
     // TODO error and info signals
@@ -90,4 +90,4 @@ private:
     XBinary::PDSTRUCT *g_pPdStruct;
 };
 
-#endif // STATICSCAN_H
+#endif  // STATICSCAN_H

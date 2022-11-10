@@ -28,15 +28,14 @@ namespace Ui {
 class HeurWidget;
 }
 
-class HeurWidget : public XShortcutsWidget
-{
+class HeurWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
-    explicit HeurWidget(QWidget *pParent=nullptr);
+    explicit HeurWidget(QWidget *pParent = nullptr);
     ~HeurWidget();
 
-    void setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType);
+    void setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType);
     // TODO setFileName
     // TODO Memory scan
 
@@ -55,4 +54,4 @@ private:
     XBinary::FT g_fileType;
 };
 
-#endif // HEURWIDGET_H
+#endif  // HEURWIDGET_H

@@ -19,60 +19,52 @@
  * SOFTWARE.
  */
 #include "dialogstaticscan.h"
+
 #include "ui_dialogstaticscan.h"
 
-DialogStaticScan::DialogStaticScan(QWidget *pParent) :
-    QDialog(pParent),
-    ui(new Ui::DialogStaticScan)
-{
+DialogStaticScan::DialogStaticScan(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogStaticScan) {
     ui->setupUi(this);
 
-    g_pDevice=nullptr;
+    g_pDevice = nullptr;
 
     setWindowFlags(Qt::Window);
 }
 
-DialogStaticScan::~DialogStaticScan()
-{
+DialogStaticScan::~DialogStaticScan() {
     delete ui;
 }
 
-void DialogStaticScan::setData(QIODevice *pDevice,bool bAuto)
-{
-    this->g_pDevice=pDevice;
+void DialogStaticScan::setData(QIODevice *pDevice, bool bAuto) {
+    this->g_pDevice = pDevice;
 
-    if(bAuto)
-    {
+    if (bAuto) {
         scan();
     }
 }
 
-void DialogStaticScan::on_pushButtonClose_clicked()
-{
+void DialogStaticScan::on_pushButtonClose_clicked() {
     this->close();
 }
 
-void DialogStaticScan::on_pushButtonScan_clicked()
-{
+void DialogStaticScan::on_pushButtonScan_clicked() {
     scan();
 }
 
-void DialogStaticScan::scan()
-{
-    SpecAbstract::SCAN_RESULT scanResult={0};
+void DialogStaticScan::scan() {
+    SpecAbstract::SCAN_RESULT scanResult = {0};
 
-    SpecAbstract::SCAN_OPTIONS options={0};
+    SpecAbstract::SCAN_OPTIONS options = {0};
 
-    options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
-    options.bDeepScan=ui->checkBoxDeepScan->isChecked();
-    options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
-    options.bVerbose=ui->checkBoxVerbose->isChecked();
-    options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
+    options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+    options.bDeepScan = ui->checkBoxDeepScan->isChecked();
+    options.bHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+    options.bVerbose = ui->checkBoxVerbose->isChecked();
+    options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
 
     DialogStaticScanProcess ds(XOptions::getMainWidget(this));
-    ds.setData(g_pDevice,&options,&scanResult);
-    ds.showDialogDelay(1000); // TODO const
+    ds.setData(g_pDevice, &options, &scanResult);
+    ds.showDialogDelay(1000);  // TODO const
 
-    QString sSaveFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Result")));
-    ui->widgetResult->setData(scanResult,sSaveFileName);
+    QString sSaveFileName = XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Result")));
+    ui->widgetResult->setData(scanResult, sSaveFileName);
 }

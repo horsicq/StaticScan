@@ -28,15 +28,14 @@ namespace Ui {
 class DialogStaticScan;
 }
 
-class DialogStaticScan : public QDialog
-{
+class DialogStaticScan : public QDialog {
     Q_OBJECT
 
 public:
     explicit DialogStaticScan(QWidget *pParent);
     ~DialogStaticScan();
 
-    void setData(QIODevice *pDevice,bool bAuto=false);
+    void setData(QIODevice *pDevice, bool bAuto = false);
 
 private slots:
     void on_pushButtonClose_clicked();
@@ -48,4 +47,4 @@ private:
     QIODevice *g_pDevice;
 };
 
-#endif // DIALOGSTATICSCAN_H
+#endif  // DIALOGSTATICSCAN_H

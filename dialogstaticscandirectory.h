@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QFileDialog>
+
 #include "dialogoptions.h"
 #include "dialogstaticscanprocess.h"
 #include "xoptions.h"
@@ -32,12 +33,11 @@ namespace Ui {
 class DialogStaticScanDirectory;
 }
 
-class DialogStaticScanDirectory : public XShortcutsDialog
-{
+class DialogStaticScanDirectory : public XShortcutsDialog {
     Q_OBJECT
 
 public:
-    explicit DialogStaticScanDirectory(QWidget *pParent,QString sDirName);
+    explicit DialogStaticScanDirectory(QWidget *pParent, QString sDirName);
     ~DialogStaticScanDirectory();
 
 private slots:
@@ -57,4 +57,4 @@ private:
     Ui::DialogStaticScanDirectory *ui;
 };
 
-#endif // DIALOGSTATICSCANDIRECTORY_H
+#endif  // DIALOGSTATICSCANDIRECTORY_H

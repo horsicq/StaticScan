@@ -19,75 +19,65 @@
  * SOFTWARE.
  */
 #include "formresult.h"
+
 #include "ui_formresult.h"
 
-FormResult::FormResult(QWidget *pParent) :
-    QWidget(pParent),
-    ui(new Ui::FormResult)
-{
+FormResult::FormResult(QWidget *pParent) : QWidget(pParent), ui(new Ui::FormResult) {
     ui->setupUi(this);
 
-    g_pModel=nullptr;
-    g_scanResult={0};
+    g_pModel = nullptr;
+    g_scanResult = {0};
 }
 
-FormResult::~FormResult()
-{
+FormResult::~FormResult() {
     delete ui;
 }
 
-void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult,QString sSaveFileName)
-{
-    this->g_scanResult=scanResult;
-    this->g_sSaveFileName=sSaveFileName;
+void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName) {
+    this->g_scanResult = scanResult;
+    this->g_sSaveFileName = sSaveFileName;
 
     ui->labelElapsedTime->clear();
 
-    QAbstractItemModel *pOldModel=ui->treeViewResult->model();
+    QAbstractItemModel *pOldModel = ui->treeViewResult->model();
 
-    QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(this->g_scanResult.listRecords));
+    QList<XBinary::SCANSTRUCT> _listRecords = SpecAbstract::convert(&(this->g_scanResult.listRecords));
 
-    g_pModel=new ScanItemModel(&(_listRecords),1);
+    g_pModel = new ScanItemModel(&(_listRecords), 1);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
-    delete pOldModel; // TODO Thread
+    delete pOldModel;  // TODO Thread
 
-    ui->labelElapsedTime->setText(QString("%1 %2").arg(QString::number(g_scanResult.nScanTime),tr("msec")));
+    ui->labelElapsedTime->setText(QString("%1 %2").arg(QString::number(g_scanResult.nScanTime), tr("msec")));
 }
 
-void FormResult::on_pushButtonClear_clicked()
-{
-    QAbstractItemModel *pOldModel=ui->treeViewResult->model();
+void FormResult::on_pushButtonClear_clicked() {
+    QAbstractItemModel *pOldModel = ui->treeViewResult->model();
 
     ui->treeViewResult->setModel(nullptr);
 
-    delete pOldModel; // TODO Thread
+    delete pOldModel;  // TODO Thread
 
     ui->labelElapsedTime->clear();
 }
 
-void FormResult::on_pushButtonSave_clicked()
-{
-    QAbstractItemModel *pModel=ui->treeViewResult->model();
+void FormResult::on_pushButtonSave_clicked() {
+    QAbstractItemModel *pModel = ui->treeViewResult->model();
 
-    if(pModel)
-    {
-        DialogStaticScanProcess::saveResult(this,(ScanItemModel *)pModel,g_sSaveFileName);
+    if (pModel) {
+        DialogStaticScanProcess::saveResult(this, (ScanItemModel *)pModel, g_sSaveFileName);
     }
 }
 
-void FormResult::on_pushButtonExtraInformation_clicked()
-{
-    if(g_pModel)
-    {
+void FormResult::on_pushButtonExtraInformation_clicked() {
+    if (g_pModel) {
         DialogTextInfo dialogTextInfo(this);
 
-        QString sText=((ScanItemModel *)g_pModel)->toFormattedString();
+        QString sText = ((ScanItemModel *)g_pModel)->toFormattedString();
 
         dialogTextInfo.setText(sText);
 
         dialogTextInfo.exec();
     }
 }
-

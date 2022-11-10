@@ -22,18 +22,18 @@
 #define STATICSCANOPTIONSWIDGET_H
 
 #include <QWidget>
+
 #include "xoptions.h"
 
 namespace Ui {
 class StaticScanOptionsWidget;
 }
 
-class StaticScanOptionsWidget : public QWidget
-{
+class StaticScanOptionsWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit StaticScanOptionsWidget(QWidget *pParent=nullptr);
+    explicit StaticScanOptionsWidget(QWidget *pParent = nullptr);
     ~StaticScanOptionsWidget();
 
     void setOptions(XOptions *pOptions);
@@ -49,4 +49,4 @@ private:
     XOptions *g_pOptions;
 };
 
-#endif // STATICSCANOPTIONSWIDGET_H
+#endif  // STATICSCANOPTIONSWIDGET_H

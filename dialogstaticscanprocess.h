@@ -26,22 +26,22 @@
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <QThread>
+
 #include "scanitemmodel.h"
 #include "staticscan.h"
 #include "xdialogprocess.h"
 
-class DialogStaticScanProcess : public XDialogProcess
-{
+class DialogStaticScanProcess : public XDialogProcess {
     Q_OBJECT
 
 public:
-    explicit DialogStaticScanProcess(QWidget *pParent=nullptr);
+    explicit DialogStaticScanProcess(QWidget *pParent = nullptr);
     ~DialogStaticScanProcess();
 
-    void setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions);
-    static bool saveResult(QWidget *pParent,ScanItemModel *pModel,QString sResultFileName); // TODO move to scanitemmodel.h
+    void setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult);
+    void setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult);
+    void setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions);
+    static bool saveResult(QWidget *pParent, ScanItemModel *pModel, QString sResultFileName);  // TODO move to scanitemmodel.h
 
 signals:
     void scanFileStarted(QString sFileName);
@@ -52,4 +52,4 @@ private:
     QThread *g_pThread;
 };
 
-#endif // DIALOGSTATICSCANPROCESS_H
+#endif  // DIALOGSTATICSCANPROCESS_H

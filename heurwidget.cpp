@@ -19,16 +19,14 @@
  * SOFTWARE.
  */
 #include "heurwidget.h"
+
 #include "ui_heurwidget.h"
 
-HeurWidget::HeurWidget(QWidget *pParent) :
-    XShortcutsWidget(pParent),
-    ui(new Ui::HeurWidget)
-{
+HeurWidget::HeurWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::HeurWidget) {
     ui->setupUi(this);
 
-    this->g_pDevice=nullptr;
-    this->g_fileType=XBinary::FT_UNKNOWN;
+    this->g_pDevice = nullptr;
+    this->g_fileType = XBinary::FT_UNKNOWN;
 
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(true);
@@ -37,111 +35,103 @@ HeurWidget::HeurWidget(QWidget *pParent) :
     ui->checkBoxAllTypesScan->setChecked(false);
 }
 
-HeurWidget::~HeurWidget()
-{
+HeurWidget::~HeurWidget() {
     delete ui;
 }
 
-void HeurWidget::setData(QIODevice *pDevice,bool bAuto,XBinary::FT fileType)
-{
-    this->g_pDevice=pDevice;
-    this->g_fileType=fileType;
+void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType) {
+    this->g_pDevice = pDevice;
+    this->g_fileType = fileType;
 
-    XFormats::setFileTypeComboBox(fileType,pDevice,ui->comboBoxType);
+    XFormats::setFileTypeComboBox(fileType, pDevice, ui->comboBoxType);
 
-    if(bAuto)
-    {
+    if (bAuto) {
         scan();
     }
 }
 
-void HeurWidget::on_pushButtonScan_clicked()
-{
+void HeurWidget::on_pushButtonScan_clicked() {
     scan();
 }
 
-void HeurWidget::registerShortcuts(bool bState)
-{
+void HeurWidget::registerShortcuts(bool bState) {
     Q_UNUSED(bState)
 }
 
-void HeurWidget::on_pushButtonSave_clicked()
-{
-    QAbstractItemModel *pModel=ui->treeViewScan->model();
+void HeurWidget::on_pushButtonSave_clicked() {
+    QAbstractItemModel *pModel = ui->treeViewScan->model();
 
-    if(pModel)
-    {
-        QString sSaveFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Result")));
+    if (pModel) {
+        QString sSaveFileName = XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Result")));
 
-        DialogStaticScanProcess::saveResult(this,(ScanItemModel *)pModel,sSaveFileName);
+        DialogStaticScanProcess::saveResult(this, (ScanItemModel *)pModel, sSaveFileName);
     }
 }
 
-void HeurWidget::scan()
-{
-    SpecAbstract::SCAN_RESULT scanResult={0};
-    SpecAbstract::SCAN_OPTIONS options={0};
+void HeurWidget::scan() {
+    SpecAbstract::SCAN_RESULT scanResult = {0};
+    SpecAbstract::SCAN_OPTIONS options = {0};
 
-    options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
-    options.bDeepScan=ui->checkBoxDeepScan->isChecked();
-    options.bHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
-    options.bVerbose=ui->checkBoxVerbose->isChecked();
-    options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
-    options.bShowDetects=true;
-    options.fileType=(XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+    options.bDeepScan = ui->checkBoxDeepScan->isChecked();
+    options.bHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+    options.bVerbose = ui->checkBoxVerbose->isChecked();
+    options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+    options.bShowDetects = true;
+    options.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 
     DialogStaticScanProcess dialogStaticScanProcess(this);
-    dialogStaticScanProcess.setData(g_pDevice,&options,&scanResult);
+    dialogStaticScanProcess.setData(g_pDevice, &options, &scanResult);
     dialogStaticScanProcess.showDialogDelay(1000);
 
-    QAbstractItemModel *pOldTreeModel=ui->treeViewScan->model();
+    QAbstractItemModel *pOldTreeModel = ui->treeViewScan->model();
 
-    QList<XBinary::SCANSTRUCT> _listRecords=SpecAbstract::convert(&(scanResult.listRecords));
+    QList<XBinary::SCANSTRUCT> _listRecords = SpecAbstract::convert(&(scanResult.listRecords));
 
-    ScanItemModel *pModel=new ScanItemModel(&_listRecords,1);
+    ScanItemModel *pModel = new ScanItemModel(&_listRecords, 1);
     ui->treeViewScan->setModel(pModel);
     ui->treeViewScan->expandAll();
 
     deleteOldAbstractModel(&pOldTreeModel);
 
-    qint32 nNumberOfHeurs=scanResult.listHeurs.count();
+    qint32 nNumberOfHeurs = scanResult.listHeurs.count();
 
-    QAbstractItemModel *pOldTableModel=ui->tableViewHeur->model();
+    QAbstractItemModel *pOldTableModel = ui->tableViewHeur->model();
 
-    QStandardItemModel *pHeurModel=new QStandardItemModel(nNumberOfHeurs,3,this);
+    QStandardItemModel *pHeurModel = new QStandardItemModel(nNumberOfHeurs, 3, this);
 
-    pHeurModel->setHeaderData(0,Qt::Horizontal,tr("Type"));
-    pHeurModel->setHeaderData(1,Qt::Horizontal,tr("Name"));
-    pHeurModel->setHeaderData(2,Qt::Horizontal,tr("Value"));
+    pHeurModel->setHeaderData(0, Qt::Horizontal, tr("Type"));
+    pHeurModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
+    pHeurModel->setHeaderData(2, Qt::Horizontal, tr("Value"));
 
-    for(qint32 i=0;i<nNumberOfHeurs;i++)
-    {
-        QStandardItem *pItemHeurType=new QStandardItem;
+    for (qint32 i = 0; i < nNumberOfHeurs; i++) {
+        QStandardItem *pItemHeurType = new QStandardItem;
         pItemHeurType->setText(SpecAbstract::heurTypeIdToString(scanResult.listHeurs.at(i).detectType));
-        pHeurModel->setItem(i,0,pItemHeurType);
+        pHeurModel->setItem(i, 0, pItemHeurType);
 
-        QStandardItem *pItemName=new QStandardItem;
-        pItemName->setText(QString("%1(%2)[%3]").arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name),scanResult.listHeurs.at(i).sVersion,scanResult.listHeurs.at(i).sInfo));
-        pHeurModel->setItem(i,1,pItemName);
+        QStandardItem *pItemName = new QStandardItem;
+        pItemName->setText(QString("%1(%2)[%3]")
+                               .arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name), scanResult.listHeurs.at(i).sVersion,
+                                    scanResult.listHeurs.at(i).sInfo));
+        pHeurModel->setItem(i, 1, pItemName);
 
-        QStandardItem *pItemValue=new QStandardItem;
+        QStandardItem *pItemValue = new QStandardItem;
         pItemValue->setText(scanResult.listHeurs.at(i).sValue);
-        pHeurModel->setItem(i,2,pItemValue);
+        pHeurModel->setItem(i, 2, pItemValue);
     }
 
     ui->tableViewHeur->setModel(pHeurModel);
 
-    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Interactive);
-    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Interactive);
-    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
+    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Interactive);
+    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Interactive);
+    ui->tableViewHeur->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
     deleteOldAbstractModel(&pOldTableModel);
 
     // mb TODO scan time
 }
 
-void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex)
-{
+void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex) {
     Q_UNUSED(nIndex)
 
     scan();

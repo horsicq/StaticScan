@@ -20,190 +20,169 @@
  */
 #include "staticscan.h"
 
-StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
-{
-    g_pOptions=nullptr;
-    g_pScanResult=nullptr;
-    g_scanType=SCAN_TYPE_UNKNOWN;
-    g_pDevice=nullptr;
-    g_pData=nullptr;
-    g_pPdStruct=nullptr;
+StaticScan::StaticScan(QObject *pParent) : QObject(pParent) {
+    g_pOptions = nullptr;
+    g_pScanResult = nullptr;
+    g_scanType = SCAN_TYPE_UNKNOWN;
+    g_pDevice = nullptr;
+    g_pData = nullptr;
+    g_pPdStruct = nullptr;
 }
 
-void StaticScan::setData(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct)
-{
-    g_sFileName=sFileName;
-    g_pOptions=pOptions;
-    g_pScanResult=pScanResult;
-    g_pPdStruct=pPdStruct;
+void StaticScan::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct) {
+    g_sFileName = sFileName;
+    g_pOptions = pOptions;
+    g_pScanResult = pScanResult;
+    g_pPdStruct = pPdStruct;
 
-    g_scanType=SCAN_TYPE_FILE;
+    g_scanType = SCAN_TYPE_FILE;
 }
 
-void StaticScan::setData(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct)
-{
-    g_pDevice=pDevice;
-    g_pOptions=pOptions;
-    g_pScanResult=pScanResult;
-    g_pPdStruct=pPdStruct;
+void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct) {
+    g_pDevice = pDevice;
+    g_pOptions = pOptions;
+    g_pScanResult = pScanResult;
+    g_pPdStruct = pPdStruct;
 
-    g_scanType=SCAN_TYPE_DEVICE;
+    g_scanType = SCAN_TYPE_DEVICE;
 }
 
-void StaticScan::setData(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,SpecAbstract::SCAN_RESULT *pScanResult,XBinary::PDSTRUCT *pPdStruct)
-{
-    g_pData=pData;
-    g_nDataSize=nDataSize;
-    g_pOptions=pOptions;
-    g_pScanResult=pScanResult;
-    g_pPdStruct=pPdStruct;
+void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult,
+                         XBinary::PDSTRUCT *pPdStruct) {
+    g_pData = pData;
+    g_nDataSize = nDataSize;
+    g_pOptions = pOptions;
+    g_pScanResult = pScanResult;
+    g_pPdStruct = pPdStruct;
 
-    g_scanType=SCAN_TYPE_MEMORY;
+    g_scanType = SCAN_TYPE_MEMORY;
 }
 
-void StaticScan::setData(QString sDirectoryName,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
-{
-    g_sDirectoryName=sDirectoryName;
-    g_pOptions=pOptions;
-    g_pPdStruct=pPdStruct;
+void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct) {
+    g_sDirectoryName = sDirectoryName;
+    g_pOptions = pOptions;
+    g_pPdStruct = pPdStruct;
 
-    g_scanType=SCAN_TYPE_DIRECTORY;
+    g_scanType = SCAN_TYPE_DIRECTORY;
 }
 
-void StaticScan::process()
-{
-    XBinary::PDSTRUCT pdStructEmpty={};
-    XBinary::PDSTRUCT *pPdStruct=g_pPdStruct;
+void StaticScan::process() {
+    XBinary::PDSTRUCT pdStructEmpty = {};
+    XBinary::PDSTRUCT *pPdStruct = g_pPdStruct;
 
-    if(!pPdStruct)
-    {
-        pPdStruct=&pdStructEmpty;
+    if (!pPdStruct) {
+        pPdStruct = &pdStructEmpty;
     }
 
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    qint32 _nFreeIndex=XBinary::getFreeIndex(pPdStruct);
-    XBinary::setPdStructInit(pPdStruct,_nFreeIndex,0);
+    qint32 _nFreeIndex = XBinary::getFreeIndex(pPdStruct);
+    XBinary::setPdStructInit(pPdStruct, _nFreeIndex, 0);
 
-    if(g_scanType==SCAN_TYPE_FILE)
-    {
-        if((g_pScanResult)&&(g_sFileName!=""))
-        {
-            XBinary::setPdStructStatus(pPdStruct,_nFreeIndex,tr("File scan"));
+    if (g_scanType == SCAN_TYPE_FILE) {
+        if ((g_pScanResult) && (g_sFileName != "")) {
+            XBinary::setPdStructStatus(pPdStruct, _nFreeIndex, tr("File scan"));
 
             emit scanFileStarted(g_sFileName);
 
-            *g_pScanResult=scanFile(g_sFileName,pPdStruct);
+            *g_pScanResult = scanFile(g_sFileName, pPdStruct);
 
             emit scanResult(*g_pScanResult);
         }
-    }
-    else if(g_scanType==SCAN_TYPE_DEVICE)
-    {
-        if(g_pDevice)
-        {
-            XBinary::setPdStructStatus(pPdStruct,_nFreeIndex,tr("Device scan"));
+    } else if (g_scanType == SCAN_TYPE_DEVICE) {
+        if (g_pDevice) {
+            XBinary::setPdStructStatus(pPdStruct, _nFreeIndex, tr("Device scan"));
 
-            *g_pScanResult=scanDevice(g_pDevice,pPdStruct);
+            *g_pScanResult = scanDevice(g_pDevice, pPdStruct);
 
             emit scanResult(*g_pScanResult);
         }
-    }
-    else if(g_scanType==SCAN_TYPE_MEMORY)
-    {
-        XBinary::setPdStructStatus(pPdStruct,_nFreeIndex,tr("Memory scan"));
+    } else if (g_scanType == SCAN_TYPE_MEMORY) {
+        XBinary::setPdStructStatus(pPdStruct, _nFreeIndex, tr("Memory scan"));
 
-        *g_pScanResult=scanMemory(g_pData,g_nDataSize,pPdStruct);
+        *g_pScanResult = scanMemory(g_pData, g_nDataSize, pPdStruct);
 
         emit scanResult(*g_pScanResult);
-    }
-    else if(g_scanType==SCAN_TYPE_DIRECTORY)
-    {
-        if(g_sDirectoryName!="")
-        {
-            XBinary::setPdStructStatus(pPdStruct,_nFreeIndex,tr("Directory scan"));
+    } else if (g_scanType == SCAN_TYPE_DIRECTORY) {
+        if (g_sDirectoryName != "") {
+            XBinary::setPdStructStatus(pPdStruct, _nFreeIndex, tr("Directory scan"));
             QList<QString> listFileNames;
 
-            XBinary::findFiles(g_sDirectoryName,&listFileNames,g_pOptions->bSubdirectories,0,pPdStruct);
+            XBinary::findFiles(g_sDirectoryName, &listFileNames, g_pOptions->bSubdirectories, 0, pPdStruct);
 
-            qint32 _nFreeIndexFiles=XBinary::getFreeIndex(pPdStruct);
+            qint32 _nFreeIndexFiles = XBinary::getFreeIndex(pPdStruct);
 
-            qint32 nTotal=listFileNames.count();
+            qint32 nTotal = listFileNames.count();
 
-            XBinary::setPdStructInit(pPdStruct,_nFreeIndexFiles,nTotal);
+            XBinary::setPdStructInit(pPdStruct, _nFreeIndexFiles, nTotal);
 
-            for(qint32 i=0;(i<nTotal)&&(!(pPdStruct->bIsStop));i++)
-            {
-                QString sFileName=listFileNames.at(i);
+            for (qint32 i = 0; (i < nTotal) && (!(pPdStruct->bIsStop)); i++) {
+                QString sFileName = listFileNames.at(i);
 
-                XBinary::setPdStructCurrent(pPdStruct,_nFreeIndexFiles,i);
-                XBinary::setPdStructStatus(pPdStruct,_nFreeIndexFiles,sFileName);
+                XBinary::setPdStructCurrent(pPdStruct, _nFreeIndexFiles, i);
+                XBinary::setPdStructStatus(pPdStruct, _nFreeIndexFiles, sFileName);
 
                 emit scanFileStarted(sFileName);
 
-                SpecAbstract::SCAN_RESULT _scanResult=scanFile(sFileName,pPdStruct);
+                SpecAbstract::SCAN_RESULT _scanResult = scanFile(sFileName, pPdStruct);
 
                 emit scanResult(_scanResult);
             }
 
-            XBinary::setPdStructFinished(pPdStruct,_nFreeIndexFiles);
+            XBinary::setPdStructFinished(pPdStruct, _nFreeIndexFiles);
         }
     }
 
-    XBinary::setPdStructFinished(pPdStruct,_nFreeIndex);
+    XBinary::setPdStructFinished(pPdStruct, _nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
-{
-    SpecAbstract::SCAN_RESULT result={0};
+SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct) {
+    SpecAbstract::SCAN_RESULT result = {0};
     StaticScan scan;
-    scan.setData(pDevice,pOptions,&result,pPdStruct);
+    scan.setData(pDevice, pOptions, &result, pPdStruct);
     scan.process();
 
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
-{
-    SpecAbstract::SCAN_RESULT result={0};
+SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct) {
+    SpecAbstract::SCAN_RESULT result = {0};
     StaticScan scan;
-    scan.setData(sFileName,pOptions,&result,pPdStruct);
+    scan.setData(sFileName, pOptions, &result, pPdStruct);
     scan.process();
 
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData,qint32 nDataSize,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
-{
-    SpecAbstract::SCAN_RESULT result={0};
+SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct) {
+    SpecAbstract::SCAN_RESULT result = {0};
     StaticScan scan;
-    scan.setData(pData,nDataSize,pOptions,&result,pPdStruct);
+    scan.setData(pData, nDataSize, pOptions, &result, pPdStruct);
     scan.process();
 
     return result;
 }
 
-QString StaticScan::getEngineVersion()
-{
+QString StaticScan::getEngineVersion() {
     return SSE_VERSION;
 }
 
-//StaticScan::STATS StaticScan::getCurrentStats()
+// StaticScan::STATS StaticScan::getCurrentStats()
 //{
-//    if(g_pElapsedTimer)
-//    {
-//        if(g_pElapsedTimer->isValid())
-//        {
-//            g_currentStats.nElapsed=g_pElapsedTimer->elapsed();
-//        }
-//        else
-//        {
-//            g_currentStats.nElapsed=0;
-//        }
-//    }
+//     if(g_pElapsedTimer)
+//     {
+//         if(g_pElapsedTimer->isValid())
+//         {
+//             g_currentStats.nElapsed=g_pElapsedTimer->elapsed();
+//         }
+//         else
+//         {
+//             g_currentStats.nElapsed=0;
+//         }
+//     }
 
 //    if(g_pOptions)
 //    {
@@ -213,30 +192,26 @@ QString StaticScan::getEngineVersion()
 //    return g_currentStats;
 //}
 
-void StaticScan::_process(QIODevice *pDevice,SpecAbstract::SCAN_RESULT *pScanResult,qint64 nOffset,qint64 nSize,XBinary::SCANID parentId,SpecAbstract::SCAN_OPTIONS *pOptions,XBinary::PDSTRUCT *pPdStruct)
-{
-    XBinary::PDSTRUCT pdStructEmpty={};
+void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId,
+                          SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct) {
+    XBinary::PDSTRUCT pdStructEmpty = {};
 
-    if(!pPdStruct)
-    {
-        pPdStruct=&pdStructEmpty;
+    if (!pPdStruct) {
+        pPdStruct = &pdStructEmpty;
     }
 
-    SpecAbstract::scan(pDevice,pScanResult,nOffset,nSize,parentId,pOptions,true,pPdStruct);
+    SpecAbstract::scan(pDevice, pScanResult, nOffset, nSize, parentId, pOptions, true, pPdStruct);
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName,XBinary::PDSTRUCT *pPdStruct)
-{
-    SpecAbstract::SCAN_RESULT result={0};
+SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName, XBinary::PDSTRUCT *pPdStruct) {
+    SpecAbstract::SCAN_RESULT result = {0};
 
-    if(sFileName!="")
-    {
+    if (sFileName != "") {
         QFile file;
         file.setFileName(sFileName);
 
-        if(file.open(QIODevice::ReadOnly))
-        {
-            result=scanDevice(&file,pPdStruct);
+        if (file.open(QIODevice::ReadOnly)) {
+            result = scanDevice(&file, pPdStruct);
 
             file.close();
         }
@@ -245,29 +220,26 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName,XBinary::PDSTRU
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice,XBinary::PDSTRUCT *pPdStruct)
-{
-    SpecAbstract::SCAN_RESULT result={0};
+SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PDSTRUCT *pPdStruct) {
+    SpecAbstract::SCAN_RESULT result = {0};
 
-    XBinary::SCANID parentId={0};
-    parentId.fileType=XBinary::FT_UNKNOWN;
-    parentId.filePart=XBinary::FILEPART_HEADER;
-    _process(pDevice,&result,0,pDevice->size(),parentId,g_pOptions,pPdStruct);
+    XBinary::SCANID parentId = {0};
+    parentId.fileType = XBinary::FT_UNKNOWN;
+    parentId.filePart = XBinary::FILEPART_HEADER;
+    _process(pDevice, &result, 0, pDevice->size(), parentId, g_pOptions, pPdStruct);
 
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData,qint32 nSize,XBinary::PDSTRUCT *pPdStruct)
-{
-    SpecAbstract::SCAN_RESULT result={0};
+SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct) {
+    SpecAbstract::SCAN_RESULT result = {0};
 
     QBuffer buffer;
 
-    buffer.setData(pData,nSize);
+    buffer.setData(pData, nSize);
 
-    if(buffer.open(QIODevice::ReadOnly))
-    {
-        result=scanDevice(&buffer,pPdStruct);
+    if (buffer.open(QIODevice::ReadOnly)) {
+        result = scanDevice(&buffer, pPdStruct);
 
         buffer.close();
     }

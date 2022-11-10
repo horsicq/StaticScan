@@ -28,20 +28,18 @@
 
 // TODO rename class
 // TODO XShortcutsWidget
-namespace Ui
-{
+namespace Ui {
 class FormResult;
 }
 
-class FormResult : public QWidget
-{
+class FormResult : public QWidget {
     Q_OBJECT
 
 public:
-    explicit FormResult(QWidget *pParent=nullptr);
+    explicit FormResult(QWidget *pParent = nullptr);
     ~FormResult();
 
-    void setData(SpecAbstract::SCAN_RESULT scanResult,QString sSaveFileName);
+    void setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName);
 
 private slots:
     void on_pushButtonClear_clicked();
@@ -55,4 +53,4 @@ private:
     QAbstractItemModel *g_pModel;
 };
 
-#endif // FORMRESULT_H
+#endif  // FORMRESULT_H

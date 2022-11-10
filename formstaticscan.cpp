@@ -19,57 +19,49 @@
  * SOFTWARE.
  */
 #include "formstaticscan.h"
+
 #include "ui_formstaticscan.h"
 
-FormStaticScan::FormStaticScan(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FormStaticScan)
-{
+FormStaticScan::FormStaticScan(QWidget *parent) : QWidget(parent), ui(new Ui::FormStaticScan) {
     ui->setupUi(this);
 
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxRecursive->setChecked(true);
 }
 
-FormStaticScan::~FormStaticScan()
-{
+FormStaticScan::~FormStaticScan() {
     delete ui;
 }
 
-void FormStaticScan::setData(QIODevice *pDevice,FormStaticScan::OPTIONS *pOptions)
-{
-    this->pDevice=pDevice;
-    this->pOptions=pOptions;
+void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptions) {
+    this->pDevice = pDevice;
+    this->pOptions = pOptions;
 
-    if(pOptions->bHideRecursive)
-    {
+    if (pOptions->bHideRecursive) {
         ui->checkBoxRecursive->setChecked(false);
         ui->checkBoxRecursive->hide();
     }
 
-    if(pOptions->bScanAfterOpen)
-    {
+    if (pOptions->bScanAfterOpen) {
         scan();
     }
 }
 
-void FormStaticScan::on_pushButtonScan_clicked()
-{
+void FormStaticScan::on_pushButtonScan_clicked() {
     scan();
 }
 
-void FormStaticScan::scan()
-{
+void FormStaticScan::scan() {
     SpecAbstract::SCAN_RESULT scanResult;
 
-    SpecAbstract::SCAN_OPTIONS options= {0};
-    options.bRecursiveScan=ui->checkBoxRecursive->isChecked();
-    options.bDeepScan=ui->checkBoxDeepScan->isChecked();
-    options.bIsImage=pOptions->bIsImage;
+    SpecAbstract::SCAN_OPTIONS options = {0};
+    options.bRecursiveScan = ui->checkBoxRecursive->isChecked();
+    options.bDeepScan = ui->checkBoxDeepScan->isChecked();
+    options.bIsImage = pOptions->bIsImage;
 
     DialogStaticScanProcess ds(this);
-    ds.setData(pDevice,&options,&scanResult);
+    ds.setData(pDevice, &options, &scanResult);
     ds.exec();
 
-    ui->widgetResult->setData(scanResult,"");
+    ui->widgetResult->setData(scanResult, "");
 }
