@@ -47,8 +47,7 @@ void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOption
     g_scanType = SCAN_TYPE_DEVICE;
 }
 
-void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult,
-                         XBinary::PDSTRUCT *pPdStruct) {
+void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct) {
     g_pData = pData;
     g_nDataSize = nDataSize;
     g_pOptions = pOptions;
@@ -192,8 +191,8 @@ QString StaticScan::getEngineVersion() {
 //    return g_currentStats;
 //}
 
-void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId,
-                          SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct) {
+void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId, SpecAbstract::SCAN_OPTIONS *pOptions,
+                          XBinary::PDSTRUCT *pPdStruct) {
     XBinary::PDSTRUCT pdStructEmpty = {};
 
     if (!pPdStruct) {

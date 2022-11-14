@@ -110,9 +110,8 @@ void HeurWidget::scan() {
         pHeurModel->setItem(i, 0, pItemHeurType);
 
         QStandardItem *pItemName = new QStandardItem;
-        pItemName->setText(QString("%1(%2)[%3]")
-                               .arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name), scanResult.listHeurs.at(i).sVersion,
-                                    scanResult.listHeurs.at(i).sInfo));
+        pItemName->setText(
+            QString("%1(%2)[%3]").arg(SpecAbstract::recordNameIdToString(scanResult.listHeurs.at(i).name), scanResult.listHeurs.at(i).sVersion, scanResult.listHeurs.at(i).sInfo));
         pHeurModel->setItem(i, 1, pItemName);
 
         QStandardItem *pItemValue = new QStandardItem;
