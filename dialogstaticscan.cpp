@@ -22,7 +22,8 @@
 
 #include "ui_dialogstaticscan.h"
 
-DialogStaticScan::DialogStaticScan(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogStaticScan) {
+DialogStaticScan::DialogStaticScan(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogStaticScan)
+{
     ui->setupUi(this);
 
     g_pDevice = nullptr;
@@ -30,11 +31,13 @@ DialogStaticScan::DialogStaticScan(QWidget *pParent) : QDialog(pParent), ui(new 
     setWindowFlags(Qt::Window);
 }
 
-DialogStaticScan::~DialogStaticScan() {
+DialogStaticScan::~DialogStaticScan()
+{
     delete ui;
 }
 
-void DialogStaticScan::setData(QIODevice *pDevice, bool bAuto) {
+void DialogStaticScan::setData(QIODevice *pDevice, bool bAuto)
+{
     this->g_pDevice = pDevice;
 
     if (bAuto) {
@@ -42,15 +45,18 @@ void DialogStaticScan::setData(QIODevice *pDevice, bool bAuto) {
     }
 }
 
-void DialogStaticScan::on_pushButtonClose_clicked() {
+void DialogStaticScan::on_pushButtonClose_clicked()
+{
     this->close();
 }
 
-void DialogStaticScan::on_pushButtonScan_clicked() {
+void DialogStaticScan::on_pushButtonScan_clicked()
+{
     scan();
 }
 
-void DialogStaticScan::scan() {
+void DialogStaticScan::scan()
+{
     SpecAbstract::SCAN_RESULT scanResult = {0};
 
     SpecAbstract::SCAN_OPTIONS options = {0};

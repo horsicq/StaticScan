@@ -22,7 +22,8 @@
 
 #include "ui_heurwidget.h"
 
-HeurWidget::HeurWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::HeurWidget) {
+HeurWidget::HeurWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::HeurWidget)
+{
     ui->setupUi(this);
 
     this->g_pDevice = nullptr;
@@ -35,11 +36,13 @@ HeurWidget::HeurWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     ui->checkBoxAllTypesScan->setChecked(false);
 }
 
-HeurWidget::~HeurWidget() {
+HeurWidget::~HeurWidget()
+{
     delete ui;
 }
 
-void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType) {
+void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType)
+{
     this->g_pDevice = pDevice;
     this->g_fileType = fileType;
 
@@ -50,15 +53,18 @@ void HeurWidget::setData(QIODevice *pDevice, bool bAuto, XBinary::FT fileType) {
     }
 }
 
-void HeurWidget::on_pushButtonScan_clicked() {
+void HeurWidget::on_pushButtonScan_clicked()
+{
     scan();
 }
 
-void HeurWidget::registerShortcuts(bool bState) {
+void HeurWidget::registerShortcuts(bool bState)
+{
     Q_UNUSED(bState)
 }
 
-void HeurWidget::on_pushButtonSave_clicked() {
+void HeurWidget::on_pushButtonSave_clicked()
+{
     QAbstractItemModel *pModel = ui->treeViewScan->model();
 
     if (pModel) {
@@ -68,7 +74,8 @@ void HeurWidget::on_pushButtonSave_clicked() {
     }
 }
 
-void HeurWidget::scan() {
+void HeurWidget::scan()
+{
     SpecAbstract::SCAN_RESULT scanResult = {0};
     SpecAbstract::SCAN_OPTIONS options = {0};
 
@@ -130,7 +137,8 @@ void HeurWidget::scan() {
     // mb TODO scan time
 }
 
-void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex) {
+void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex)
+{
     Q_UNUSED(nIndex)
 
     scan();

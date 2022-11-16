@@ -22,18 +22,21 @@
 
 #include "ui_formstaticscan.h"
 
-FormStaticScan::FormStaticScan(QWidget *parent) : QWidget(parent), ui(new Ui::FormStaticScan) {
+FormStaticScan::FormStaticScan(QWidget *parent) : QWidget(parent), ui(new Ui::FormStaticScan)
+{
     ui->setupUi(this);
 
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxRecursive->setChecked(true);
 }
 
-FormStaticScan::~FormStaticScan() {
+FormStaticScan::~FormStaticScan()
+{
     delete ui;
 }
 
-void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptions) {
+void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptions)
+{
     this->pDevice = pDevice;
     this->pOptions = pOptions;
 
@@ -47,11 +50,13 @@ void FormStaticScan::setData(QIODevice *pDevice, FormStaticScan::OPTIONS *pOptio
     }
 }
 
-void FormStaticScan::on_pushButtonScan_clicked() {
+void FormStaticScan::on_pushButtonScan_clicked()
+{
     scan();
 }
 
-void FormStaticScan::scan() {
+void FormStaticScan::scan()
+{
     SpecAbstract::SCAN_RESULT scanResult;
 
     SpecAbstract::SCAN_OPTIONS options = {0};

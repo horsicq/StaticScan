@@ -22,18 +22,21 @@
 
 #include "ui_formresult.h"
 
-FormResult::FormResult(QWidget *pParent) : QWidget(pParent), ui(new Ui::FormResult) {
+FormResult::FormResult(QWidget *pParent) : QWidget(pParent), ui(new Ui::FormResult)
+{
     ui->setupUi(this);
 
     g_pModel = nullptr;
     g_scanResult = {0};
 }
 
-FormResult::~FormResult() {
+FormResult::~FormResult()
+{
     delete ui;
 }
 
-void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName) {
+void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFileName)
+{
     this->g_scanResult = scanResult;
     this->g_sSaveFileName = sSaveFileName;
 
@@ -52,7 +55,8 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, QString sSaveFile
     ui->labelElapsedTime->setText(QString("%1 %2").arg(QString::number(g_scanResult.nScanTime), tr("msec")));
 }
 
-void FormResult::on_pushButtonClear_clicked() {
+void FormResult::on_pushButtonClear_clicked()
+{
     QAbstractItemModel *pOldModel = ui->treeViewResult->model();
 
     ui->treeViewResult->setModel(nullptr);
@@ -62,7 +66,8 @@ void FormResult::on_pushButtonClear_clicked() {
     ui->labelElapsedTime->clear();
 }
 
-void FormResult::on_pushButtonSave_clicked() {
+void FormResult::on_pushButtonSave_clicked()
+{
     QAbstractItemModel *pModel = ui->treeViewResult->model();
 
     if (pModel) {
@@ -70,7 +75,8 @@ void FormResult::on_pushButtonSave_clicked() {
     }
 }
 
-void FormResult::on_pushButtonExtraInformation_clicked() {
+void FormResult::on_pushButtonExtraInformation_clicked()
+{
     if (g_pModel) {
         DialogTextInfo dialogTextInfo(this);
 

@@ -22,7 +22,8 @@
 
 #include "ui_staticscanoptionswidget.h"
 
-StaticScanOptionsWidget::StaticScanOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::StaticScanOptionsWidget) {
+StaticScanOptionsWidget::StaticScanOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::StaticScanOptionsWidget)
+{
     ui->setupUi(this);
 
     g_pOptions = nullptr;
@@ -30,17 +31,20 @@ StaticScanOptionsWidget::StaticScanOptionsWidget(QWidget *pParent) : QWidget(pPa
     setProperty("GROUPID", XOptions::GROUPID_SCAN);
 }
 
-StaticScanOptionsWidget::~StaticScanOptionsWidget() {
+StaticScanOptionsWidget::~StaticScanOptionsWidget()
+{
     delete ui;
 }
 
-void StaticScanOptionsWidget::setOptions(XOptions *pOptions) {
+void StaticScanOptionsWidget::setOptions(XOptions *pOptions)
+{
     g_pOptions = pOptions;
 
     reload();
 }
 
-void StaticScanOptionsWidget::save() {
+void StaticScanOptionsWidget::save()
+{
     g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_SCANAFTEROPEN);
     g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_RECURSIVE);
     g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_DEEP);
@@ -49,7 +53,8 @@ void StaticScanOptionsWidget::save() {
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
 }
 
-void StaticScanOptionsWidget::setDefaultValues(XOptions *pOptions) {
+void StaticScanOptionsWidget::setDefaultValues(XOptions *pOptions)
+{
     pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN, true);
     pOptions->addID(XOptions::ID_SCAN_RECURSIVE, true);
     pOptions->addID(XOptions::ID_SCAN_DEEP, true);
@@ -58,7 +63,8 @@ void StaticScanOptionsWidget::setDefaultValues(XOptions *pOptions) {
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
 }
 
-void StaticScanOptionsWidget::reload() {
+void StaticScanOptionsWidget::reload()
+{
     g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
     g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
     g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);

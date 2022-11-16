@@ -22,7 +22,8 @@
 
 #include "ui_dialogstaticscandirectory.h"
 
-DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, QString sDirName) : XShortcutsDialog(pParent), ui(new Ui::DialogStaticScanDirectory) {
+DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, QString sDirName) : XShortcutsDialog(pParent), ui(new Ui::DialogStaticScanDirectory)
+{
     ui->setupUi(this);
 
     setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);  // Qt::WindowTitleHint
@@ -36,11 +37,13 @@ DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, QString s
     }
 }
 
-DialogStaticScanDirectory::~DialogStaticScanDirectory() {
+DialogStaticScanDirectory::~DialogStaticScanDirectory()
+{
     delete ui;
 }
 
-void DialogStaticScanDirectory::on_pushButtonOpenDirectory_clicked() {
+void DialogStaticScanDirectory::on_pushButtonOpenDirectory_clicked()
+{
     QString sInitDirectory = ui->lineEditDirectoryName->text();
 
     QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
@@ -50,7 +53,8 @@ void DialogStaticScanDirectory::on_pushButtonOpenDirectory_clicked() {
     }
 }
 
-void DialogStaticScanDirectory::on_pushButtonScan_clicked() {
+void DialogStaticScanDirectory::on_pushButtonScan_clicked()
+{
     QString sDirectoryName = ui->lineEditDirectoryName->text().trimmed();
 
     scanDirectory(sDirectoryName);
@@ -58,7 +62,8 @@ void DialogStaticScanDirectory::on_pushButtonScan_clicked() {
     getGlobalOptions()->setLastDirectory(sDirectoryName);
 }
 
-void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName) {
+void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)
+{
     if (sDirectoryName != "") {
         ui->textBrowserResult->clear();
 
@@ -79,7 +84,8 @@ void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName) {
     }
 }
 
-void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult) {
+void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
+{
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));
     sResult += "\r\n";  // TODO Linux
 
@@ -92,19 +98,23 @@ void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
     emit resultSignal(sResult);
 }
 
-void DialogStaticScanDirectory::appendResult(QString sResult) {
+void DialogStaticScanDirectory::appendResult(QString sResult)
+{
     ui->textBrowserResult->append(sResult);
 }
 
-void DialogStaticScanDirectory::on_pushButtonOK_clicked() {
+void DialogStaticScanDirectory::on_pushButtonOK_clicked()
+{
     this->close();
 }
 
-void DialogStaticScanDirectory::on_pushButtonClear_clicked() {
+void DialogStaticScanDirectory::on_pushButtonClear_clicked()
+{
     ui->textBrowserResult->clear();
 }
 
-void DialogStaticScanDirectory::on_pushButtonSave_clicked() {
+void DialogStaticScanDirectory::on_pushButtonSave_clicked()
+{
     QString sFilter;
     sFilter += QString("%1 (*.txt)").arg(tr("Text documents"));
     QString sSaveFileName = ui->lineEditDirectoryName->text() + QDir::separator() + "result";

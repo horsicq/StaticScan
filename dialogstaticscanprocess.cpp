@@ -20,7 +20,8 @@
  */
 #include "dialogstaticscanprocess.h"
 
-DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) : XDialogProcess(pParent) {
+DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) : XDialogProcess(pParent)
+{
     g_pScan = new StaticScan;
     g_pThread = new QThread;
 
@@ -32,22 +33,26 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) : XDialogProc
     connect(g_pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), this, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), Qt::DirectConnection);
 }
 
-void DialogStaticScanProcess::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult) {
+void DialogStaticScanProcess::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+{
     g_pScan->setData(sFileName, pOptions, pScanResult, getPdStruct());
     g_pThread->start();
 }
 
-void DialogStaticScanProcess::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult) {
+void DialogStaticScanProcess::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+{
     g_pScan->setData(pDevice, pOptions, pScanResult, getPdStruct());
     g_pThread->start();
 }
 
-void DialogStaticScanProcess::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions) {
+void DialogStaticScanProcess::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
+{
     g_pScan->setData(sDirectoryName, pOptions, getPdStruct());
     g_pThread->start();
 }
 
-DialogStaticScanProcess::~DialogStaticScanProcess() {
+DialogStaticScanProcess::~DialogStaticScanProcess()
+{
     stop();
     waitForFinished();
 
@@ -61,7 +66,8 @@ DialogStaticScanProcess::~DialogStaticScanProcess() {
     delete g_pScan;
 }
 
-bool DialogStaticScanProcess::saveResult(QWidget *pParent, ScanItemModel *pModel, QString sResultFileName) {
+bool DialogStaticScanProcess::saveResult(QWidget *pParent, ScanItemModel *pModel, QString sResultFileName)
+{
     bool bResult = false;
 
     if (pModel) {
