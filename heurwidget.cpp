@@ -22,7 +22,8 @@
 
 #include "ui_heurwidget.h"
 
-HeurWidget::HeurWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::HeurWidget)
+HeurWidget::HeurWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::HeurWidget)
 {
     ui->setupUi(this);
 

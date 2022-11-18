@@ -20,7 +20,8 @@
  */
 #include "dialogstaticscanprocess.h"
 
-DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) : XDialogProcess(pParent)
+DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent)
+    : XDialogProcess(pParent)
 {
     g_pScan = new StaticScan;
     g_pThread = new QThread;

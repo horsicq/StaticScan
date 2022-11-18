@@ -20,7 +20,8 @@
  */
 #include "staticscan.h"
 
-StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
+StaticScan::StaticScan(QObject *pParent)
+    : QObject(pParent)
 {
     g_pOptions = nullptr;
     g_pScanResult = nullptr;
