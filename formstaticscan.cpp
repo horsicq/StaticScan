@@ -22,8 +22,7 @@
 
 #include "ui_formstaticscan.h"
 
-FormStaticScan::FormStaticScan(QWidget *parent)
-    : QWidget(parent), ui(new Ui::FormStaticScan)
+FormStaticScan::FormStaticScan(QWidget *parent) : QWidget(parent), ui(new Ui::FormStaticScan)
 {
     ui->setupUi(this);
 

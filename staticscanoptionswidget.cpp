@@ -22,8 +22,7 @@
 
 #include "ui_staticscanoptionswidget.h"
 
-StaticScanOptionsWidget::StaticScanOptionsWidget(QWidget *pParent)
-    : QWidget(pParent), ui(new Ui::StaticScanOptionsWidget)
+StaticScanOptionsWidget::StaticScanOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::StaticScanOptionsWidget)
 {
     ui->setupUi(this);
 
