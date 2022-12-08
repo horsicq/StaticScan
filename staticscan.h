@@ -26,21 +26,12 @@
 
 #include "specabstract.h"
 
-#define SSE_VERSION "0.08"  // TODO
+#define SSE_VERSION __DATE__  // TODO compiled time
 
 class StaticScan : public QObject {
     Q_OBJECT
 
 public:
-    //    struct STATS
-    //    {
-    //        qint32 nTotal;
-    //        qint32 nCurrent;
-    //        qint64 nElapsed;
-    //        QString sFileName;
-    //        QString sStatus1;
-    //        QString sStatus2;
-    //    };
     explicit StaticScan(QObject *pParent = nullptr);
 
     void setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct);
