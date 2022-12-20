@@ -42,6 +42,8 @@ public:
     static SpecAbstract::SCAN_RESULT processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
     static SpecAbstract::SCAN_RESULT processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
     static SpecAbstract::SCAN_RESULT processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    static SpecAbstract::SCAN_RESULT processSubdevice(QIODevice *pDevice, qint64 nOffset, qint64 nSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
+
     static QString getEngineVersion();
 
 private:
