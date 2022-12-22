@@ -257,7 +257,13 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PD
 
     XBinary::SCANID parentId = {0};
     parentId.fileType = XBinary::FT_UNKNOWN;
-    parentId.filePart = XBinary::FILEPART_HEADER;
+
+    if (g_pOptions->initFilePart == XBinary::FILEPART_UNKNOWN) {
+        parentId.filePart = XBinary::FILEPART_HEADER;
+    } else {
+        parentId.filePart = g_pOptions->initFilePart;
+    }
+
     _process(pDevice, &result, 0, pDevice->size(), parentId, g_pOptions, pPdStruct);
 
     return result;
