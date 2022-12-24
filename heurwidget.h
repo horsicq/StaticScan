@@ -42,8 +42,8 @@ public:
 private slots:
     void on_pushButtonScan_clicked();
     void on_pushButtonSave_clicked();
-    void scan();
     void on_comboBoxType_currentIndexChanged(int nIndex);
+    void scan();
 
 protected:
     virtual void registerShortcuts(bool bState);

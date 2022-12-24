@@ -74,6 +74,13 @@ void HeurWidget::on_pushButtonSave_clicked()
     }
 }
 
+void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex)
+{
+    Q_UNUSED(nIndex)
+
+    scan();
+}
+
 void HeurWidget::scan()
 {
     SpecAbstract::SCAN_RESULT scanResult = {0};
@@ -136,11 +143,4 @@ void HeurWidget::scan()
     deleteOldAbstractModel(&pOldTableModel);
 
     // mb TODO scan time
-}
-
-void HeurWidget::on_comboBoxType_currentIndexChanged(int nIndex)
-{
-    Q_UNUSED(nIndex)
-
-    scan();
 }
