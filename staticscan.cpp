@@ -76,6 +76,7 @@ void StaticScan::process()
     XBinary::PDSTRUCT *pPdStruct = g_pPdStruct;
 
     if (!pPdStruct) {
+        XBinary::_pdStructInit(&pdStructEmpty);
         pPdStruct = &pdStructEmpty;
     }
 
@@ -227,6 +228,7 @@ void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanRe
     XBinary::PDSTRUCT pdStructEmpty = {};
 
     if (!pPdStruct) {
+        XBinary::_pdStructInit(&pdStructEmpty);
         pPdStruct = &pdStructEmpty;
     }
 
