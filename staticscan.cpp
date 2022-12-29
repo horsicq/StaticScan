@@ -72,11 +72,10 @@ void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOp
 
 void StaticScan::process()
 {
-    XBinary::PDSTRUCT pdStructEmpty = {};
+    XBinary::PDSTRUCT pdStructEmpty = XBinary::createPdStruct();
     XBinary::PDSTRUCT *pPdStruct = g_pPdStruct;
 
     if (!pPdStruct) {
-        XBinary::_pdStructInit(&pdStructEmpty);
         pPdStruct = &pdStructEmpty;
     }
 
@@ -225,10 +224,9 @@ QString StaticScan::getEngineVersion()
 void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId,
                           SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    XBinary::PDSTRUCT pdStructEmpty = {};
+    XBinary::PDSTRUCT pdStructEmpty = XBinary::createPdStruct();
 
     if (!pPdStruct) {
-        XBinary::_pdStructInit(&pdStructEmpty);
         pPdStruct = &pdStructEmpty;
     }
 
