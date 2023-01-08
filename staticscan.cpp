@@ -174,12 +174,12 @@ SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSiz
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processSubdevice(QIODevice *pDevice, qint64 nOffset, qint64 nSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+SpecAbstract::SCAN_RESULT StaticScan::processSubdevice(QIODevice *pDevice, qint64 nOffset, qint64 nSize, SpecAbstract::SCAN_OPTIONS *pOptions,
+                                                       XBinary::PDSTRUCT *pPdStruct)
 {
     SpecAbstract::SCAN_RESULT result = {0};
 
-    if (XBinary::isOffsetAndSizeValid(pDevice, nOffset, nSize))
-    {
+    if (XBinary::isOffsetAndSizeValid(pDevice, nOffset, nSize)) {
         SubDevice sd(pDevice, nOffset, nSize);
 
         if (sd.open(QIODevice::ReadOnly)) {
