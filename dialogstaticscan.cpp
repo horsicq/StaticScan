@@ -69,7 +69,7 @@ void DialogStaticScan::scan()
 
     DialogStaticScanProcess ds(XOptions::getMainWidget(this));
     ds.setData(g_pDevice, &options, &scanResult);
-    ds.showDialogDelay(1000);  // TODO const
+    ds.showDialogDelay();  // TODO const
 
     QString sSaveFileName = XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Result")));
     ui->widgetResult->setData(scanResult, sSaveFileName);
