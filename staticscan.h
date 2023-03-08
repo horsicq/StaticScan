@@ -26,7 +26,7 @@
 
 #include "specabstract.h"
 
-#define SSE_VERSION __DATE__  // TODO compiled time
+#define SSE_VERSION __DATE__
 
 class StaticScan : public QObject {
     Q_OBJECT
