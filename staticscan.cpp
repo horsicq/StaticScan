@@ -146,7 +146,7 @@ void StaticScan::process()
 
 SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {0};
+    SpecAbstract::SCAN_RESULT result = {};
     StaticScan scan;
     scan.setData(pDevice, pOptions, &result, pPdStruct);
     scan.process();
@@ -156,7 +156,7 @@ SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbst
 
 SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {0};
+    SpecAbstract::SCAN_RESULT result = {};
     StaticScan scan;
     scan.setData(sFileName, pOptions, &result, pPdStruct);
     scan.process();
@@ -166,7 +166,7 @@ SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstrac
 
 SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {0};
+    SpecAbstract::SCAN_RESULT result = {};
     StaticScan scan;
     scan.setData(pData, nDataSize, pOptions, &result, pPdStruct);
     scan.process();
@@ -177,7 +177,7 @@ SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSiz
 SpecAbstract::SCAN_RESULT StaticScan::processSubdevice(QIODevice *pDevice, qint64 nOffset, qint64 nSize, SpecAbstract::SCAN_OPTIONS *pOptions,
                                                        XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {0};
+    SpecAbstract::SCAN_RESULT result = {};
 
     if (XBinary::isOffsetAndSizeValid(pDevice, nOffset, nSize)) {
         SubDevice sd(pDevice, nOffset, nSize);
