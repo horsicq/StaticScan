@@ -57,9 +57,9 @@ void DialogStaticScan::on_pushButtonScan_clicked()
 
 void DialogStaticScan::scan()
 {
-    SpecAbstract::SCAN_RESULT scanResult = {0};
+    SpecAbstract::SCAN_RESULT scanResult = {};
 
-    SpecAbstract::SCAN_OPTIONS options = {0};
+    SpecAbstract::SCAN_OPTIONS options = {};
 
     options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
     options.bDeepScan = ui->checkBoxDeepScan->isChecked();
