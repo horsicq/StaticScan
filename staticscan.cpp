@@ -235,7 +235,7 @@ void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanRe
 
 SpecAbstract::SCAN_RESULT StaticScan::scanFile(QString sFileName, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {0};
+    SpecAbstract::SCAN_RESULT result = {};
 
     if (sFileName != "") {
         QFile file;
