@@ -67,7 +67,7 @@ void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)
     if (sDirectoryName != "") {
         ui->textBrowserResult->clear();
 
-        SpecAbstract::SCAN_OPTIONS options = {0};
+        SpecAbstract::SCAN_OPTIONS options = {};
         options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
         options.bDeepScan = ui->checkBoxDeepScan->isChecked();
         options.bHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
