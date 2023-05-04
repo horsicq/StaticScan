@@ -271,7 +271,7 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PD
 
 SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {0};
+    SpecAbstract::SCAN_RESULT result = {};
 
     QBuffer buffer;
 
