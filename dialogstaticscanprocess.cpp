@@ -33,7 +33,7 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) : XDialogProc
     connect(g_pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), this, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), Qt::DirectConnection);
 }
 
-void DialogStaticScanProcess::setData(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+void DialogStaticScanProcess::setData(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
 {
     g_pScan->setData(sFileName, pOptions, pScanResult, getPdStruct());
     g_pThread->start();
