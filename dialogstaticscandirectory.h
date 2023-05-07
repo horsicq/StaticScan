@@ -37,7 +37,7 @@ class DialogStaticScanDirectory : public XShortcutsDialog {
     Q_OBJECT
 
 public:
-    explicit DialogStaticScanDirectory(QWidget *pParent, QString sDirName);
+    explicit DialogStaticScanDirectory(QWidget *pParent, const QString &sDirName);
     ~DialogStaticScanDirectory();
 
 private slots:

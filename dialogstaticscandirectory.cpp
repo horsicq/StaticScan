@@ -22,7 +22,7 @@
 
 #include "ui_dialogstaticscandirectory.h"
 
-DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, QString sDirName) : XShortcutsDialog(pParent), ui(new Ui::DialogStaticScanDirectory)
+DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, const QString &sDirName) : XShortcutsDialog(pParent), ui(new Ui::DialogStaticScanDirectory)
 {
     ui->setupUi(this);
 
