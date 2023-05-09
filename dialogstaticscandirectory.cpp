@@ -62,7 +62,7 @@ void DialogStaticScanDirectory::on_pushButtonScan_clicked()
     getGlobalOptions()->setLastDirectory(sDirectoryName);
 }
 
-void DialogStaticScanDirectory::scanDirectory(QString sDirectoryName)
+void DialogStaticScanDirectory::scanDirectory(const QString &sDirectoryName)
 {
     if (sDirectoryName != "") {
         ui->textBrowserResult->clear();
