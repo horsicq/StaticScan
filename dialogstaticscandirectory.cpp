@@ -98,7 +98,7 @@ void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
     emit resultSignal(sResult);
 }
 
-void DialogStaticScanDirectory::appendResult(QString sResult)
+void DialogStaticScanDirectory::appendResult(const QString &sResult)
 {
     ui->textBrowserResult->append(sResult);
 }

@@ -45,7 +45,7 @@ private slots:
     void on_pushButtonScan_clicked();
     void scanDirectory(const QString &sDirectoryName);
     void scanResult(SpecAbstract::SCAN_RESULT scanResult);
-    void appendResult(QString sResult);
+    void appendResult(const QString &sResult);
     void on_pushButtonOK_clicked();
     void on_pushButtonClear_clicked();
     void on_pushButtonSave_clicked();
