@@ -45,7 +45,7 @@ void DialogStaticScanProcess::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPT
     g_pThread->start();
 }
 
-void DialogStaticScanProcess::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
+void DialogStaticScanProcess::setData(const QString &sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
 {
     g_pScan->setData(sDirectoryName, pOptions, getPdStruct());
     g_pThread->start();

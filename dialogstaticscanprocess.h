@@ -40,7 +40,7 @@ public:
 
     void setData(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult);
     void setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions);
+    void setData(const QString &sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions);
     static bool saveResult(QWidget *pParent, ScanItemModel *pModel, QString sResultFileName);  // TODO move to scanitemmodel.h
 
 signals:
