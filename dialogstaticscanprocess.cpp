@@ -66,7 +66,7 @@ DialogStaticScanProcess::~DialogStaticScanProcess()
     delete g_pScan;
 }
 
-bool DialogStaticScanProcess::saveResult(QWidget *pParent, ScanItemModel *pModel, QString sResultFileName)
+bool DialogStaticScanProcess::saveResult(QWidget *pParent, ScanItemModel *pModel, const QString &sResultFileName)
 {
     bool bResult = false;
 
