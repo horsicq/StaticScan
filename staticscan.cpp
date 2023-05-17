@@ -61,7 +61,7 @@ void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIO
     g_scanType = SCAN_TYPE_MEMORY;
 }
 
-void StaticScan::setData(QString sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+void StaticScan::setData(const QString &sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
     g_sDirectoryName = sDirectoryName;
     g_pOptions = pOptions;
