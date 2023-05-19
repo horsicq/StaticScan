@@ -154,7 +154,7 @@ SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbst
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processFile(QString sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+SpecAbstract::SCAN_RESULT StaticScan::processFile(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
     SpecAbstract::SCAN_RESULT result = {};
     StaticScan scan;
