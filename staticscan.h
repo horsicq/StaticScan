@@ -59,7 +59,7 @@ private:
 
     void _process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId,
                   SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct = nullptr);
-    SpecAbstract::SCAN_RESULT scanFile(QString sFileName, XBinary::PDSTRUCT *pPdStruct = nullptr);
+    SpecAbstract::SCAN_RESULT scanFile(const QString &sFileName, XBinary::PDSTRUCT *pPdStruct = nullptr);
     SpecAbstract::SCAN_RESULT scanDevice(QIODevice *pDevice, XBinary::PDSTRUCT *pPdStruct = nullptr);
     SpecAbstract::SCAN_RESULT scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct = nullptr);
 
