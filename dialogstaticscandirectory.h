@@ -24,7 +24,6 @@
 #include <QDialog>
 #include <QFileDialog>
 
-#include "dialogoptions.h"
 #include "dialogstaticscanprocess.h"
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
