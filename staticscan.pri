@@ -12,11 +12,6 @@ SOURCES += \
     include($$PWD/../SpecAbstract/specabstract.pri)
 }
 
-!contains(XCONFIG, scanitem) {
-    XCONFIG += scanitem
-    include($$PWD/../Formats/scanitem.pri)
-}
-
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
