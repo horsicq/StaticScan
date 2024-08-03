@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,14 +38,14 @@ public:
     explicit DialogStaticScanProcess(QWidget *pParent = nullptr);
     ~DialogStaticScanProcess();
 
-    void setData(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult);
-    void setData(const QString &sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions);
+    void setData(const QString &sFileName, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult);
+    void setData(QIODevice *pDevice, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult);
+    void setData(const QString &sDirectoryName, XScanEngine::SCAN_OPTIONS *pOptions);
     static bool saveResult(QWidget *pParent, ScanItemModel *pModel, const QString &sResultFileName);  // TODO move to scanitemmodel.h
 
 signals:
     void scanFileStarted(QString sFileName);
-    void scanResult(SpecAbstract::SCAN_RESULT scanResult);
+    void scanResult(XScanEngine::SCAN_RESULT scanResult);
 
 private:
     StaticScan *g_pScan;

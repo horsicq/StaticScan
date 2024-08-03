@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,22 +30,22 @@ DialogStaticScanProcess::DialogStaticScanProcess(QWidget *pParent) : XDialogProc
     connect(g_pThread, SIGNAL(started()), g_pScan, SLOT(process()));
     connect(g_pScan, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pScan, SIGNAL(scanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
-    connect(g_pScan, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), this, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), Qt::DirectConnection);
+    connect(g_pScan, SIGNAL(scanResult(XScanEngine::SCAN_RESULT)), this, SIGNAL(scanResult(XScanEngine::SCAN_RESULT)), Qt::DirectConnection);
 }
 
-void DialogStaticScanProcess::setData(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+void DialogStaticScanProcess::setData(const QString &sFileName, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult)
 {
     g_pScan->setData(sFileName, pOptions, pScanResult, getPdStruct());
     g_pThread->start();
 }
 
-void DialogStaticScanProcess::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult)
+void DialogStaticScanProcess::setData(QIODevice *pDevice, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult)
 {
     g_pScan->setData(pDevice, pOptions, pScanResult, getPdStruct());
     g_pThread->start();
 }
 
-void DialogStaticScanProcess::setData(const QString &sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions)
+void DialogStaticScanProcess::setData(const QString &sDirectoryName, XScanEngine::SCAN_OPTIONS *pOptions)
 {
     g_pScan->setData(sDirectoryName, pOptions, getPdStruct());
     g_pThread->start();

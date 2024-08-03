@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ StaticScan::StaticScan(QObject *pParent) : QObject(pParent)
     g_pPdStruct = nullptr;
 }
 
-void StaticScan::setData(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
+void StaticScan::setData(const QString &sFileName, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
 {
     g_sFileName = sFileName;
     g_pOptions = pOptions;
@@ -40,7 +40,7 @@ void StaticScan::setData(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *p
     g_scanType = SCAN_TYPE_FILE;
 }
 
-void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
+void StaticScan::setData(QIODevice *pDevice, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
 {
     g_pDevice = pDevice;
     g_pOptions = pOptions;
@@ -50,7 +50,7 @@ void StaticScan::setData(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOption
     g_scanType = SCAN_TYPE_DEVICE;
 }
 
-void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, SpecAbstract::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
+void StaticScan::setData(char *pData, qint32 nDataSize, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult, XBinary::PDSTRUCT *pPdStruct)
 {
     g_pData = pData;
     g_nDataSize = nDataSize;
@@ -61,7 +61,7 @@ void StaticScan::setData(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIO
     g_scanType = SCAN_TYPE_MEMORY;
 }
 
-void StaticScan::setData(const QString &sDirectoryName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+void StaticScan::setData(const QString &sDirectoryName, XScanEngine::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
     g_sDirectoryName = sDirectoryName;
     g_pOptions = pOptions;
@@ -130,7 +130,7 @@ void StaticScan::process()
 
                 emit scanFileStarted(sFileName);
 
-                SpecAbstract::SCAN_RESULT _scanResult = scanFile(sFileName, pPdStruct);
+                XScanEngine::SCAN_RESULT _scanResult = scanFile(sFileName, pPdStruct);
 
                 emit scanResult(_scanResult);
             }
@@ -144,9 +144,9 @@ void StaticScan::process()
     emit completed(scanTimer.elapsed());
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
     StaticScan scan;
     scan.setData(pDevice, pOptions, &result, pPdStruct);
     scan.process();
@@ -154,9 +154,9 @@ SpecAbstract::SCAN_RESULT StaticScan::processDevice(QIODevice *pDevice, SpecAbst
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processFile(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::processFile(const QString &sFileName, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
     StaticScan scan;
     scan.setData(sFileName, pOptions, &result, pPdStruct);
     scan.process();
@@ -164,9 +164,9 @@ SpecAbstract::SCAN_RESULT StaticScan::processFile(const QString &sFileName, Spec
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSize, SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
     StaticScan scan;
     scan.setData(pData, nDataSize, pOptions, &result, pPdStruct);
     scan.process();
@@ -174,10 +174,10 @@ SpecAbstract::SCAN_RESULT StaticScan::processMemory(char *pData, qint32 nDataSiz
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::processSubdevice(QIODevice *pDevice, qint64 nOffset, qint64 nSize, SpecAbstract::SCAN_OPTIONS *pOptions,
-                                                       XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::processSubdevice(QIODevice *pDevice, qint64 nOffset, qint64 nSize, SpecAbstract::SCAN_OPTIONS *pOptions,
+                                                      XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
 
     if (XBinary::isOffsetAndSizeValid(pDevice, nOffset, nSize)) {
         SubDevice sd(pDevice, nOffset, nSize);
@@ -221,7 +221,7 @@ QString StaticScan::getEngineVersion()
 //    return g_currentStats;
 //}
 
-void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XBinary::SCANID parentId,
+void StaticScan::_process(QIODevice *pDevice, XScanEngine::SCAN_RESULT *pScanResult, qint64 nOffset, qint64 nSize, XScanEngine::SCANID parentId,
                           SpecAbstract::SCAN_OPTIONS *pOptions, XBinary::PDSTRUCT *pPdStruct)
 {
     XBinary::PDSTRUCT pdStructEmpty = XBinary::createPdStruct();
@@ -230,12 +230,12 @@ void StaticScan::_process(QIODevice *pDevice, SpecAbstract::SCAN_RESULT *pScanRe
         pPdStruct = &pdStructEmpty;
     }
 
-    SpecAbstract::scan(pDevice, pScanResult, nOffset, nSize, parentId, pOptions, true, pPdStruct);
+    SpecAbstract().scanProcess(pDevice, pScanResult, nOffset, nSize, parentId, pOptions, true, pPdStruct);
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanFile(const QString &sFileName, XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::scanFile(const QString &sFileName, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
 
     if (sFileName != "") {
         QFile file;
@@ -251,11 +251,11 @@ SpecAbstract::SCAN_RESULT StaticScan::scanFile(const QString &sFileName, XBinary
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
 
-    XBinary::SCANID parentId = {};
+    XScanEngine::SCANID parentId = {};
     parentId.fileType = XBinary::FT_UNKNOWN;
 
     if (g_pOptions->initFilePart == XBinary::FILEPART_UNKNOWN) {
@@ -269,9 +269,9 @@ SpecAbstract::SCAN_RESULT StaticScan::scanDevice(QIODevice *pDevice, XBinary::PD
     return result;
 }
 
-SpecAbstract::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct)
+XScanEngine::SCAN_RESULT StaticScan::scanMemory(char *pData, qint32 nSize, XBinary::PDSTRUCT *pPdStruct)
 {
-    SpecAbstract::SCAN_RESULT result = {};
+    XScanEngine::SCAN_RESULT result = {};
 
     QBuffer buffer;
 
