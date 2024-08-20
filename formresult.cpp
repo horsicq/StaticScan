@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ FormResult::~FormResult()
     delete ui;
 }
 
-void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, const QString &sSaveFileName)
+void FormResult::setData(XScanEngine::SCAN_OPTIONS scanOptions, XScanEngine::SCAN_RESULT scanResult, const QString &sSaveFileName)
 {
     this->g_scanResult = scanResult;
     this->g_sSaveFileName = sSaveFileName;
@@ -44,9 +44,7 @@ void FormResult::setData(SpecAbstract::SCAN_RESULT scanResult, const QString &sS
 
     QAbstractItemModel *pOldModel = ui->treeViewResult->model();
 
-    QList<XBinary::SCANSTRUCT> _listRecords = SpecAbstract::convert(&(this->g_scanResult.listRecords));
-
-    g_pModel = new ScanItemModel(&(_listRecords), 1);
+    g_pModel = new ScanItemModel(&scanOptions, &(scanResult.listRecords), 1);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 

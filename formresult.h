@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ public:
     explicit FormResult(QWidget *pParent = nullptr);
     ~FormResult();
 
-    void setData(SpecAbstract::SCAN_RESULT scanResult, const QString &sSaveFileName);
+    void setData(XScanEngine::SCAN_OPTIONS scanOptions, XScanEngine::SCAN_RESULT scanResult, const QString &sSaveFileName);
 
 private slots:
     void on_pushButtonClear_clicked();
@@ -48,7 +48,7 @@ private slots:
 
 private:
     Ui::FormResult *ui;
-    SpecAbstract::SCAN_RESULT g_scanResult;
+    XScanEngine::SCAN_RESULT g_scanResult;
     QString g_sSaveFileName;
     QAbstractItemModel *g_pModel;
 };

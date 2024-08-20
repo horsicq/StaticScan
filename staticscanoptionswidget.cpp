@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,29 +46,29 @@ void StaticScanOptionsWidget::setOptions(XOptions *pOptions)
 void StaticScanOptionsWidget::save()
 {
     g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_DEEP);
-    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
-    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_FLAG_RECURSIVE);
+    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_DEEP);
+    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
+    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
 }
 
 void StaticScanOptionsWidget::setDefaultValues(XOptions *pOptions)
 {
     pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN, true);
-    pOptions->addID(XOptions::ID_SCAN_RECURSIVE, true);
-    pOptions->addID(XOptions::ID_SCAN_DEEP, true);
-    pOptions->addID(XOptions::ID_SCAN_HEURISTIC, false);
-    pOptions->addID(XOptions::ID_SCAN_VERBOSE, false);
-    pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_RECURSIVE, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_DEEP, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_HEURISTIC, false);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_VERBOSE, false);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_ALLTYPES, false);
 }
 
 void StaticScanOptionsWidget::reload()
 {
     g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
-    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
-    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
+    g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
+    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
+    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
 }

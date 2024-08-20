@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2018-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ private slots:
     void on_pushButtonOpenDirectory_clicked();
     void on_pushButtonScan_clicked();
     void scanDirectory(const QString &sDirectoryName);
-    void scanResult(SpecAbstract::SCAN_RESULT scanResult);
+    void scanResult(XScanEngine::SCAN_RESULT scanResult);
     void appendResult(const QString &sResult);
     void on_pushButtonOK_clicked();
     void on_pushButtonClear_clicked();
@@ -54,6 +54,7 @@ signals:
 
 private:
     Ui::DialogStaticScanDirectory *ui;
+    SpecAbstract::SCAN_OPTIONS g_scanOptions;
 };
 
 #endif  // DIALOGSTATICSCANDIRECTORY_H

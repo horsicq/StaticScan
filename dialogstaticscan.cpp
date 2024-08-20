@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -57,20 +57,20 @@ void DialogStaticScan::on_pushButtonScan_clicked()
 
 void DialogStaticScan::scan()
 {
-    SpecAbstract::SCAN_RESULT scanResult = {};
+    XScanEngine::SCAN_RESULT scanResult = {};
 
-    SpecAbstract::SCAN_OPTIONS options = {};
+    XScanEngine::SCAN_OPTIONS scanOptions = {};
 
-    options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-    options.bDeepScan = ui->checkBoxDeepScan->isChecked();
-    options.bHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-    options.bVerbose = ui->checkBoxVerbose->isChecked();
-    options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+    scanOptions.bIsRecursiveScan  = ui->checkBoxRecursiveScan->isChecked();
+    scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+    scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+    scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
+    scanOptions.bIsAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
 
     DialogStaticScanProcess ds(XOptions::getMainWidget(this));
-    ds.setData(g_pDevice, &options, &scanResult);
+    ds.setData(g_pDevice, &scanOptions, &scanResult);
     ds.showDialogDelay();  // TODO const
 
     QString sSaveFileName = XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Result")));
-    ui->widgetResult->setData(scanResult, sSaveFileName);
+    ui->widgetResult->setData(scanOptions, scanResult, sSaveFileName);
 }

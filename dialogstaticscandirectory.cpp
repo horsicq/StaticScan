@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2018-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,8 @@
 DialogStaticScanDirectory::DialogStaticScanDirectory(QWidget *pParent, const QString &sDirName) : XShortcutsDialog(pParent), ui(new Ui::DialogStaticScanDirectory)
 {
     ui->setupUi(this);
+
+    g_scanOptions = {};
 
     setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);  // Qt::WindowTitleHint
 
@@ -67,31 +69,28 @@ void DialogStaticScanDirectory::scanDirectory(const QString &sDirectoryName)
     if (sDirectoryName != "") {
         ui->textBrowserResult->clear();
 
-        SpecAbstract::SCAN_OPTIONS options = {};
-        options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-        options.bDeepScan = ui->checkBoxDeepScan->isChecked();
-        options.bHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-        options.bVerbose = ui->checkBoxVerbose->isChecked();
-        options.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+        g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+        g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+        g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
+        g_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
+        g_scanOptions.bIsAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
         // TODO Filter options
         // |flags|x all|
 
         DialogStaticScanProcess ds(this);
-        connect(&ds, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)), this, SLOT(scanResult(SpecAbstract::SCAN_RESULT)), Qt::DirectConnection);
-        ds.setData(sDirectoryName, &options);
+        connect(&ds, SIGNAL(scanResult(XScanEngine::SCAN_RESULT)), this, SLOT(scanResult(XScanEngine::SCAN_RESULT)), Qt::DirectConnection);
+        ds.setData(sDirectoryName, &g_scanOptions);
         ds.showDialogDelay();
     }
 }
 
-void DialogStaticScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
+void DialogStaticScanDirectory::scanResult(XScanEngine::SCAN_RESULT scanResult)
 {
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));
     sResult += "\r\n";  // TODO Linux
 
-    QList<XBinary::SCANSTRUCT> _listRecords = SpecAbstract::convert(&(scanResult.listRecords));
-
-    ScanItemModel model(&_listRecords);
+    ScanItemModel model(&g_scanOptions, &(scanResult.listRecords), 1);
 
     sResult += model.toString(XBinary::FORMATTYPE_TEXT).toUtf8().data();
 
