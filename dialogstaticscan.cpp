@@ -61,7 +61,7 @@ void DialogStaticScan::scan()
 
     XScanEngine::SCAN_OPTIONS scanOptions = {};
 
-    scanOptions.bIsRecursiveScan  = ui->checkBoxRecursiveScan->isChecked();
+    scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
     scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
     scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
     scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
